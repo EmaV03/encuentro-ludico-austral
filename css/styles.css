@@ -1,0 +1,465 @@
+:root {
+    --bg-main: #F4F4F9;
+    --primary: #FF6B6B;
+    --secondary: #4ECDC4;
+    --dark: #2D3142;
+    --white: #FFFFFF;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --padding-mobile: 1rem;
+    --border-radius: 8px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg-main);
+    color: var(--dark);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* =========================================
+   BARRA DE NAVEGACIÓN (HEADER)
+   ========================================= */
+header {
+    background-color: var(--dark);
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: var(--white);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: var(--secondary);
+}
+
+/* =========================================
+   HERO SECTION (CON SLIDER OPTIMIZADO)
+   ========================================= */
+.hero-section {
+    background-color: rgba(45, 49, 66, 0.85); 
+    background-blend-mode: overlay;
+    
+    /* Le damos altura dinámica para que la imagen tenga más área visible */
+    min-height: 60vh; 
+    
+    /* Centramos el contenido internamente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    /* Configuración de la imagen */
+    background-size: cover;
+    background-position: center center; /* Fuerza el centro exacto de la foto */
+    background-repeat: no-repeat;
+    
+    /* Transición suave */
+    transition: background-image 1.5s ease-in-out;
+    
+    color: var(--white);
+    text-align: center;
+    padding: 40px 20px; 
+}
+
+/* =========================================
+   BOTÓN CALL TO ACTION (CTA)
+   ========================================= */
+.cta-button {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 12px 28px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    margin-top: 15px;
+}
+
+.cta-button:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   SECCIONES: QUIÉNES SOMOS Y EXPOSITORES
+   ========================================= */
+.about-section, .speakers-section, .agenda-section, .sponsors-section {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.about-section h2, .speakers-section h2, .agenda-section h2, .sponsors-section h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    color: var(--dark);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+    text-align: center;
+}
+
+.speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.speaker-card {
+    background: var(--white);
+    padding: 30px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+    border-top: 4px solid var(--secondary);
+    text-align: center;
+}
+
+.speaker-card:hover {
+    transform: translateY(-10px);
+}
+
+.speaker-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}
+
+.speaker-card h3 { margin: 0 0 5px 0; color: var(--dark); }
+.speaker-card h4 { margin: 0 0 15px 0; color: var(--secondary); font-size: 0.9rem; font-weight: normal; }
+.speaker-card p { font-size: 0.9rem; color: #555; line-height: 1.5; }
+
+/* =========================================
+   AGENDA EN FORMATO TABLA (Desktop & Mobile)
+   ========================================= */
+.agenda-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.agenda-table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+}
+
+.agenda-table th, .agenda-table td {
+    border: 1px solid #E2E8F0;
+    padding: 15px;
+    vertical-align: top;
+}
+
+.agenda-table th {
+    background-color: var(--dark);
+    color: var(--white);
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.turno-col {
+    background-color: var(--bg-main);
+    font-weight: bold;
+    color: var(--dark);
+    text-align: center;
+    vertical-align: middle !important;
+    width: 120px;
+    letter-spacing: 1px;
+}
+
+.taller-card {
+    background: var(--white);
+    margin: 0 0 15px 0;
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 5px solid var(--primary);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s;
+    height: calc(100% - 15px);
+}
+
+.taller-card:last-child { margin-bottom: 0; }
+.taller-card:active { transform: scale(0.98); }
+.taller-card h4 { margin: 0 0 10px 0; }
+.taller-card p { margin: 5px 0; font-size: 0.9rem; }
+
+/* =========================================
+   SPONSORS UNIFORME
+   ========================================= */
+.sponsors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+}
+
+.sponsor-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    border: 2px solid #E2E8F0;
+    transition: transform 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: block;
+}
+
+.sponsor-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--secondary);
+}
+
+.sponsor-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+    border-radius: 4px;
+}
+
+.sponsor-card h4 { margin: 0; color: var(--dark); font-size: 0.9rem; }
+
+/* =========================================
+   MODALES (TALLERES Y ALERTAS) - CORREGIDO
+   ========================================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(45, 49, 66, 0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.modal-content {
+    background: var(--white); width: 90%; max-width: 550px;
+    border-radius: 16px; padding: 25px; max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transform: scale(0.9); transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content { transform: scale(1); }
+
+.btn-cerrar {
+    background: var(--bg-main); border: none; font-size: 1.2rem;
+    font-weight: bold; color: var(--dark); padding: 5px 12px;
+    border-radius: 50%; float: right; cursor: pointer;
+}
+
+.form-inscripcion {
+    margin-top: 20px; background: #F8F9FA; padding: 15px;
+    border-radius: 12px; border: 2px dashed var(--secondary);
+}
+
+.campo-grupo { margin-bottom: 12px; }
+.campo-grupo label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+.campo-grupo input { width: 100%; padding: 10px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 1rem; }
+.campo-grupo input:focus { border-color: var(--primary); outline: none; }
+
+.btn-anotarse {
+    background: var(--primary); color: var(--white); border: none; padding: 12px;
+    width: 100%; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s;
+}
+.btn-anotarse:hover { background-color: #ff5252; }
+
+/* SE CORRIGE AQUÍ PARA SOPORTAR TANTO LA ALERTA COMO LA CONFIRMACIÓN PERSONALIZADA */
+#custom-alert-overlay,
+#custom-confirm-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(30, 30, 40, 0.7); display: flex; justify-content: center; align-items: center;
+    z-index: 9999; backdrop-filter: blur(3px);
+}
+#custom-alert-overlay.hidden,
+#custom-confirm-overlay.hidden { display: none; }
+
+.custom-alert-box {
+    background-color: #ffffff; width: 90%; max-width: 400px; padding: 2rem 1.5rem;
+    border-radius: 12px; text-align: center; border: 2px dashed #40E0D0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3); animation: popIn 0.3s ease-out forwards;
+}
+
+#custom-alert-icon svg { margin-bottom: 1rem; }
+#custom-alert-message { color: #4a4a4a; font-size: 1.05rem; margin-bottom: 1.5rem; line-height: 1.5; }
+#custom-alert-btn { background-color: #ff6b6b; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; }
+
+@keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* Estilos para los enlaces cruzados en el modal del expositor */
+.link-taller-cruzado {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.link-taller-cruzado:hover {
+    color: var(--secondary);
+    transform: translateX(5px); /* Pequeño desplazamiento hacia la derecha al pasar el mouse */
+}
+
+/* Estilos para el Panel de Asistente */
+.perfil-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.taller-inscrito-card {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-baja {
+    background: #FF6B6B;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* =========================================
+   ESTILOS DINÁMICOS DEL CRONOGRAMA (UX)
+   ========================================= */
+
+/* Taller donde el usuario activo está inscrito */
+.taller-card.inscrito {
+    border-left: 5px solid #FF9F1C; /* Naranja llamativo */
+    background-color: #FFF9F0;      /* Fondo ligeramente cálido */
+}
+
+/* Indicadores de capacidad de cupos */
+.cupos-altos { 
+    color: var(--secondary); /* Turquesa: Queda mucho espacio */
+    font-weight: bold; 
+}
+.cupos-medios { 
+    color: #FF9F1C; /* Naranja: Se está llenando */
+    font-weight: bold; 
+}
+.cupos-bajos { 
+    color: var(--primary); /* Rojo: Quedan muy pocos lugares */
+    font-weight: bold; 
+}
+.cupos-agotados { 
+    color: #999999; /* Gris: Lleno total */
+    font-weight: bold; 
+    text-decoration: line-through; 
+}
+
+/* =========================================
+   CONTADOR LÚDICO (CUENTA REGRESIVA)
+   ========================================= */
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.countdown-box {
+    background-color: var(--white);
+    color: var(--dark);
+    width: 85px;
+    height: 85px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    /* Efecto 3D estilo ficha/dado */
+    box-shadow: 0 8px 0 var(--secondary), 0 15px 20px rgba(0,0,0,0.2);
+    border: 3px solid var(--dark);
+    transform: translateY(0);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.countdown-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 13px 0 var(--secondary), 0 20px 25px rgba(0,0,0,0.2);
+}
+
+.countdown-box span {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--primary);
+}
+
+.countdown-box small {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #666;
+    margin-top: 5px;
+}

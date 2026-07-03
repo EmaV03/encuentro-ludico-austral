@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuentro Lúdico Austral | Inicio</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header id="main-header">
+        <nav>
+            <div class="logo">
+                <a href="#">
+                    <img src="Imagenes/TuLogo.png" alt="Logo del Congreso" style="max-height: 85px; width: auto; display: block; transition: transform 0.2s;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#info">Información</a></li>
+                <li><a href="#quienes-somos">Nosotros</a></li>
+                <li><a href="#expositores">Expositores</a></li>
+                <li><a href="#cronograma">Agenda</a></li>
+                <li><a href="#sponsors">Sponsors</a></li>
+                <li><a href="javascript:void(0)" id="btn-abrir-perfil" class="cta-button" style="margin-top: 0; padding: 8px 18px;">Mi Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="info" class="hero-section">
+            <div class="hero-content">
+                <h1>Encuentro Lúdico Austral 2026</h1>
+                <p>Tres días de inmersión total en el diseño, las mecánicas y la pasión por los juegos de mesa. 14, 15 y 16 de Agosto de 2026 en Bahía Blanca, Provincia de Buenos Aires.</p>
+                
+                <!-- CONTADOR LÚDICO -->
+                <div id="contador-ludico" class="countdown-container">
+                    <div class="countdown-box"><span id="cd-dias">00</span><small>Días</small></div>
+                    <div class="countdown-box"><span id="cd-horas">00</span><small>Horas</small></div>
+                    <div class="countdown-box"><span id="cd-mins">00</span><small>Min</small></div>
+                    <div class="countdown-box"><span id="cd-segs">00</span><small>Seg</small></div>
+                </div>
+
+                <a href="#cronograma" class="cta-button">Ver Cronograma</a>
+            </div>
+        </section>
+
+        <section id="quienes-somos" class="about-section">
+            <h2>Detrás del Tablero</h2>
+            <p>Somos un grupo de entusiastas, diseñadores independientes y promotores acérrimos de la cultura lúdica. Gestados al calor de las largas partidas y el intercambio de estrategias en Casa Homo Ludens, decidimos dar el siguiente gran paso: crear el punto de encuentro definitivo para la comunidad en el sur argentino. Nuestro objetivo es derribar el mito de que los juegos de mesa son solo "tirar dados y avanzar casilleros", mostrando el inmenso valor artístico, matemático y social que tiene esta industria. Queremos que Bahía Blanca se convierta en un faro para el diseño de juegos en el país.</p>
+        </section>
+
+        <section id="expositores" class="speakers-section">
+            <h2>Nuestros Expositores</h2>
+            <div class="speakers-grid" id="speakers-container">
+                <!-- Se inyecta dinámicamente con JS -->
+            </div>
+        </section>
+
+        <section id="cronograma" class="agenda-section">
+            <h2>Agenda del Evento</h2>
+            <div id="agenda-container" class="agenda-container">
+                <p>Cargando cronograma...</p>
+            </div>
+        </section>
+
+        <section id="sponsors" class="sponsors-section">
+            <h2>Nuestros Patrocinadores</h2>
+            <div class="sponsors-grid">
+                <!-- Se inyecta dinámicamente -->
+            </div>
+        </section>
+    </main>
+
+    <footer id="main-footer">
+        <p>&copy; 2026 Encuentro Lúdico Austral. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- CONTENEDORES DE MODALES -->
+    <div id="modal-contenedor" class="modal-overlay"></div>
+    <div id="modal-expositor" class="modal-overlay"></div>
+    
+    <div id="modal-perfil" class="modal-overlay">
+        <div class="modal-content">
+            <button class="btn-cerrar" id="btn-cerrar-perfil">×</button>
+            <h2 style="color: var(--dark); text-align: center; margin-top: 0;">Panel de Asistente</h2>
+            <div id="perfil-contenido">
+                <!-- JS inyectará el formulario -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="custom-alert-overlay" class="hidden">
+        <div class="custom-alert-box">
+            <div id="custom-alert-icon"></div>
+            <p id="custom-alert-message"></p>
+            <button id="custom-alert-btn">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN PERSONALIZADO -->
+    <div id="custom-confirm-overlay" class="hidden">
+        <div class="custom-alert-box">
+            <div id="custom-confirm-icon">
+                <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <p id="custom-confirm-message" style="color: #4a4a4a; font-size: 1.05rem; margin-bottom: 1.5rem;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button id="btn-confirmar-accion" class="cta-button" style="width: 100%; margin-top: 0; padding: 10px;">Sí, dar de baja</button>
+                <button id="btn-cancelar-accion" style="width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; background: #E2E8F0; color: var(--dark); cursor: pointer;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js" type="module"></script>
+</body>
+</html>
