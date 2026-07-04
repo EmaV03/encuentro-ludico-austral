@@ -57,7 +57,7 @@ if (alertBtn) {
 }
 
 // ==========================================
-// RENDERIZADO DEL CRONOGRAMA (Sincronizado con BD y Perfil)
+// RENDERIZADO DEL CRONOGRAMA
 // ==========================================
 window.renderizarAgenda = async function() {
     const { data: inscripcionesActivas, error } = await supabase.from('inscripciones').select('taller_id');
@@ -95,7 +95,6 @@ window.renderizarAgenda = async function() {
     
     turnos.forEach(turno => {
         const tr = document.createElement('tr');
-        // APLICAMOS LOS NUEVOS HORARIOS ABJ
         const textoHora = turno === 'manana' ? '14:00 HRS' : '15:45 HRS';
         tr.innerHTML = `<td class="turno-col" style="color: var(--primary); font-size: 1.1rem; font-weight: bold;">${textoHora}</td>`;
         
@@ -142,7 +141,7 @@ window.renderizarAgenda = async function() {
 
 window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
-    const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; // HORARIO EN EL MODAL
+    const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; 
     
     modalContenedor.innerHTML = `
         <div class="modal-content">
@@ -179,7 +178,7 @@ window.cerrarModal = function() {
 }
 
 // ==========================================
-// SISTEMA DE INSCRIPCIÓN (NUBE)
+// SISTEMA DE INSCRIPCIÓN (CORREGIDO SESIÓN)
 // ==========================================
 window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
     const nombre = document.getElementById('ins-nombre').value.trim();
@@ -192,23 +191,28 @@ window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
 
     try {
         let usuarioId;
+        let usuarioGuardar;
+        
+        // Pedimos TODOS los datos del usuario (*)
         const { data: usuarioExistente, error: errorBusqueda } = await supabase
             .from('asistentes')
-            .select('id')
+            .select('*')
             .eq('email', email)
             .maybeSingle();
 
         if (usuarioExistente) {
             usuarioId = usuarioExistente.id;
+            usuarioGuardar = usuarioExistente;
         } else {
             const { data: nuevoUsuario, error: errorInsert } = await supabase
                 .from('asistentes')
                 .insert([{ nombre: nombre, email: email, telefono: tel }])
-                .select('id')
+                .select('*')
                 .single();
                 
             if (errorInsert) throw new Error('El correo o teléfono ya está asociado a otro nombre.');
             usuarioId = nuevoUsuario.id;
+            usuarioGuardar = nuevoUsuario;
         }
 
         const { error: errorInscripcion } = await supabase
@@ -222,19 +226,23 @@ window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
 
         if (errorInscripcion) {
             if (errorInscripcion.code === '23505') {
-                showCustomAlert('error', `⚠️ ¡Atención <strong>${nombre}</strong>! Ya estás inscrito a otro taller en el turno de la ${moduloKey} para este mismo día.`);
+                showCustomAlert('error', `⚠️ ¡Atención <strong>${nombre}</strong>! Ya estás inscrito a otro taller en este mismo turno.`);
             } else {
                 throw errorInscripcion;
             }
         } else {
-            showCustomAlert('success', `¡Excelente, <strong>${nombre}</strong>! Tu lugar en la nube ha sido reservado con éxito.`);
+            // AQUÍ ESTÁ LA MAGIA: Iniciamos sesión silenciosamente en el navegador
+            localStorage.setItem('usuarioActivo', JSON.stringify(usuarioGuardar));
+            
+            showCustomAlert('success', `¡Excelente, <strong>${nombre}</strong>! Tu lugar ha sido reservado con éxito.`);
             cerrarModal();
+            // Al recargar, ya sabe quién eres y pintará el taller de naranja
             await renderizarAgenda();
         }
 
     } catch (err) {
         console.error("Error en inscripción:", err);
-        showCustomAlert('error', `❌ No pudimos completar tu registro. ${err.message || 'Verifica tus datos de conexión.'}`);
+        showCustomAlert('error', `❌ No pudimos completar tu registro. ${err.message}`);
     } finally {
         if(btnSubmit) {
             btnSubmit.innerText = 'Confirmar mi Lugar';
@@ -359,11 +367,8 @@ window.validarUsuario = async function() {
             .maybeSingle();
 
         if (error || !usuario) {
-            showCustomAlert('error', '❌ No encontramos un registro con esos datos. Verifica que el correo y el teléfono sean los que usaste al inscribirte.');
-            if(btn) {
-                btn.innerText = 'Ingresar';
-                btn.disabled = false;
-            }
+            showCustomAlert('error', '❌ No encontramos un registro con esos datos.');
+            if(btn) { btn.innerText = 'Ingresar'; btn.disabled = false; }
             return;
         }
 
@@ -373,12 +378,9 @@ window.validarUsuario = async function() {
 
     } catch (err) {
         console.error("Error de conexión:", err);
-        showCustomAlert('error', '⚠️ Hubo un problema de conexión con el servidor. Intenta nuevamente en unos segundos.');
+        showCustomAlert('error', '⚠️ Hubo un problema de conexión con el servidor.');
     } finally {
-        if(btn) {
-            btn.innerText = 'Ingresar';
-            btn.disabled = false;
-        }
+        if(btn) { btn.innerText = 'Ingresar'; btn.disabled = false; }
     }
 };
 
@@ -390,7 +392,7 @@ window.cerrarSesion = function() {
 
 window.cargarTalleresUsuario = async function(usuario) {
     const listaContenedor = document.getElementById('lista-mis-talleres');
-    listaContenedor.innerHTML = '<p style="color: var(--dark); font-weight: bold;">Buscando tus inscripciones en el servidor...</p>';
+    listaContenedor.innerHTML = '<p style="color: var(--dark); font-weight: bold;">Buscando tus inscripciones...</p>';
 
     try {
         const { data: inscripciones, error } = await supabase
@@ -437,32 +439,23 @@ window.cargarTalleresUsuario = async function(usuario) {
 
 window.darseDeBaja = async function(inscripcionId, tituloTaller) {
     const confirmado = await mostrarConfirmacion(`¿Estás completamente seguro de que deseas liberar tu cupo para <strong>"${tituloTaller}"</strong>?<br>Esta acción no se puede deshacer.`);
-    
     if (!confirmado) return;
 
     try {
-        const { error } = await supabase
-            .from('inscripciones')
-            .delete()
-            .eq('id', inscripcionId);
-
+        const { error } = await supabase.from('inscripciones').delete().eq('id', inscripcionId);
         if (error) throw error;
-
-        showCustomAlert('success', '✅ Te has dado de baja exitosamente. ¡Gracias por liberar el cupo para otro entusiasta!');
-        
+        showCustomAlert('success', '✅ Te has dado de baja exitosamente.');
         await renderizarAgenda();
-
         const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
         cargarTalleresUsuario(usuarioActivo);
-
     } catch (err) {
         console.error("Error al dar de baja:", err);
-        showCustomAlert('error', '❌ Tuvimos un problema de conexión al intentar liberar el cupo. Intenta de nuevo.');
+        showCustomAlert('error', '❌ Tuvimos un problema de conexión al intentar liberar el cupo.');
     }
 };
 
 // ==========================================
-// RESTO DE FUNCIONES VISUALES
+// RENDERIZAR SPONSORS
 // ==========================================
 function renderizarSponsors() {
     const sponsorsGrid = document.querySelector('.sponsors-grid');
@@ -483,39 +476,18 @@ function renderizarSponsors() {
     });
 }
 
-function iniciarHeroSlider() {
-    const heroSection = document.querySelector('.hero-section');
-    if (!heroSection) return;
-
-    const imagenesFondo = [
-        'Imagenes/HeroTitle.jpg',
-        'Imagenes/HeroTitle2.jpg',
-        'Imagenes/HeroTitle3.jpg',
-        'Imagenes/HeroTitle4.jpg',
-        'Imagenes/HeroTitle5.jpg'
-    ];
-
-    let indiceActual = 0;
-
-    function cambiarFondo() {
-        heroSection.style.backgroundImage = `url('${imagenesFondo[indiceActual]}')`;
-        indiceActual = (indiceActual + 1) % imagenesFondo.length;
-    }
-
-    cambiarFondo();
-    setInterval(cambiarFondo, 5000);
-}
-
 // ==========================================
-// RENDERIZAR EXPOSITORES (SLIDER DINÁMICO)
+// RENDERIZAR EXPOSITORES (CARRUSEL PAGINADO)
 // ==========================================
+window.expositoresDinamicos = [];
+window.paginaExpositores = 0;
+
 function obtenerPonentesUnicos() {
     const ponentesSet = new Set();
     Object.values(congresoData.cronograma).forEach(dia => {
         ['manana', 'tarde'].forEach(turno => {
             if (dia.modulos[turno]) {
                 dia.modulos[turno].forEach(taller => {
-                    // Filtramos si dice "Por definir" o está vacío
                     if (taller.ponente && taller.ponente.trim() !== "" && !taller.ponente.toLowerCase().includes("por confirmar") && !taller.ponente.toLowerCase().includes("por definir")) {
                         ponentesSet.add(taller.ponente);
                     }
@@ -527,39 +499,80 @@ function obtenerPonentesUnicos() {
 }
 
 function renderizarExpositores() {
-    const section = document.getElementById('expositores');
-    if (!section) return;
+    const container = document.getElementById('speakers-container');
+    if (!container) return;
     
     const ponentes = obtenerPonentesUnicos();
-    let htmlCards = '';
     
-    ponentes.forEach(ponente => {
-        const iniciales = ponente.substring(0, 2).toUpperCase();
+    // Generamos los objetos robustos para todos, fusionando con los que ya tenemos en data.js
+    window.expositoresDinamicos = ponentes.map(nombre => {
+        const expRegistrado = congresoData.expositores.find(e => e.nombre.toLowerCase().includes(nombre.toLowerCase()));
+        if (expRegistrado) return expRegistrado;
+        
+        return {
+            id: 'gen-' + nombre.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+            nombre: nombre,
+            avatar: nombre.substring(0, 2).toUpperCase(),
+            titulo: "Tallerista ABJ",
+            bio: "Información detallada sobre su trayectoria próximamente.",
+            web: ""
+        };
+    });
+    
+    mostrarPaginaExpositores();
+}
+
+window.mostrarPaginaExpositores = function() {
+    const container = document.getElementById('speakers-container');
+    if (!container) return;
+
+    const itemsPorPagina = 4;
+    const totalPaginas = Math.ceil(window.expositoresDinamicos.length / itemsPorPagina);
+    
+    const inicio = window.paginaExpositores * itemsPorPagina;
+    const fin = inicio + itemsPorPagina;
+    const ponentesPagina = window.expositoresDinamicos.slice(inicio, fin);
+    
+    let htmlCards = '<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">';
+    ponentesPagina.forEach(exp => {
         htmlCards += `
-            <div class="speaker-card slide">
-                <div class="speaker-avatar">${iniciales}</div>
-                <h3 style="font-size: 1rem;">${ponente}</h3>
-                <p style="font-size: 0.85rem; color: var(--secondary); font-weight: bold;">Tallerista ABJ</p>
+            <div class="speaker-card" style="width: 200px; cursor: pointer; flex-shrink: 0;" onclick="abrirModalExpositor('${exp.id}')">
+                <div class="speaker-avatar">${exp.avatar}</div>
+                <h3 style="font-size: 1rem; color: var(--dark);">${exp.nombre}</h3>
+                <p style="font-size: 0.85rem; color: var(--secondary); font-weight: bold; margin:0;">${exp.titulo}</p>
             </div>
         `;
     });
+    htmlCards += '</div>';
 
-    // Inyectamos el HTML con las tarjetas duplicadas para que el Slider sea infinito
-    section.innerHTML = `
-        <h2>Nuestros Talleristas (${ponentes.length})</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 30px;">Conoce a los profesionales que darán vida a los espacios de formación.</p>
-        <div class="speakers-slider-wrapper">
-            <div class="speakers-track">
-                ${htmlCards}
-                ${htmlCards}
-            </div>
+    // Controles de Paginación
+    const botones = `
+        <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
+            <button class="cta-button" style="padding: 8px 15px; margin: 0; background-color: ${window.paginaExpositores > 0 ? 'var(--primary)' : '#ccc'}; cursor: ${window.paginaExpositores > 0 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(-1)" ${window.paginaExpositores === 0 ? 'disabled' : ''}>⬅ Anterior</button>
+            <span style="font-weight: bold; color: var(--dark);">Página ${window.paginaExpositores + 1} de ${totalPaginas}</span>
+            <button class="cta-button" style="padding: 8px 15px; margin: 0; background-color: ${window.paginaExpositores < totalPaginas - 1 ? 'var(--primary)' : '#ccc'}; cursor: ${window.paginaExpositores < totalPaginas - 1 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(1)" ${window.paginaExpositores >= totalPaginas - 1 ? 'disabled' : ''}>Siguiente ➡</button>
         </div>
     `;
+
+    container.innerHTML = htmlCards + botones;
 }
 
-// Mantengo estas funciones por si decides reactivar la funcionalidad del modal más adelante
+window.cambiarPaginaExpositores = function(direccion) {
+    const itemsPorPagina = 5;
+    const totalPaginas = Math.ceil(window.expositoresDinamicos.length / itemsPorPagina);
+    
+    window.paginaExpositores += direccion;
+    if (window.paginaExpositores < 0) window.paginaExpositores = 0;
+    if (window.paginaExpositores >= totalPaginas) window.paginaExpositores = totalPaginas - 1;
+    
+    mostrarPaginaExpositores();
+}
+
+// ==========================================
+// MODAL DE EXPOSITORES E INTERCONEXIÓN
+// ==========================================
 window.abrirModalExpositor = function(expId) {
-    const expositor = congresoData.expositores.find(e => e.id === expId);
+    const expositor = window.expositoresDinamicos.find(e => e.id === expId);
     if (!expositor) return;
 
     let talleresHTML = '';
@@ -568,7 +581,8 @@ window.abrirModalExpositor = function(expId) {
         ['manana', 'tarde'].forEach(turno => {
             if (dia.modulos && dia.modulos[turno]) {
                 dia.modulos[turno].forEach(taller => {
-                    if (taller.ponente === expositor.nombre) {
+                    // Validamos ignorando mayúsculas y espacios
+                    if (taller.ponente.trim().toLowerCase() === expositor.nombre.trim().toLowerCase()) {
                         talleresHTML += `
                             <li style="margin-bottom: 12px; list-style: none;">
                                 📍 <a href="javascript:void(0)" 
@@ -585,13 +599,10 @@ window.abrirModalExpositor = function(expId) {
         });
     });
 
-    if (talleresHTML === '') {
-        talleresHTML = '<p style="color: #999; font-style: italic;">Sin talleres asignados aún.</p>';
-    }
+    if (talleresHTML === '') talleresHTML = '<p style="color: #999; font-style: italic;">Sin talleres asignados aún.</p>';
 
     const enlaceWeb = expositor.web 
-        ? `<a href="${expositor.web}" target="_blank" class="cta-button" style="padding: 8px 15px; font-size: 0.9rem; margin-top: 0;">Visitar su Portal</a>` 
-        : '';
+        ? `<a href="${expositor.web}" target="_blank" class="cta-button" style="padding: 8px 15px; font-size: 0.9rem; margin-top: 0;">Visitar su Portal</a>` : '';
 
     if (modalExpositor) {
         modalExpositor.innerHTML = `
@@ -623,6 +634,7 @@ window.abrirDetalleTallerPorIds = function(tallerId, moduloKey, diaKey) {
     const talleres = congresoData.cronograma[diaKey].modulos[moduloKey];
     const taller = talleres.find(t => t.id === tallerId);
     if(taller) {
+        // Al tocar el link cruzado, abrimos directamente el taller
         abrirDetalleTaller(taller, moduloKey, diaKey, taller.cupoMaximo);
     }
 }
@@ -679,9 +691,7 @@ window.guardarNuevosDatos = async function() {
             .eq('id', usuarioActivo.id);
 
         if (error) {
-            if (error.code === '23505') { 
-                throw new Error('Ese correo o teléfono ya está siendo utilizado por otro usuario.');
-            }
+            if (error.code === '23505') throw new Error('Ese correo o teléfono ya está siendo utilizado.');
             throw error;
         }
 
@@ -696,10 +706,7 @@ window.guardarNuevosDatos = async function() {
         console.error("Error al actualizar datos:", err);
         showCustomAlert('error', `❌ No pudimos guardar los cambios. ${err.message}`);
     } finally {
-        if(btnGuardar) {
-            btnGuardar.innerText = 'Guardar';
-            btnGuardar.disabled = false;
-        }
+        if(btnGuardar) { btnGuardar.innerText = 'Guardar'; btnGuardar.disabled = false; }
     }
 };
 
@@ -707,7 +714,6 @@ window.guardarNuevosDatos = async function() {
 // CONTADOR EN CUENTA REGRESIVA
 // ==========================================
 function iniciarContador() {
-    // NUEVA FECHA DE INICIO ABJ: Sábado 15 de Agosto de 2026, 14:00 hs
     const fechaInicio = new Date('August 15, 2026 14:00:00').getTime();
 
     const actualizarReloj = setInterval(function() {
@@ -720,10 +726,7 @@ function iniciarContador() {
         const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
         const elDias = document.getElementById('cd-dias');
-        if (!elDias) {
-            clearInterval(actualizarReloj);
-            return; 
-        }
+        if (!elDias) { clearInterval(actualizarReloj); return; }
         
         elDias.innerText = dias < 10 ? '0' + dias : dias;
         document.getElementById('cd-horas').innerText = horas < 10 ? '0' + horas : horas;
@@ -760,6 +763,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarAgenda();
     renderizarSponsors();
     renderizarExpositores();
-    if(typeof iniciarHeroSlider === 'function') iniciarHeroSlider();
     iniciarContador(); 
 });
