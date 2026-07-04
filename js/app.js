@@ -763,5 +763,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarAgenda();
     renderizarSponsors();
     renderizarExpositores();
+    iniciarHeroSlider();
     iniciarContador(); 
 });
