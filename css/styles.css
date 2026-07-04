@@ -466,3 +466,37 @@ header nav {
     color: #666;
     margin-top: 5px;
 }
+
+/* =========================================
+   SLIDER DE EXPOSITORES (AUTO-SCROLL INFINITO)
+   ========================================= */
+.speakers-slider-wrapper {
+    width: 100%;
+    overflow: hidden; /* Oculta lo que sale de los bordes */
+    position: relative;
+    padding: 20px 0;
+}
+
+.speakers-track {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+    /* La animación dura 40s, lineal, y se repite infinitamente */
+    animation: scrollSpeakers 40s linear infinite; 
+}
+
+/* Pausar el slider cuando el usuario pone el mouse encima */
+.speakers-track:hover {
+    animation-play-state: paused; 
+}
+
+.speaker-card.slide {
+    width: 260px; /* Ancho fijo para cada tarjeta */
+    flex-shrink: 0; /* Evita que se aplasten */
+    margin: 0; 
+}
+
+@keyframes scrollSpeakers {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 15px)); } /* Se desplaza la mitad exacta para el loop */
+}

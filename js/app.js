@@ -60,9 +60,7 @@ if (alertBtn) {
 // RENDERIZADO DEL CRONOGRAMA (Sincronizado con BD y Perfil)
 // ==========================================
 window.renderizarAgenda = async function() {
-    // 1. Obtenemos TODAS las inscripciones para calcular los cupos reales
     const { data: inscripcionesActivas, error } = await supabase.from('inscripciones').select('taller_id');
-    
     const ocupacionTalleres = {};
     if (inscripcionesActivas) {
         inscripcionesActivas.forEach(ins => {
@@ -70,22 +68,13 @@ window.renderizarAgenda = async function() {
         });
     }
 
-    // 2. Verificamos si hay un usuario logueado y cuáles son sus talleres
     const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
     let misTalleres = [];
-    
     if (usuarioActivo) {
-        const { data: misInscripciones } = await supabase
-            .from('inscripciones')
-            .select('taller_id')
-            .eq('asistente_id', usuarioActivo.id);
-            
-        if (misInscripciones) {
-            misTalleres = misInscripciones.map(ins => ins.taller_id);
-        }
+        const { data: misInscripciones } = await supabase.from('inscripciones').select('taller_id').eq('asistente_id', usuarioActivo.id);
+        if (misInscripciones) misTalleres = misInscripciones.map(ins => ins.taller_id);
     }
 
-    // 3. Construimos la tabla
     agendaContainer.innerHTML = '';
     const diasKeys = Object.keys(congresoData.cronograma);
     const turnos = ['manana', 'tarde'];
@@ -95,10 +84,9 @@ window.renderizarAgenda = async function() {
     const tabla = document.createElement('table');
     tabla.className = 'agenda-table';
 
-    let theadHTML = `<thead><tr><th class="turno-col">Turno</th>`;
+    let theadHTML = `<thead><tr><th class="turno-col">Horario</th>`;
     diasKeys.forEach(diaKey => {
-        const dia = congresoData.cronograma[diaKey];
-        theadHTML += `<th>${dia.fecha}</th>`;
+        theadHTML += `<th>${congresoData.cronograma[diaKey].fecha}</th>`;
     });
     theadHTML += `</tr></thead>`;
     tabla.innerHTML = theadHTML;
@@ -107,7 +95,9 @@ window.renderizarAgenda = async function() {
     
     turnos.forEach(turno => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="turno-col">${turno.toUpperCase()}</td>`;
+        // APLICAMOS LOS NUEVOS HORARIOS ABJ
+        const textoHora = turno === 'manana' ? '14:00 HRS' : '15:45 HRS';
+        tr.innerHTML = `<td class="turno-col" style="color: var(--primary); font-size: 1.1rem; font-weight: bold;">${textoHora}</td>`;
         
         diasKeys.forEach(diaKey => {
             const td = document.createElement('td');
@@ -119,23 +109,14 @@ window.renderizarAgenda = async function() {
                     const inscritos = ocupacionTalleres[taller.id] || 0;
                     const cuposReales = taller.cupoMaximo - inscritos;
                     
-                    // Lógica para pintar de naranja si el usuario está inscrito
                     let clasesTarjeta = 'taller-card';
-                    if (misTalleres.includes(taller.id)) {
-                        clasesTarjeta += ' inscrito';
-                    }
+                    if (misTalleres.includes(taller.id)) clasesTarjeta += ' inscrito';
 
-                    // Lógica de porcentaje para el color del texto de los cupos
                     let porcentajeDisponible = cuposReales / taller.cupoMaximo;
                     let claseCupos = 'cupos-altos'; 
-                    
-                    if (cuposReales === 0) {
-                        claseCupos = 'cupos-agotados';
-                    } else if (porcentajeDisponible <= 0.25) {
-                        claseCupos = 'cupos-bajos'; // Queda 25% o menos
-                    } else if (porcentajeDisponible <= 0.50) {
-                        claseCupos = 'cupos-medios'; // Queda la mitad o menos
-                    }
+                    if (cuposReales === 0) claseCupos = 'cupos-agotados';
+                    else if (porcentajeDisponible <= 0.25) claseCupos = 'cupos-bajos';
+                    else if (porcentajeDisponible <= 0.50) claseCupos = 'cupos-medios';
                     
                     const card = document.createElement('div');
                     card.className = clasesTarjeta;
@@ -154,7 +135,6 @@ window.renderizarAgenda = async function() {
         });
         tbody.appendChild(tr);
     });
-
     tabla.appendChild(tbody);
     wrapper.appendChild(tabla);
     agendaContainer.appendChild(wrapper);
@@ -162,11 +142,13 @@ window.renderizarAgenda = async function() {
 
 window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
+    const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; // HORARIO EN EL MODAL
+    
     modalContenedor.innerHTML = `
         <div class="modal-content">
             <button class="btn-cerrar" onclick="cerrarModal()">×</button>
             <span style="color: var(--secondary); font-weight:bold; text-transform:uppercase; font-size:0.8rem;">
-                ${diaTexto} - Módulo ${moduloKey}
+                ${diaTexto} - ${horaTexto}
             </span>
             <h2 style="margin-top:5px; color: var(--dark);">${taller.titulo}</h2>
             <p><strong>Impartido por:</strong> ${taller.ponente}</p>
@@ -174,21 +156,11 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
                 ${taller.resumen}
             </p>
             <p><strong>Cupos disponibles:</strong> <span id="modal-cupos">${cuposReales}</span> / ${taller.cupoMaximo}</p>
-            
             <form id="form-registro" class="form-inscripcion">
                 <h3>¡Inscríbete a este taller!</h3>
-                <div class="campo-grupo">
-                    <label>Nombre y Apellido</label>
-                    <input type="text" id="ins-nombre" required>
-                </div>
-                <div class="campo-grupo">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="ins-email" required>
-                </div>
-                <div class="campo-grupo">
-                    <label>Número de Teléfono</label>
-                    <input type="tel" id="ins-tel" required>
-                </div>
+                <div class="campo-grupo"><label>Nombre y Apellido</label><input type="text" id="ins-nombre" required></div>
+                <div class="campo-grupo"><label>Correo Electrónico</label><input type="email" id="ins-email" required></div>
+                <div class="campo-grupo"><label>Número de Teléfono</label><input type="tel" id="ins-tel" required></div>
                 <button type="submit" class="btn-anotarse" ${cuposReales <= 0 ? 'disabled style="background:#ccc; cursor:not-allowed;"' : ''}>
                     ${cuposReales <= 0 ? 'Cupos Agotados' : 'Confirmar mi Lugar'}
                 </button>
@@ -196,7 +168,6 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
         </div>
     `;
     modalContenedor.classList.add('active');
-
     document.getElementById('form-registro').onsubmit = function(e) {
         e.preventDefault();
         procesarInscripcion(taller, moduloKey, diaKey);
@@ -304,14 +275,18 @@ const btnAbrirPerfil = document.getElementById('btn-abrir-perfil');
 const btnCerrarPerfil = document.getElementById('btn-cerrar-perfil');
 const perfilContenido = document.getElementById('perfil-contenido');
 
-btnAbrirPerfil.onclick = () => {
-    modalPerfil.classList.add('active');
-    renderizarContenidoPerfil(); 
-};
+if (btnAbrirPerfil) {
+    btnAbrirPerfil.onclick = () => {
+        modalPerfil.classList.add('active');
+        renderizarContenidoPerfil(); 
+    };
+}
 
-btnCerrarPerfil.onclick = () => {
-    modalPerfil.classList.remove('active');
-};
+if (btnCerrarPerfil) {
+    btnCerrarPerfil.onclick = () => {
+        modalPerfil.classList.remove('active');
+    };
+}
 
 function renderizarContenidoPerfil() {
     const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
@@ -531,26 +506,58 @@ function iniciarHeroSlider() {
     setInterval(cambiarFondo, 5000);
 }
 
-function renderizarExpositores() {
-    if (!speakersContainer) return;
-    speakersContainer.innerHTML = '';
-    
-    congresoData.expositores.forEach(exp => {
-        const card = document.createElement('div');
-        card.className = 'speaker-card';
-        card.style.cursor = 'pointer'; 
-        card.onclick = () => abrirModalExpositor(exp.id);
-        
-        card.innerHTML = `
-            <div class="speaker-avatar">${exp.avatar}</div>
-            <h3>${exp.nombre}</h3>
-            <h4>${exp.titulo}</h4>
-            <p>${exp.bio}</p>
-        `;
-        speakersContainer.appendChild(card);
+// ==========================================
+// RENDERIZAR EXPOSITORES (SLIDER DINÁMICO)
+// ==========================================
+function obtenerPonentesUnicos() {
+    const ponentesSet = new Set();
+    Object.values(congresoData.cronograma).forEach(dia => {
+        ['manana', 'tarde'].forEach(turno => {
+            if (dia.modulos[turno]) {
+                dia.modulos[turno].forEach(taller => {
+                    // Filtramos si dice "Por definir" o está vacío
+                    if (taller.ponente && taller.ponente.trim() !== "" && !taller.ponente.toLowerCase().includes("por confirmar") && !taller.ponente.toLowerCase().includes("por definir")) {
+                        ponentesSet.add(taller.ponente);
+                    }
+                });
+            }
+        });
     });
+    return Array.from(ponentesSet);
 }
 
+function renderizarExpositores() {
+    const section = document.getElementById('expositores');
+    if (!section) return;
+    
+    const ponentes = obtenerPonentesUnicos();
+    let htmlCards = '';
+    
+    ponentes.forEach(ponente => {
+        const iniciales = ponente.substring(0, 2).toUpperCase();
+        htmlCards += `
+            <div class="speaker-card slide">
+                <div class="speaker-avatar">${iniciales}</div>
+                <h3 style="font-size: 1rem;">${ponente}</h3>
+                <p style="font-size: 0.85rem; color: var(--secondary); font-weight: bold;">Tallerista ABJ</p>
+            </div>
+        `;
+    });
+
+    // Inyectamos el HTML con las tarjetas duplicadas para que el Slider sea infinito
+    section.innerHTML = `
+        <h2>Nuestros Talleristas (${ponentes.length})</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">Conoce a los profesionales que darán vida a los espacios de formación.</p>
+        <div class="speakers-slider-wrapper">
+            <div class="speakers-track">
+                ${htmlCards}
+                ${htmlCards}
+            </div>
+        </div>
+    `;
+}
+
+// Mantengo estas funciones por si decides reactivar la funcionalidad del modal más adelante
 window.abrirModalExpositor = function(expId) {
     const expositor = congresoData.expositores.find(e => e.id === expId);
     if (!expositor) return;
@@ -586,28 +593,30 @@ window.abrirModalExpositor = function(expId) {
         ? `<a href="${expositor.web}" target="_blank" class="cta-button" style="padding: 8px 15px; font-size: 0.9rem; margin-top: 0;">Visitar su Portal</a>` 
         : '';
 
-    modalExpositor.innerHTML = `
-        <div class="modal-content" style="text-align: center;">
-            <button class="btn-cerrar" onclick="cerrarModalExpositor()">×</button>
-            <div class="speaker-avatar" style="width: 120px; height: 120px; font-size: 3rem; margin: 0 auto 15px auto;">${expositor.avatar}</div>
-            <h2 style="margin: 0; color: var(--dark);">${expositor.nombre}</h2>
-            <h4 style="color: var(--secondary); margin-top: 5px;">${expositor.titulo}</h4>
-            <p style="font-size: 1.05rem; line-height: 1.6;">${expositor.bio}</p>
-            ${enlaceWeb}
-            
-            <hr style="border: 1px dashed #ccc; margin: 25px 0;">
-            
-            <h3 style="text-align: left; color: var(--primary); font-size: 1.2rem;">Talleres que dicta:</h3>
-            <ul style="text-align: left; padding: 0;">
-                ${talleresHTML}
-            </ul>
-        </div>
-    `;
-    modalExpositor.classList.add('active');
+    if (modalExpositor) {
+        modalExpositor.innerHTML = `
+            <div class="modal-content" style="text-align: center;">
+                <button class="btn-cerrar" onclick="cerrarModalExpositor()">×</button>
+                <div class="speaker-avatar" style="width: 120px; height: 120px; font-size: 3rem; margin: 0 auto 15px auto;">${expositor.avatar}</div>
+                <h2 style="margin: 0; color: var(--dark);">${expositor.nombre}</h2>
+                <h4 style="color: var(--secondary); margin-top: 5px;">${expositor.titulo}</h4>
+                <p style="font-size: 1.05rem; line-height: 1.6;">${expositor.bio}</p>
+                ${enlaceWeb}
+                
+                <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+                
+                <h3 style="text-align: left; color: var(--primary); font-size: 1.2rem;">Talleres que dicta:</h3>
+                <ul style="text-align: left; padding: 0;">
+                    ${talleresHTML}
+                </ul>
+            </div>
+        `;
+        modalExpositor.classList.add('active');
+    }
 }
 
 window.cerrarModalExpositor = function() {
-    modalExpositor.classList.remove('active');
+    if (modalExpositor) modalExpositor.classList.remove('active');
 }
 
 window.abrirDetalleTallerPorIds = function(tallerId, moduloKey, diaKey) {
@@ -617,32 +626,6 @@ window.abrirDetalleTallerPorIds = function(tallerId, moduloKey, diaKey) {
         abrirDetalleTaller(taller, moduloKey, diaKey, taller.cupoMaximo);
     }
 }
-
-// ==========================================
-// INICIALIZACIÓN GLOBAL
-// ==========================================
-document.addEventListener('keydown', function(event) {
-    const isAlertVisible = !customAlertOverlay.classList.contains('hidden');
-    const isTallerModalVisible = modalContenedor.classList.contains('active');
-    const isExpositorModalVisible = modalExpositor.classList.contains('active');
-
-    if (event.key === 'Escape') {
-        if (isAlertVisible) closeCustomAlert();
-        else if (isTallerModalVisible) cerrarModal();
-        else if (isExpositorModalVisible) cerrarModalExpositor();
-    }
-    if (event.key === 'Enter' && isAlertVisible) {
-        event.preventDefault();
-        closeCustomAlert();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderizarAgenda();
-    renderizarSponsors();
-    renderizarExpositores();
-    if(typeof iniciarHeroSlider === 'function') iniciarHeroSlider();
-});
 
 // ==========================================
 // EDICIÓN DE PERFIL (ACTUALIZAR DATOS)
@@ -682,7 +665,7 @@ window.guardarNuevosDatos = async function() {
     }
 
     if (nuevoEmail === usuarioActivo.email && nuevoTel === usuarioActivo.telefono) {
-        renderizarContenidoPerfil(); // No hay cambios
+        renderizarContenidoPerfil(); 
         return;
     }
 
@@ -690,27 +673,24 @@ window.guardarNuevosDatos = async function() {
     btnGuardar.disabled = true;
 
     try {
-        // Actualizamos en Supabase usando el ID del usuario
         const { error } = await supabase
             .from('asistentes')
             .update({ email: nuevoEmail, telefono: nuevoTel })
             .eq('id', usuarioActivo.id);
 
         if (error) {
-            // Manejo de error si el email ya existe en otro usuario (Violación Unique)
             if (error.code === '23505') { 
                 throw new Error('Ese correo o teléfono ya está siendo utilizado por otro usuario.');
             }
             throw error;
         }
 
-        // Si todo sale bien, actualizamos la memoria local
         usuarioActivo.email = nuevoEmail;
         usuarioActivo.telefono = nuevoTel;
         localStorage.setItem('usuarioActivo', JSON.stringify(usuarioActivo));
 
         showCustomAlert('success', '✅ Tus datos se han actualizado correctamente.');
-        renderizarContenidoPerfil(); // Volvemos a la vista principal
+        renderizarContenidoPerfil(); 
 
     } catch (err) {
         console.error("Error al actualizar datos:", err);
@@ -727,14 +707,13 @@ window.guardarNuevosDatos = async function() {
 // CONTADOR EN CUENTA REGRESIVA
 // ==========================================
 function iniciarContador() {
-    // Fecha de inicio del congreso: 14 de Agosto de 2026, 09:00 AM
-    const fechaInicio = new Date('August 14, 2026 09:00:00').getTime();
+    // NUEVA FECHA DE INICIO ABJ: Sábado 15 de Agosto de 2026, 14:00 hs
+    const fechaInicio = new Date('August 15, 2026 14:00:00').getTime();
 
     const actualizarReloj = setInterval(function() {
         const ahora = new Date().getTime();
         const distancia = fechaInicio - ahora;
 
-        // Cálculos matemáticos para días, horas, minutos y segundos
         const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
         const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
@@ -743,16 +722,14 @@ function iniciarContador() {
         const elDias = document.getElementById('cd-dias');
         if (!elDias) {
             clearInterval(actualizarReloj);
-            return; // Detener si el elemento no existe en el DOM
+            return; 
         }
         
-        // Insertar en el HTML con ceros a la izquierda si es menor a 10
         elDias.innerText = dias < 10 ? '0' + dias : dias;
         document.getElementById('cd-horas').innerText = horas < 10 ? '0' + horas : horas;
         document.getElementById('cd-mins').innerText = minutos < 10 ? '0' + minutos : minutos;
         document.getElementById('cd-segs').innerText = segundos < 10 ? '0' + segundos : segundos;
 
-        // Si la cuenta regresiva termina (llegó la fecha)
         if (distancia < 0) {
             clearInterval(actualizarReloj);
             document.getElementById('contador-ludico').innerHTML = '<h3 style="color: var(--secondary); background: var(--white); padding: 10px 20px; border-radius: 8px; border: 3px dashed var(--primary); display: inline-block;">¡El congreso ha comenzado!</h3>';
@@ -760,11 +737,29 @@ function iniciarContador() {
     }, 1000);
 }
 
-// Asegúrate de modificar tu DOMContentLoaded actual para que quede así:
+// ==========================================
+// INICIALIZACIÓN GLOBAL
+// ==========================================
+document.addEventListener('keydown', function(event) {
+    const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');
+    const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
+    const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
+
+    if (event.key === 'Escape') {
+        if (isAlertVisible) closeCustomAlert();
+        else if (isTallerModalVisible) cerrarModal();
+        else if (isExpositorModalVisible) cerrarModalExpositor();
+    }
+    if (event.key === 'Enter' && isAlertVisible) {
+        event.preventDefault();
+        closeCustomAlert();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     renderizarAgenda();
     renderizarSponsors();
     renderizarExpositores();
     if(typeof iniciarHeroSlider === 'function') iniciarHeroSlider();
-    iniciarContador(); // <--- Arrancamos el reloj
+    iniciarContador(); 
 });
