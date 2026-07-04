@@ -7,8 +7,22 @@ export const congresoData = {
     // Dejamos los expositores anteriores como plantilla para no romper la UI, 
     // luego los vincularemos directamente a los nuevos ponentes.
     expositores: [
-        { id: "exp-al", nombre: "Ricardo Lema", avatar: "RL", titulo: "Especialista ABJ", bio: "Ludificación de la enseñanza en Ciencias Sociales.", web: "" },
-        { id: "exp-cr", nombre: "Marisa Conde", avatar: "MC", titulo: "Diseñadora Educativa", bio: "Creación de aventuras point & click en contextos educativos.", web: "" }
+        { 
+            id: "exp-rl", 
+            nombre: "Dr. Ricardo Lema Álvarez", 
+            avatar: "RL", 
+            titulo: "Doctor en Ocio y Desarrollo Humano", 
+            bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", 
+            web: "" 
+        },
+        { 
+            id: "exp-ap", 
+            nombre: "Lic. Alejandra Pytel", 
+            avatar: "AP", 
+            titulo: "Licenciada en Psicología MP 3182", 
+            bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", 
+            web: "" 
+        }
     ],
     sponsors: {
         diamante: [ 
