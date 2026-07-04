@@ -23,9 +23,9 @@ body {
    BARRA DE NAVEGACIÓN (HEADER)
    ========================================= */
 header {
-    background-color: var(--dark);
+    background-color: var(--white); /* Fondo claro para integrar el nuevo logo */
     padding: 15px 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08); /* Sombra un poco más suave */
     position: sticky;
     top: 0;
     z-index: 900;
@@ -35,10 +35,12 @@ header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1100px; 
+    margin: 0 auto;    
 }
 
 .logo {
-    color: var(--white);
+    color: var(--dark); /* Cambiado a oscuro por si algún texto no es imagen */
     font-size: 1.5rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -54,13 +56,14 @@ header nav {
 
 .nav-links li a {
     text-decoration: none;
-    color: var(--white);
-    font-size: 1rem;
-    transition: color 0.3s ease;
+    color: var(--dark); /* Letras de los atajos en color oscuro/negro */
+    font-size: 1.05rem; /* Ligeramente más grandes para mejor legibilidad en fondo claro */
+    font-weight: 600;
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-links li a:hover {
-    color: var(--secondary);
+    color: #FF9F1C; /* Color naranja/amarillo vibrante al pasar el mouse */
 }
 
 /* =========================================
