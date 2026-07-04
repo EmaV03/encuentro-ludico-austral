@@ -500,3 +500,90 @@ header nav {
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-50% - 15px)); } /* Se desplaza la mitad exacta para el loop */
 }
+
+/* =========================================
+   DISEÑO RESPONSIVO (TELÉFONOS MÓVILES)
+   ========================================= */
+@media screen and (max-width: 768px) {
+    /* 1. Encabezado y Navegación apilados */
+    header {
+        padding: 10px;
+    }
+    
+    header nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .nav-links li a {
+        font-size: 0.95rem;
+    }
+
+    /* 2. Textos del título más adaptados */
+    .hero-section {
+        padding: 30px 15px;
+        min-height: auto;
+    }
+    
+    .hero-section h1 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    /* 3. Contador Lúdico (Fichas más pequeñas para que entren) */
+    .countdown-box {
+        width: 65px;
+        height: 65px;
+        border-width: 2px;
+    }
+    
+    .countdown-box span {
+        font-size: 1.5rem;
+    }
+    
+    .countdown-box small {
+        font-size: 0.75rem;
+    }
+
+    /* 4. Tabla de Agenda (Ajuste a los bordes) */
+    .agenda-table-wrapper {
+        margin: 20px -20px; /* Extiende la tabla a los bordes del celular */
+        border-radius: 0;
+    }
+
+    /* 5. Modales (Que ocupen casi toda la pantalla) */
+    .modal-content {
+        width: 95%;
+        padding: 20px 15px;
+    }
+    
+    .speaker-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Ajuste extremo para celulares muy pequeños (ej: iPhone SE) */
+@media screen and (max-width: 380px) {
+    .nav-links {
+        gap: 8px;
+    }
+    .countdown-box {
+        width: 55px;
+        height: 55px;
+    }
+    .countdown-box span {
+        font-size: 1.2rem;
+    }
+}
