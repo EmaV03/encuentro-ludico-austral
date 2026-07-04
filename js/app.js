@@ -193,7 +193,6 @@ window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
         let usuarioId;
         let usuarioGuardar;
         
-        // Pedimos TODOS los datos del usuario (*)
         const { data: usuarioExistente, error: errorBusqueda } = await supabase
             .from('asistentes')
             .select('*')
@@ -231,12 +230,10 @@ window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
                 throw errorInscripcion;
             }
         } else {
-            // AQUÍ ESTÁ LA MAGIA: Iniciamos sesión silenciosamente en el navegador
             localStorage.setItem('usuarioActivo', JSON.stringify(usuarioGuardar));
             
             showCustomAlert('success', `¡Excelente, <strong>${nombre}</strong>! Tu lugar ha sido reservado con éxito.`);
             cerrarModal();
-            // Al recargar, ya sabe quién eres y pintará el taller de naranja
             await renderizarAgenda();
         }
 
@@ -477,6 +474,34 @@ function renderizarSponsors() {
 }
 
 // ==========================================
+// RENDERIZAR HERO SLIDER (FONDOS ROTATIVOS)
+// ==========================================
+window.iniciarHeroSlider = function() {
+    const heroSection = document.querySelector('.hero-section');
+    if (!heroSection) return;
+
+    // IMPORTANTE: Asegúrate de que estos nombres coincidan EXACTAMENTE 
+    // con mayúsculas/minúsculas de cómo están en tu carpeta de GitHub.
+    const imagenesFondo = [
+        'Imagenes/HeroTitle.jpg',
+        'Imagenes/HeroTitle2.jpg',
+        'Imagenes/HeroTitle3.jpg',
+        'Imagenes/HeroTitle4.jpg',
+        'Imagenes/HeroTitle5.jpg'
+    ];
+
+    let indiceActual = 0;
+
+    function cambiarFondo() {
+        heroSection.style.backgroundImage = `url('${imagenesFondo[indiceActual]}')`;
+        indiceActual = (indiceActual + 1) % imagenesFondo.length;
+    }
+
+    cambiarFondo();
+    setInterval(cambiarFondo, 5000);
+};
+
+// ==========================================
 // RENDERIZAR EXPOSITORES (CARRUSEL PAGINADO)
 // ==========================================
 window.expositoresDinamicos = [];
@@ -558,7 +583,7 @@ window.mostrarPaginaExpositores = function() {
 }
 
 window.cambiarPaginaExpositores = function(direccion) {
-    const itemsPorPagina = 5;
+    const itemsPorPagina = 4;
     const totalPaginas = Math.ceil(window.expositoresDinamicos.length / itemsPorPagina);
     
     window.paginaExpositores += direccion;
@@ -763,6 +788,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarAgenda();
     renderizarSponsors();
     renderizarExpositores();
-    iniciarHeroSlider();
+    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     iniciarContador(); 
 });
