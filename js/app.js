@@ -487,7 +487,18 @@ window.iniciarHeroSlider = function() {
         'Imagenes/HeroTitle2.jpg',
         'Imagenes/HeroTitle3.jpg',
         'Imagenes/HeroTitle4.jpg',
-        'Imagenes/HeroTitle5.jpg'
+        'Imagenes/HeroTitle5.jpg',
+        'Imagenes/HeroTitle6.jpg',
+        'Imagenes/HeroTitle7.jpg',
+        'Imagenes/HeroTitle8.jpg',
+        'Imagenes/HeroTitle9.jpg',
+        'Imagenes/HeroTitle10.jpg',
+        'Imagenes/HeroTitle11.jpg',
+        'Imagenes/HeroTitle12.jpg',
+        'Imagenes/HeroTitle13.jpg',
+        'Imagenes/HeroTitle14.jpg',
+        'Imagenes/HeroTitle15.jpg',
+        'Imagenes/HeroTitle16.jpg'
     ];
 
     let indiceActual = 0;
