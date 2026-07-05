@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>1er Congreso Nacional ABJ</title>
-    
     <link rel="icon" href="Imagenes/TuLogo.png" type="image/png">
-    
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
     <header id="main-header">
@@ -21,21 +17,23 @@
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="#info">Información</a></li>
-                <li><a href="#quienes-somos">Nosotros</a></li>
-                <li><a href="#expositores">Expositores</a></li>
-                <li><a href="#cronograma">Agenda</a></li>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#primer-congreso">1er Congreso</a></li>
+                <li><a href="#agenda">Agenda</a></li>
+                <li><a href="#ponentes">Ponentes</a></li>
+                <li><a href="#talleres">Talleres</a></li>
+                <li><a href="#zona-stands">Zona Stands</a></li>
                 <li><a href="#sponsors">Sponsors</a></li>
-                <li><a href="javascript:void(0)" id="btn-abrir-perfil" class="cta-button" style="margin-top: 0; padding: 8px 18px;">Mi Perfil</a></li>
+                <li><a href="javascript:void(0)" id="btn-abrir-perfil" class="cta-button btn-perfil" style="margin-top: 0; padding: 8px 18px;">Mi Perfil</a></li>
             </ul>
         </nav>
     </header>
 
-<main>
-        <section id="info" class="hero-section">
+    <main>
+        <section id="inicio" class="hero-section">
             <div class="hero-content">
-                <h1>1er Congreso Nacional de Aprendizaje Basado en Juego (ABJ)</h1>
-                <p>Reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social. 15, 16 y 17 de Agosto de 2026 en Bahía Blanca.</p>
+                <h1 style="font-size: 2.8rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">¡Prepárate para el evento del año!</h1>
+                <p style="font-size: 1.2rem;">Asegura tu lugar en el encuentro que transformará la educación.</p>
                 
                 <div id="contador-ludico" class="countdown-container">
                     <div class="countdown-box"><span id="cd-dias">00</span><small>Días</small></div>
@@ -44,48 +42,57 @@
                     <div class="countdown-box"><span id="cd-segs">00</span><small>Seg</small></div>
                 </div>
 
-                <a href="#cronograma" class="cta-button">Ver Cronograma</a>
+                <a href="#agenda" class="cta-button" style="background-color: #046b33; box-shadow: 0 4px 15px rgba(4, 107, 51, 0.4);">Ver Agenda</a>
             </div>
         </section>
 
-        <section id="quienes-somos" class="about-section">
-            <h2>Detrás del Tablero</h2>
-            <p>Somos un grupo de entusiastas, diseñadores independientes y promotores acérrimos de la cultura lúdica. Gestados al calor de las largas partidas y el intercambio de estrategias en Casa Homo Ludens, decidimos dar el siguiente gran paso: crear el punto de encuentro definitivo para la comunidad en el sur argentino. Nuestro objetivo es derribar el mito de que los juegos de mesa son solo "tirar dados y avanzar casilleros", mostrando el inmenso valor artístico, matemático y social que tiene esta industria. Queremos que Bahía Blanca se convierta en un faro para el diseño de juegos en el país.</p>
+        <section id="primer-congreso" class="about-section">
+            <h2 style="color: #046b33; font-size: 2.2rem;">1er Congreso Nacional de Aprendizaje Basado en Juego (ABJ)</h2>
+            <p>Primer congreso de ABJ reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.</p>
+            <p>Este gran evento está organizado por <strong>Homo Ludens</strong> quien lleva mas de 10 años trabajando en difundir la cultura lúdica en el país. El evento ya fue declarado de interés municipal y legislativo por su impacto en la innovación educativa.</p>
+            <p style="font-weight: bold; color: #f6961a; font-size: 1.2rem;">Se realizará en la ciudad de Bahía Blanca los días 15, 16 y 17 de agosto de 2026.</p>
             
-            <p style="margin-top: 20px;">Este 1er Congreso ABJ ha sido declarado de interés municipal y legislativo por su impacto en la innovación educativa. Nos enfocamos en tres grandes ejes temáticos:</p>
-            
-            <ul style="text-align: left; max-width: 600px; margin: 15px auto; padding-left: 20px; font-size: 1.05rem; line-height: 1.8;">
+            <h3 style="color: var(--dark); margin-top: 30px; font-size: 1.5rem;">Ejes Temáticos:</h3>
+            <ul style="text-align: left; max-width: 700px; margin: 15px auto; padding-left: 20px; font-size: 1.1rem; line-height: 1.8;">
                 <li><strong>📚 Educación:</strong> Para transformar los métodos de enseñanza en las aulas.</li>
                 <li><strong>⚕️ Salud:</strong> Para descubrir el juego como una herramienta de bienestar y calidad de vida.</li>
                 <li><strong>👨‍👩‍👧‍👦 Familia:</strong> Para recuperar el tiempo compartido y los vínculos entre generaciones.</li>
             </ul>
         </section>
 
-        <section id="expositores" class="speakers-section">
-            <h2>Nuestros Talleristas</h2>
-            <div id="speakers-container"></div>
-        </section>
-
-        <section id="cronograma" class="agenda-section">
-            <h2>Agenda del Evento</h2>
+        <section id="agenda" class="agenda-section" style="background-color: var(--white);">
+            <h2 style="color: #046b33;">Agenda del Evento</h2>
             <div id="agenda-container" class="agenda-container">
                 <p>Cargando cronograma...</p>
             </div>
         </section>
 
-        <section id="sponsors" class="sponsors-section">
-            <h2>Nuestros Patrocinadores</h2>
+        <section id="ponentes" class="speakers-section">
+            <h2 style="color: #f6961a;">Nuestros Ponentes</h2>
+            <div id="speakers-container"></div>
+        </section>
+
+        <section id="talleres" class="about-section" style="background-color: var(--white);">
+            <h2 style="color: #046b33;">Talleres de Formación Práctica</h2>
+            <p>Próximamente habilitaremos el detalle extendido de cada taller interactivo, los materiales necesarios y las temáticas específicas de aprendizaje basado en juegos.</p>
+        </section>
+
+        <section id="zona-stands" class="about-section">
+            <h2 style="color: #f6961a;">Zona de Stands</h2>
+            <p>Recorre nuestra exposición comercial con la participación de múltiples editoriales de juegos de mesa de todo el país. Muy pronto publicaremos el mapa del recinto.</p>
+        </section>
+
+        <section id="sponsors" class="sponsors-section" style="background-color: var(--white);">
+            <h2 style="color: #046b33;">Nuestros Patrocinadores</h2>
             <div class="sponsors-grid">
                 </div>
         </section>
-    
     </main>
 
     <footer id="main-footer">
-        <p>&copy; 2026 Encuentro Lúdico Austral. Todos los derechos reservados.</p>
+        <p>&copy; 2026 1er Congreso Nacional ABJ. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- CONTENEDORES DE MODALES -->
     <div id="modal-contenedor" class="modal-overlay"></div>
     <div id="modal-expositor" class="modal-overlay"></div>
     
@@ -94,8 +101,7 @@
             <button class="btn-cerrar" id="btn-cerrar-perfil">×</button>
             <h2 style="color: var(--dark); text-align: center; margin-top: 0;">Panel de Asistente</h2>
             <div id="perfil-contenido">
-                <!-- JS inyectará el formulario -->
-            </div>
+                </div>
         </div>
     </div>
     
@@ -107,7 +113,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMACIÓN PERSONALIZADO -->
     <div id="custom-confirm-overlay" class="hidden">
         <div class="custom-alert-box">
             <div id="custom-confirm-icon">

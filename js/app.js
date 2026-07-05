@@ -573,9 +573,9 @@ window.mostrarPaginaExpositores = function() {
     // Controles de Paginación
     const botones = `
         <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
-            <button class="cta-button" style="padding: 8px 15px; margin: 0; background-color: ${window.paginaExpositores > 0 ? 'var(--primary)' : '#ccc'}; cursor: ${window.paginaExpositores > 0 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(-1)" ${window.paginaExpositores === 0 ? 'disabled' : ''}>⬅ Anterior</button>
+            <button class="cta-button btn-perfil" style="padding: 8px 15px; margin: 0; opacity: ${window.paginaExpositores > 0 ? '1' : '0.5'}; cursor: ${window.paginaExpositores > 0 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(-1)" ${window.paginaExpositores === 0 ? 'disabled' : ''}>⬅ Anterior</button>
             <span style="font-weight: bold; color: var(--dark);">Página ${window.paginaExpositores + 1} de ${totalPaginas}</span>
-            <button class="cta-button" style="padding: 8px 15px; margin: 0; background-color: ${window.paginaExpositores < totalPaginas - 1 ? 'var(--primary)' : '#ccc'}; cursor: ${window.paginaExpositores < totalPaginas - 1 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(1)" ${window.paginaExpositores >= totalPaginas - 1 ? 'disabled' : ''}>Siguiente ➡</button>
+            <button class="cta-button btn-perfil" style="padding: 8px 15px; margin: 0; opacity: ${window.paginaExpositores < totalPaginas - 1 ? '1' : '0.5'}; cursor: ${window.paginaExpositores < totalPaginas - 1 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(1)" ${window.paginaExpositores >= totalPaginas - 1 ? 'disabled' : ''}>Siguiente ➡</button>
         </div>
     `;
 
