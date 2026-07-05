@@ -61,10 +61,10 @@ header nav {
     font-weight: 600;
     transition: color 0.3s ease, transform 0.2s ease;
 }
-
 .nav-links li a:hover {
     color: #f6961a; /* Remarcado con el naranja del logo */
 }
+
 
 /* =========================================
    HERO SECTION (CON SLIDER OPTIMIZADO)
