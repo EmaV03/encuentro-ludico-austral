@@ -73,23 +73,19 @@ header nav {
     background-color: rgba(45, 49, 66, 0.85); 
     background-blend-mode: overlay;
     
-    /* Le damos altura dinámica para que la imagen tenga más área visible */
     min-height: 60vh; 
     
-    /* Centramos el contenido internamente */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     
-    /* Configuración de la imagen */
-    background-size: cover;
-    background-position: center center; /* Fuerza el centro exacto de la foto */
+    /* CAMBIO CLAVE: 'contain' fuerza a que la imagen se vea completa al 100% */
+    background-size: contain; 
+    background-position: center center; 
     background-repeat: no-repeat;
     
-    /* Transición suave */
     transition: background-image 1.5s ease-in-out;
-    
     color: var(--white);
     text-align: center;
     padding: 40px 20px; 
