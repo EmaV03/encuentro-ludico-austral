@@ -59,9 +59,9 @@ const alertBtn = document.getElementById('custom-alert-btn');
 if (alertBtn) alertBtn.addEventListener('click', window.closeCustomAlert);
 
 // ==========================================
-// RENDERIZAR AGENDA GENERAL (TABS)
+// RENDERIZAR AGENDA GENERAL (TABS) - CORREGIDO
 // ==========================================
-function iniciarTabsAgenda() {
+window.iniciarTabsAgenda = function() {
     const tabsContainer = document.getElementById('tabs-agenda-container');
     const contentContainer = document.getElementById('contenido-agenda-dinamico');
     if (!tabsContainer || !contentContainer) return;
@@ -75,7 +75,7 @@ function iniciarTabsAgenda() {
 
     // Mostrar el primer día por defecto
     window.cambiarDiaAgenda(congresoData.agendaGeneral[0].id);
-}
+};
 
 window.cambiarDiaAgenda = function(diaId) {
     const botones = document.querySelectorAll('.tab-btn');
@@ -188,7 +188,7 @@ window.renderizarAgenda = async function() {
     tabla.appendChild(tbody);
     wrapper.appendChild(tabla);
     agendaContainer.appendChild(wrapper);
-}
+};
 
 window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
@@ -241,11 +241,11 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
             procesarInscripcion(taller, moduloKey, diaKey);
         };
     }
-}
+};
 
 window.cerrarModal = function() {
     modalContenedor.classList.remove('active');
-}
+};
 
 // ==========================================
 // SISTEMA DE INSCRIPCIÓN 
@@ -513,7 +513,7 @@ window.darseDeBaja = async function(inscripcionId, tituloTaller) {
 // ==========================================
 // RENDERIZAR SPONSORS
 // ==========================================
-function renderizarSponsors() {
+window.renderizarSponsors = function() {
     const sponsorsGrid = document.querySelector('.sponsors-grid');
     if (!sponsorsGrid) return;
     sponsorsGrid.innerHTML = '';
@@ -529,7 +529,7 @@ function renderizarSponsors() {
         `;
         sponsorsGrid.appendChild(card);
     });
-}
+};
 
 window.iniciarHeroSlider = function() {
     const heroSection = document.querySelector('.hero-section');
@@ -559,14 +559,14 @@ window.iniciarHeroSlider = function() {
 // ==========================================
 window.paginaExpositores = 0;
 
-function renderizarExpositores() {
+window.renderizarExpositores = function() {
     const container = document.getElementById('speakers-container');
     if (!container) return;
     
     window.expositoresDinamicos = congresoData.expositores;
     
-    mostrarPaginaExpositores();
-}
+    window.mostrarPaginaExpositores();
+};
 
 window.mostrarPaginaExpositores = function() {
     const container = document.getElementById('speakers-container');
@@ -600,7 +600,7 @@ window.mostrarPaginaExpositores = function() {
     `;
 
     container.innerHTML = htmlCards + botones;
-}
+};
 
 window.cambiarPaginaExpositores = function(direccion) {
     const itemsPorPagina = 4;
@@ -610,8 +610,8 @@ window.cambiarPaginaExpositores = function(direccion) {
     if (window.paginaExpositores < 0) window.paginaExpositores = 0;
     if (window.paginaExpositores >= totalPaginas) window.paginaExpositores = totalPaginas - 1;
     
-    mostrarPaginaExpositores();
-}
+    window.mostrarPaginaExpositores();
+};
 
 window.abrirModalExpositor = function(expId) {
     const expositor = window.expositoresDinamicos.find(e => e.id === expId);
@@ -661,95 +661,24 @@ window.abrirModalExpositor = function(expId) {
         `;
         modalExpositor.classList.add('active');
     }
-}
+};
 
 window.cerrarModalExpositor = function() {
     if (modalExpositor) modalExpositor.classList.remove('active');
-}
+};
 
 window.abrirDetalleTallerPorIds = function(tallerId, moduloKey, diaKey) {
     const talleres = congresoData.cronograma[diaKey].modulos[moduloKey];
     const taller = talleres.find(t => t.id === tallerId);
     if(taller) {
-        abrirDetalleTaller(taller, moduloKey, diaKey, taller.cupoMaximo);
-    }
-}
-
-// ==========================================
-// EDICIÓN DE PERFIL (ACTUALIZAR DATOS)
-// ==========================================
-window.mostrarFormularioEdicion = function() {
-    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
-    
-    perfilContenido.innerHTML = `
-        <h3 style="margin-top: 0; color: var(--dark);">Actualizar Mis Datos</h3>
-        <p style="font-size: 0.9rem; color: #666;">Modifica tu correo o teléfono si te equivocaste al registrarte.</p>
-        
-        <div class="campo-grupo">
-            <label>Correo Electrónico</label>
-            <input type="email" id="edit-email" value="${usuarioActivo.email}">
-        </div>
-        <div class="campo-grupo">
-            <label>Teléfono</label>
-            <input type="tel" id="edit-tel" value="${usuarioActivo.telefono}">
-        </div>
-        
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button class="btn-anotarse btn-perfil" id="btn-guardar-datos" onclick="window.guardarNuevosDatos()" style="margin-top: 0;">Guardar</button>
-            <button class="btn-anotarse" onclick="renderizarContenidoPerfil()" style="margin-top: 0; background-color: #E2E8F0; color: var(--dark);">Cancelar</button>
-        </div>
-    `;
-};
-
-window.guardarNuevosDatos = async function() {
-    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
-    const nuevoEmail = document.getElementById('edit-email').value.trim().toLowerCase();
-    const nuevoTel = document.getElementById('edit-tel').value.trim();
-    const btnGuardar = document.getElementById('btn-guardar-datos');
-
-    if (!nuevoEmail || !nuevoTel) {
-        showCustomAlert('error', '⚠️ Los campos no pueden estar vacíos.');
-        return;
-    }
-
-    if (nuevoEmail === usuarioActivo.email && nuevoTel === usuarioActivo.telefono) {
-        renderizarContenidoPerfil(); 
-        return;
-    }
-
-    btnGuardar.innerText = 'Guardando...';
-    btnGuardar.disabled = true;
-
-    try {
-        const { error } = await supabase
-            .from('asistentes')
-            .update({ email: nuevoEmail, telefono: nuevoTel })
-            .eq('id', usuarioActivo.id);
-
-        if (error) {
-            if (error.code === '23505') throw new Error('Ese correo o teléfono ya está siendo utilizado.');
-            throw error;
-        }
-
-        usuarioActivo.email = nuevoEmail;
-        usuarioActivo.telefono = nuevoTel;
-        localStorage.setItem('usuarioActivo', JSON.stringify(usuarioActivo));
-
-        showCustomAlert('success', '✅ Tus datos se han actualizado correctamente.');
-        renderizarContenidoPerfil(); 
-
-    } catch (err) {
-        console.error("Error al actualizar datos:", err);
-        showCustomAlert('error', `❌ No pudimos guardar los cambios. ${err.message}`);
-    } finally {
-        if(btnGuardar) { btnGuardar.innerText = 'Guardar'; btnGuardar.disabled = false; }
+        window.abrirDetalleTaller(taller, moduloKey, diaKey, taller.cupoMaximo);
     }
 };
 
 // ==========================================
 // CONTADOR EN CUENTA REGRESIVA
 // ==========================================
-function iniciarContador() {
+window.iniciarContador = function() {
     const fechaInicio = new Date('August 15, 2026 14:00:00').getTime();
 
     const actualizarReloj = setInterval(function() {
@@ -774,35 +703,7 @@ function iniciarContador() {
             document.getElementById('contador-ludico').innerHTML = '<h3 style="color: var(--secondary); background: var(--white); padding: 10px 20px; border-radius: 8px; border: 3px dashed var(--primary); display: inline-block;">¡El congreso ha comenzado!</h3>';
         }
     }, 1000);
-}
-
-// ==========================================
-// INICIALIZACIÓN GLOBAL
-// ==========================================
-document.addEventListener('keydown', function(event) {
-    const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');
-    const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
-    const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
-
-    if (event.key === 'Escape') {
-        if (isAlertVisible) closeCustomAlert();
-        else if (isTallerModalVisible) cerrarModal();
-        else if (isExpositorModalVisible) cerrarModalExpositor();
-    }
-    if (event.key === 'Enter' && isAlertVisible) {
-        event.preventDefault();
-        closeCustomAlert();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    if(typeof window.iniciarTabsAgenda === 'function') iniciarTabsAgenda();
-    renderizarAgenda();
-    renderizarSponsors();
-    renderizarExpositores();
-    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
-    iniciarContador(); 
-});
+};
 
 // ==========================================
 // LÓGICA DE QUIÉNES SOMOS INTERACTIVO
@@ -833,3 +734,31 @@ window.cambiarOrg = function(orgId, element) {
         <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark);">${data.texto}</p>
     `;
 };
+
+// ==========================================
+// INICIALIZACIÓN GLOBAL
+// ==========================================
+document.addEventListener('keydown', function(event) {
+    const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');
+    const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
+    const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
+
+    if (event.key === 'Escape') {
+        if (isAlertVisible) window.closeCustomAlert();
+        else if (isTallerModalVisible) window.cerrarModal();
+        else if (isExpositorModalVisible) window.cerrarModalExpositor();
+    }
+    if (event.key === 'Enter' && isAlertVisible) {
+        event.preventDefault();
+        window.closeCustomAlert();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    if(typeof window.iniciarTabsAgenda === 'function') window.iniciarTabsAgenda();
+    if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
+    if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
+    if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
+    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
+    if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
+});
