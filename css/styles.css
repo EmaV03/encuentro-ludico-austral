@@ -19,13 +19,10 @@ body {
     line-height: 1.6;
 }
 
-/* =========================================
-   BARRA DE NAVEGACIÓN (HEADER)
-   ========================================= */
 header {
-    background-color: var(--white); /* Fondo claro para integrar el nuevo logo */
+    background-color: var(--white); 
     padding: 15px 30px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08); /* Sombra un poco más suave */
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08); 
     position: sticky;
     top: 0;
     z-index: 900;
@@ -40,7 +37,7 @@ header nav {
 }
 
 .logo {
-    color: var(--dark); /* Cambiado a oscuro por si algún texto no es imagen */
+    color: var(--dark); 
     font-size: 1.5rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -56,44 +53,33 @@ header nav {
 
 .nav-links li a {
     text-decoration: none;
-    color: var(--dark); /* Letras de los atajos en color oscuro/negro */
-    font-size: 1.05rem; /* Ligeramente más grandes para mejor legibilidad en fondo claro */
+    color: var(--dark); 
+    font-size: 1.05rem; 
     font-weight: 600;
     transition: color 0.3s ease, transform 0.2s ease;
 }
+
 .nav-links li a:hover {
-    color: #f6961a; /* Remarcado con el naranja del logo */
+    color: #f6961a; 
 }
 
-
-/* =========================================
-   HERO SECTION (CON SLIDER OPTIMIZADO)
-   ========================================= */
 .hero-section {
     background-color: rgba(45, 49, 66, 0.85); 
     background-blend-mode: overlay;
-    
     min-height: 60vh; 
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    /* CAMBIO CLAVE: 'contain' fuerza a que la imagen se vea completa al 100% */
     background-size: contain; 
     background-position: center center; 
     background-repeat: no-repeat;
-    
     transition: background-image 1.5s ease-in-out;
     color: var(--white);
     text-align: center;
     padding: 40px 20px; 
 }
 
-/* =========================================
-   BOTÓN CALL TO ACTION (CTA)
-   ========================================= */
 .cta-button {
     background-color: var(--primary);
     color: var(--white);
@@ -113,9 +99,21 @@ header nav {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   SECCIONES: QUIÉNES SOMOS Y EXPOSITORES
-   ========================================= */
+.btn-perfil {
+    background-color: #f6961a !important; 
+    color: #046b33 !important; 
+    border: 2px solid #f6961a !important;
+    box-shadow: 0 4px 15px rgba(246, 150, 26, 0.4) !important;
+    font-weight: 900 !important;
+}
+
+.btn-perfil:hover {
+    background-color: #046b33 !important; 
+    color: #f6961a !important; 
+    border: 2px solid #046b33 !important;
+    box-shadow: 0 4px 15px rgba(4, 107, 51, 0.4) !important;
+}
+
 .about-section, .speakers-section, .agenda-section, .sponsors-section {
     padding: 60px 20px;
     max-width: 1100px;
@@ -155,9 +153,7 @@ header nav {
     text-align: center;
 }
 
-.speaker-card:hover {
-    transform: translateY(-10px);
-}
+.speaker-card:hover { transform: translateY(-10px); }
 
 .speaker-avatar {
     width: 90px;
@@ -174,13 +170,6 @@ header nav {
     box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
 }
 
-.speaker-card h3 { margin: 0 0 5px 0; color: var(--dark); }
-.speaker-card h4 { margin: 0 0 15px 0; color: var(--secondary); font-size: 0.9rem; font-weight: normal; }
-.speaker-card p { font-size: 0.9rem; color: #555; line-height: 1.5; }
-
-/* =========================================
-   AGENDA EN FORMATO TABLA (Desktop & Mobile)
-   ========================================= */
 .agenda-table-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -239,9 +228,6 @@ header nav {
 .taller-card h4 { margin: 0 0 10px 0; }
 .taller-card p { margin: 5px 0; font-size: 0.9rem; }
 
-/* =========================================
-   SPONSORS UNIFORME
-   ========================================= */
 .sponsors-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -277,11 +263,11 @@ header nav {
     border-radius: 4px;
 }
 
-.sponsor-card h4 { margin: 0; color: var(--dark); font-size: 0.9rem; }
+.sponsors-grid .sponsor-card {
+    max-width: 350px !important;
+    width: 100%;
+}
 
-/* =========================================
-   MODALES (TALLERES Y ALERTAS) - CORREGIDO
-   ========================================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(45, 49, 66, 0.6);
@@ -322,7 +308,6 @@ header nav {
 }
 .btn-anotarse:hover { background-color: #ff5252; }
 
-/* SE CORRIGE AQUÍ PARA SOPORTAR TANTO LA ALERTA COMO LA CONFIRMACIÓN PERSONALIZADA */
 #custom-alert-overlay,
 #custom-confirm-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -344,7 +329,6 @@ header nav {
 
 @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-/* Estilos para los enlaces cruzados en el modal del expositor */
 .link-taller-cruzado {
     color: var(--primary);
     text-decoration: none;
@@ -355,10 +339,9 @@ header nav {
 
 .link-taller-cruzado:hover {
     color: var(--secondary);
-    transform: translateX(5px); /* Pequeño desplazamiento hacia la derecha al pasar el mouse */
+    transform: translateX(5px); 
 }
 
-/* Estilos para el Panel de Asistente */
 .perfil-grid {
     display: flex;
     flex-direction: column;
@@ -386,38 +369,16 @@ header nav {
     font-size: 0.8rem;
 }
 
-/* =========================================
-   ESTILOS DINÁMICOS DEL CRONOGRAMA (UX)
-   ========================================= */
-
-/* Taller donde el usuario activo está inscrito */
 .taller-card.inscrito {
-    border-left: 5px solid #FF9F1C; /* Naranja llamativo */
-    background-color: #FFF9F0;      /* Fondo ligeramente cálido */
+    border-left: 5px solid #FF9F1C; 
+    background-color: #FFF9F0;      
 }
 
-/* Indicadores de capacidad de cupos */
-.cupos-altos { 
-    color: var(--secondary); /* Turquesa: Queda mucho espacio */
-    font-weight: bold; 
-}
-.cupos-medios { 
-    color: #FF9F1C; /* Naranja: Se está llenando */
-    font-weight: bold; 
-}
-.cupos-bajos { 
-    color: var(--primary); /* Rojo: Quedan muy pocos lugares */
-    font-weight: bold; 
-}
-.cupos-agotados { 
-    color: #999999; /* Gris: Lleno total */
-    font-weight: bold; 
-    text-decoration: line-through; 
-}
+.cupos-altos { color: var(--secondary); font-weight: bold; }
+.cupos-medios { color: #FF9F1C; font-weight: bold; }
+.cupos-bajos { color: var(--primary); font-weight: bold; }
+.cupos-agotados { color: #999999; font-weight: bold; text-decoration: line-through; }
 
-/* =========================================
-   CONTADOR LÚDICO (CUENTA REGRESIVA)
-   ========================================= */
 .countdown-container {
     display: flex;
     justify-content: center;
@@ -436,7 +397,6 @@ header nav {
     justify-content: center;
     align-items: center;
     border-radius: 12px;
-    /* Efecto 3D estilo ficha/dado */
     box-shadow: 0 8px 0 var(--secondary), 0 15px 20px rgba(0,0,0,0.2);
     border: 3px solid var(--dark);
     transform: translateY(0);
@@ -452,7 +412,7 @@ header nav {
     font-size: 2rem;
     font-weight: 900;
     line-height: 1;
-    color: #f6961a; /* Naranja corporativo ABJ */
+    color: #f6961a;
 }
 
 .countdown-box small {
@@ -463,146 +423,6 @@ header nav {
     margin-top: 5px;
 }
 
-/* =========================================
-   SLIDER DE EXPOSITORES (AUTO-SCROLL INFINITO)
-   ========================================= */
-.speakers-slider-wrapper {
-    width: 100%;
-    overflow: hidden; /* Oculta lo que sale de los bordes */
-    position: relative;
-    padding: 20px 0;
-}
-
-.speakers-track {
-    display: flex;
-    gap: 30px;
-    width: max-content;
-    /* La animación dura 40s, lineal, y se repite infinitamente */
-    animation: scrollSpeakers 40s linear infinite; 
-}
-
-/* Pausar el slider cuando el usuario pone el mouse encima */
-.speakers-track:hover {
-    animation-play-state: paused; 
-}
-
-.speaker-card.slide {
-    width: 260px; /* Ancho fijo para cada tarjeta */
-    flex-shrink: 0; /* Evita que se aplasten */
-    margin: 0; 
-}
-
-@keyframes scrollSpeakers {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-50% - 15px)); } /* Se desplaza la mitad exacta para el loop */
-}
-
-/* =========================================
-   DISEÑO RESPONSIVO (TELÉFONOS MÓVILES)
-   ========================================= */
-@media screen and (max-width: 768px) {
-    /* 1. Encabezado y Navegación apilados */
-    header {
-        padding: 10px;
-    }
-    
-    header nav {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
-    }
-    
-    .nav-links li a {
-        font-size: 0.95rem;
-    }
-
-    /* 2. Textos del título más adaptados */
-    .hero-section {
-        padding: 30px 15px;
-        min-height: auto;
-    }
-    
-    .hero-section h1 {
-        font-size: 1.8rem;
-        line-height: 1.2;
-    }
-
-    .hero-section p {
-        font-size: 1rem;
-    }
-
-    /* 3. Contador Lúdico (Fichas más pequeñas para que entren) */
-    .countdown-box {
-        width: 65px;
-        height: 65px;
-        border-width: 2px;
-    }
-    
-    .countdown-box span {
-        font-size: 1.5rem;
-    }
-    
-    .countdown-box small {
-        font-size: 0.75rem;
-    }
-
-    /* 4. Tabla de Agenda (Ajuste a los bordes) */
-    .agenda-table-wrapper {
-        margin: 20px -20px; /* Extiende la tabla a los bordes del celular */
-        border-radius: 0;
-    }
-
-    /* 5. Modales (Que ocupen casi toda la pantalla) */
-    .modal-content {
-        width: 95%;
-        padding: 20px 15px;
-    }
-    
-    .speaker-avatar {
-        width: 70px;
-        height: 70px;
-        font-size: 1.5rem;
-    }
-}
-
-/* Ajuste extremo para celulares muy pequeños (ej: iPhone SE) */
-@media screen and (max-width: 380px) {
-    .nav-links {
-        gap: 8px;
-    }
-    .countdown-box {
-        width: 55px;
-        height: 55px;
-    }
-    .countdown-box span {
-        font-size: 1.2rem;
-    }
-}
-/* =========================================
-   BOTÓN MI PERFIL (COLORES CORPORATIVOS)
-   ========================================= */
-.btn-perfil {
-    background-color: #f6961a !important; /* Fondo Naranja */
-    color: #046b33 !important; /* Letras Verdes */
-    border: 2px solid #f6961a !important;
-    box-shadow: 0 4px 15px rgba(246, 150, 26, 0.4) !important;
-    font-weight: 900 !important;
-}
-
-.btn-perfil:hover {
-    background-color: #046b33 !important; /* Fondo Verde */
-    color: #f6961a !important; /* Letras Naranjas */
-    border: 2px solid #046b33 !important;
-    box-shadow: 0 4px 15px rgba(4, 107, 51, 0.4) !important;
-}
-/* =========================================
-   AGENDA INTERACTIVA (TABS)
-   ========================================= */
 .tabs-container {
     display: flex;
     justify-content: center;
@@ -630,7 +450,7 @@ header nav {
 }
 
 .agenda-dia-card {
-    background-color: #046b33; /* Fondo verde del volante */
+    background-color: #046b33; 
     border-radius: 20px;
     padding: 30px;
     max-width: 600px;
@@ -668,17 +488,117 @@ header nav {
     margin-right: 15px;
 }
 
-.evento-titulo {
-    font-size: 1.05rem;
+.evento-titulo { font-size: 1.05rem; }
+
+.org-selector {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-/* Modificamos los 2 sponsors para que se vean gigantes */
-.sponsors-grid .sponsor-card {
-    max-width: 350px !important;
-    width: 100%;
+.org-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 4px solid transparent;
+    transition: all 0.3s ease;
+    filter: grayscale(80%) opacity(0.6);
+    background-color: var(--white);
+    box-shadow: var(--shadow);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.org-logo:hover {
+    filter: grayscale(0%) opacity(1);
+    transform: translateY(-5px);
+}
+
+.org-logo.active {
+    filter: grayscale(0%) opacity(1);
+    border-color: #f6961a;
+    box-shadow: 0 10px 20px rgba(246, 150, 26, 0.3);
+}
+
+.org-content-box {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.complex-footer {
+    background-color: #1a1c23; 
+    color: #e2e8f0;
+    padding: 60px 20px 20px 20px;
+    font-size: 0.9rem;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    border-bottom: 1px solid #2d3142;
+    padding-bottom: 40px;
+}
+
+.footer-col h4 {
+    color: #f6961a;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-col p { margin: 10px 0; line-height: 1.6; }
+
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { color: #cbd5e1; text-decoration: none; transition: color 0.2s; }
+.footer-col ul li a:hover { color: #046b33; }
+
+.social-links { display: flex; gap: 15px; margin-bottom: 25px; }
+.social-links a svg { width: 24px; height: 24px; fill: currentColor; color: #cbd5e1; transition: color 0.2s, transform 0.2s; }
+.social-links a:hover svg { color: #f6961a; transform: scale(1.1); }
+
+.newsletter-form { display: flex; flex-direction: column; gap: 10px; }
+.newsletter-form input { padding: 10px; border-radius: 4px; border: none; background: #2d3142; color: white; }
+.footer-bottom { text-align: center; padding-top: 20px; color: #64748b; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =========================================
+   DISEÑO RESPONSIVO (TELÉFONOS MÓVILES)
+   ========================================= */
+@media screen and (max-width: 768px) {
+    header { padding: 10px; }
+    header nav { flex-direction: column; gap: 15px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .nav-links li a { font-size: 0.95rem; }
+    .hero-section { padding: 30px 15px; min-height: auto; }
+    .hero-section h1 { font-size: 1.8rem; line-height: 1.2; }
+    .hero-section p { font-size: 1rem; }
+    .countdown-box { width: 65px; height: 65px; border-width: 2px; }
+    .countdown-box span { font-size: 1.5rem; }
+    .countdown-box small { font-size: 0.75rem; }
+    .agenda-table-wrapper { margin: 20px -20px; border-radius: 0; }
+    .modal-content { width: 95%; padding: 20px 15px; }
+    .speaker-avatar { width: 70px; height: 70px; font-size: 1.5rem; }
+    .evento-item { flex-direction: column; align-items: flex-start; text-align: left; }
+    .evento-hora { border-right: none; border-bottom: 2px solid #E2E8F0; width: 100%; margin-bottom: 5px; padding-bottom: 5px; margin-right: 0; }
+}
+
+@media screen and (max-width: 380px) {
+    .nav-links { gap: 8px; }
+    .countdown-box { width: 55px; height: 55px; }
+    .countdown-box span { font-size: 1.2rem; }
 }

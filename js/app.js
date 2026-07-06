@@ -540,18 +540,7 @@ window.iniciarHeroSlider = function() {
         'Imagenes/HeroTitle2.jpg',
         'Imagenes/HeroTitle3.jpg',
         'Imagenes/HeroTitle4.jpg',
-        'Imagenes/HeroTitle5.jpg',
-        'Imagenes/HeroTitle6.jpg',
-        'Imagenes/HeroTitle7.jpg',
-        'Imagenes/HeroTitle8.jpg',
-        'Imagenes/HeroTitle9.jpg',
-        'Imagenes/HeroTitle10.jpg',
-        'Imagenes/HeroTitle11.jpg',
-        'Imagenes/HeroTitle12.jpg',
-        'Imagenes/HeroTitle13.jpg',
-        'Imagenes/HeroTitle14.jpg',
-        'Imagenes/HeroTitle15.jpg',
-        'Imagenes/HeroTitle16.jpg'
+        'Imagenes/HeroTitle5.jpg'
     ];
 
     let indiceActual = 0;
@@ -807,10 +796,40 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    iniciarTabsAgenda();
+    if(typeof window.iniciarTabsAgenda === 'function') iniciarTabsAgenda();
     renderizarAgenda();
     renderizarSponsors();
     renderizarExpositores();
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     iniciarContador(); 
 });
+
+// ==========================================
+// LÓGICA DE QUIÉNES SOMOS INTERACTIVO
+// ==========================================
+window.cambiarOrg = function(orgId, element) {
+    const logos = document.querySelectorAll('.org-logo');
+    logos.forEach(logo => logo.classList.remove('active'));
+    element.classList.add('active');
+
+    const orgData = {
+        'homo-ludens': {
+            titulo: 'Homo Ludens',
+            color: '#046b33', 
+            texto: 'Somos una organización con más de 10 años de trayectoria dedicada a promover la cultura lúdica en todas sus formas. (Texto temporal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.)'
+        },
+        'hl-educacion': {
+            titulo: 'Homo Ludens Educación',
+            color: '#f6961a', 
+            texto: 'Nuestra rama educativa se enfoca en llevar el poder de los juegos de mesa directamente a las aulas y a los profesionales de la enseñanza. (Texto temporal: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.)'
+        }
+    };
+
+    const contentBox = document.getElementById('org-content-box');
+    const data = orgData[orgId];
+    
+    contentBox.innerHTML = `
+        <h3 style="color: ${data.color}; font-size: 1.8rem; margin-top: 0;">${data.titulo}</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark);">${data.texto}</p>
+    `;
+};
