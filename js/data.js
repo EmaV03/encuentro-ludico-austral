@@ -48,8 +48,8 @@ export const congresoData = {
     ],
     sponsors: {
         principales: [ 
-            { nombre: "La Regadera", logo: "Imagenes/Sponsor1.jpg", url: "#" },
-            { nombre: "Dragón Azul", logo: "Imagenes/Sponsor2.jpg", url: "#" }
+            { nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
+            { nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" }
         ]
     },
     agendaGeneral: [
