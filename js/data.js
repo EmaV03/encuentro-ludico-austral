@@ -4,9 +4,31 @@ export const congresoData = {
         descripcion: "Reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.",
         organizador: "Homo Ludens"
     },
-    // Dejamos los expositores anteriores como plantilla para no romper la UI, 
-    // luego los vincularemos directamente a los nuevos ponentes.
     expositores: [
+        { 
+            id: "exp-or", 
+            nombre: "Oriol Ripoll", 
+            avatar: "OR", 
+            titulo: "Magisterio especializado en juegos y didáctica", 
+            bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", 
+            web: "" 
+        },
+        { 
+            id: "exp-fo", 
+            nombre: "Fernando Ortiz Cueva", 
+            avatar: "FO", 
+            titulo: "Doctor en Educación", 
+            bio: "Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO. Maestro en administración educativa, especializado en estrategias para el aprendizaje. Licenciado en Diseño.", 
+            web: "" 
+        },
+        { 
+            id: "exp-se", 
+            nombre: "Lic. Solange Estevez", 
+            avatar: "SE", 
+            titulo: "Licenciada en Psicología Clínica", 
+            bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", 
+            web: "" 
+        },
         { 
             id: "exp-rl", 
             nombre: "Dr. Ricardo Lema Álvarez", 
@@ -25,15 +47,49 @@ export const congresoData = {
         }
     ],
     sponsors: {
-        diamante: [ 
+        principales: [ 
             { nombre: "La Regadera", logo: "Imagenes/Sponsor1.jpg", url: "#" },
             { nombre: "Dragón Azul", logo: "Imagenes/Sponsor2.jpg", url: "#" }
-        ],
-        oro: [ 
-            { nombre: "Sudoku2", logo: "Imagenes/Sponsor3.jpg", url: "#" },
-            { nombre: "Yuguets", logo: "Imagenes/Sponsor4.jpg", url: "#" }
         ]
     },
+    agendaGeneral: [
+        {
+            id: "dia1",
+            dia: "1er DÍA",
+            fecha: "SÁBADO 15",
+            eventos: [
+                { hora: "9:00hs", titulo: "ACREDITACIÓN" },
+                { hora: "9:30hs", titulo: "APERTURA" },
+                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "14:00HS", titulo: "TALLERES" },
+                { hora: "15:45HS", titulo: "TALLERES" },
+                { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
+            ]
+        },
+        {
+            id: "dia2",
+            dia: "2º DÍA",
+            fecha: "DOMINGO 16",
+            eventos: [
+                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "14:00HS", titulo: "TALLERES" },
+                { hora: "15:45HS", titulo: "TALLERES" },
+                { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
+            ]
+        },
+        {
+            id: "dia3",
+            dia: "3er DÍA",
+            fecha: "LUNES 17",
+            eventos: [
+                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "10:30hs", titulo: "TALLERES" },
+                { hora: "14:00HS", titulo: "CIERRE" },
+                { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
+            ]
+        }
+    ],
     cronograma: {
         dia1: {
             fecha: "Sábado 15 de Agosto",
@@ -67,7 +123,7 @@ export const congresoData = {
                     { id: "d2-m-4", titulo: "Juegos de educación ambiental", ponente: "Compostate bien", resumen: "Concientización a través del tablero.", cupoMaximo: 30 },
                     { id: "d2-m-5", titulo: "Escape rooms educativos", ponente: "Fabian Zamit", resumen: "Diseño y aplicación en el aula.", cupoMaximo: 30 },
                     { id: "d2-m-6", titulo: "Juegos en la secundaria", ponente: "Sandra Enrique", resumen: "Estrategias para adolescentes.", cupoMaximo: 30 },
-                    { id: "d2-m-7", titulo: "Juegos para actuar", ponente: "Damián Valgiusti", resumen: "Dinámicas de rol y expresión corporal.", cupoMaximo: 30 }
+                    { id: "d2-m-7", titulo: "Juegos para actuar", ponente: "Damián Valgiusti", resumen: "Dinámicas de rol y expression corporal.", cupoMaximo: 30 }
                 ],
                 tarde: [
                     { id: "d2-t-1", titulo: "Adolescencias en juego", ponente: "Alejandra y Sol", resumen: "Experiencias de talleres lúdicos.", cupoMaximo: 30 },
@@ -91,7 +147,7 @@ export const congresoData = {
                     { id: "d3-m-6", titulo: "Homo ludens de los 0 a los 99 años", ponente: "Mesa de experiencias", resumen: "Eje Temático: Familia.", cupoMaximo: 30 },
                     { id: "d3-m-7", titulo: "Juegos de ciencias sociales en primaria", ponente: "Fernando Ariel", resumen: "Aplicación práctica e histórica.", cupoMaximo: 30 }
                 ],
-                tarde: [] // No hay talleres programados para la tarde del lunes
+                tarde: [] 
             }
         }
     }

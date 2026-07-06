@@ -42,7 +42,7 @@
                     <div class="countdown-box"><span id="cd-segs">00</span><small>Seg</small></div>
                 </div>
 
-                <a href="#agenda" class="cta-button" style="background-color: #046b33; box-shadow: 0 4px 15px rgba(4, 107, 51, 0.4);">Ver Agenda</a>
+                <a href="#talleres" class="cta-button btn-perfil">Ver Cronograma de Talleres</a>
             </div>
         </section>
 
@@ -61,10 +61,10 @@
         </section>
 
         <section id="agenda" class="agenda-section" style="background-color: var(--white);">
-            <h2 style="color: #046b33;">Agenda del Evento</h2>
-            <div id="agenda-container" class="agenda-container">
-                <p>Cargando cronograma...</p>
-            </div>
+            <h2 style="color: #046b33;">Agenda General</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Conoce las actividades principales en el escenario central.</p>
+            <div id="tabs-agenda-container" class="tabs-container"></div>
+            <div id="contenido-agenda-dinamico" class="tab-content-wrapper"></div>
         </section>
 
         <section id="ponentes" class="speakers-section">
@@ -72,9 +72,17 @@
             <div id="speakers-container"></div>
         </section>
 
-        <section id="talleres" class="about-section" style="background-color: var(--white);">
-            <h2 style="color: #046b33;">Talleres de Formación Práctica</h2>
-            <p>Próximamente habilitaremos el detalle extendido de cada taller interactivo, los materiales necesarios y las temáticas específicas de aprendizaje basado en juegos.</p>
+        <section id="talleres" class="agenda-section" style="background-color: var(--white);">
+            <h2 style="color: #046b33;">Cronograma de Talleres</h2>
+            
+            <p style="text-align: center; margin-bottom: 5px; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
+                ¡Próximamente se habilitará el sistema para reservar tu lugar!
+            </p>
+            <p style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
+            
+            <div id="talleres-container" class="agenda-container">
+                <p>Cargando cronograma...</p>
+            </div>
         </section>
 
         <section id="zona-stands" class="about-section">
@@ -84,7 +92,7 @@
 
         <section id="sponsors" class="sponsors-section" style="background-color: var(--white);">
             <h2 style="color: #046b33;">Nuestros Patrocinadores</h2>
-            <div class="sponsors-grid">
+            <div class="sponsors-grid" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
                 </div>
         </section>
     </main>

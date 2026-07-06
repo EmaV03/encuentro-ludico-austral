@@ -600,3 +600,85 @@ header nav {
     border: 2px solid #046b33 !important;
     box-shadow: 0 4px 15px rgba(4, 107, 51, 0.4) !important;
 }
+/* =========================================
+   AGENDA INTERACTIVA (TABS)
+   ========================================= */
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background-color: var(--white);
+    border: 2px solid #046b33;
+    color: #046b33;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background-color: #046b33;
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(4, 107, 51, 0.3);
+}
+
+.agenda-dia-card {
+    background-color: #046b33; /* Fondo verde del volante */
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--white);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.agenda-dia-card h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 0;
+    border-bottom: 2px solid #f6961a;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.evento-item {
+    background-color: var(--white);
+    color: #2D3142;
+    border-radius: 30px;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.evento-hora {
+    color: #046b33;
+    width: 130px;
+    font-size: 1.1rem;
+    border-right: 2px solid #E2E8F0;
+    margin-right: 15px;
+}
+
+.evento-titulo {
+    font-size: 1.05rem;
+}
+
+/* Modificamos los 2 sponsors para que se vean gigantes */
+.sponsors-grid .sponsor-card {
+    max-width: 350px !important;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -2,6 +2,12 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { congresoData } from './data.js';
 
 // ==========================================
+// LLAVE MAESTRA: CONTROL DE INSCRIPCIONES
+// ==========================================
+// Cambia 'false' por 'true' cuando quieras que la gente pueda anotarse a los talleres.
+const INSCRIPCIONES_ABIERTAS = false; 
+
+// ==========================================
 // CONFIGURACIÓN DE SUPABASE (BACKEND)
 // ==========================================
 const supabaseUrl = 'https://faxyzkcbcbqdifgqbwrn.supabase.co';
@@ -11,7 +17,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // ==========================================
 // REFERENCIAS AL DOM
 // ==========================================
-const agendaContainer = document.getElementById('agenda-container');
+const agendaContainer = document.getElementById('talleres-container'); 
 const modalContenedor = document.getElementById('modal-contenedor');
 const customAlertOverlay = document.getElementById('custom-alert-overlay');
 const customAlertMessage = document.getElementById('custom-alert-message');
@@ -46,21 +52,66 @@ window.showCustomAlert = function(tipo, mensaje) {
 
 window.closeCustomAlert = function() {
     const overlay = document.getElementById('custom-alert-overlay');
-    if (overlay) {
-        overlay.classList.add('hidden');
-    }
+    if (overlay) overlay.classList.add('hidden');
 };
 
 const alertBtn = document.getElementById('custom-alert-btn');
-if (alertBtn) {
-    alertBtn.addEventListener('click', window.closeCustomAlert);
-}
+if (alertBtn) alertBtn.addEventListener('click', window.closeCustomAlert);
 
 // ==========================================
-// RENDERIZADO DEL CRONOGRAMA
+// RENDERIZAR AGENDA GENERAL (TABS)
+// ==========================================
+function iniciarTabsAgenda() {
+    const tabsContainer = document.getElementById('tabs-agenda-container');
+    const contentContainer = document.getElementById('contenido-agenda-dinamico');
+    if (!tabsContainer || !contentContainer) return;
+
+    let tabsHTML = '';
+    congresoData.agendaGeneral.forEach((dia, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        tabsHTML += `<button class="tab-btn ${isActive}" onclick="window.cambiarDiaAgenda('${dia.id}')">${dia.dia} - ${dia.fecha}</button>`;
+    });
+    tabsContainer.innerHTML = tabsHTML;
+
+    // Mostrar el primer día por defecto
+    window.cambiarDiaAgenda(congresoData.agendaGeneral[0].id);
+}
+
+window.cambiarDiaAgenda = function(diaId) {
+    const botones = document.querySelectorAll('.tab-btn');
+    botones.forEach(btn => btn.classList.remove('active'));
+    const btnActivo = Array.from(botones).find(b => b.innerText.includes(diaId === 'dia1' ? '1er' : diaId === 'dia2' ? '2º' : '3er'));
+    if (btnActivo) btnActivo.classList.add('active');
+
+    const diaData = congresoData.agendaGeneral.find(d => d.id === diaId);
+    const contentContainer = document.getElementById('contenido-agenda-dinamico');
+    
+    let eventosHTML = '';
+    diaData.eventos.forEach(ev => {
+        eventosHTML += `
+            <div class="evento-item">
+                <div class="evento-hora">${ev.hora}</div>
+                <div class="evento-titulo">${ev.titulo}</div>
+            </div>
+        `;
+    });
+
+    contentContainer.innerHTML = `
+        <div class="agenda-dia-card">
+            <h3>${diaData.fecha}</h3>
+            ${eventosHTML}
+        </div>
+    `;
+};
+
+
+// ==========================================
+// RENDERIZADO DEL CRONOGRAMA DE TALLERES
 // ==========================================
 window.renderizarAgenda = async function() {
-    const { data: inscripcionesActivas, error } = await supabase.from('inscripciones').select('taller_id');
+    if (!agendaContainer) return;
+    
+    const { data: inscripcionesActivas } = await supabase.from('inscripciones').select('taller_id');
     const ocupacionTalleres = {};
     if (inscripcionesActivas) {
         inscripcionesActivas.forEach(ins => {
@@ -143,6 +194,29 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
     const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; 
     
+    // Evaluamos la Llave Maestra para ver qué mostramos
+    let bloqueInscripcion = '';
+    if (INSCRIPCIONES_ABIERTAS) {
+        bloqueInscripcion = `
+            <form id="form-registro" class="form-inscripcion">
+                <h3>¡Inscríbete a este taller!</h3>
+                <div class="campo-grupo"><label>Nombre y Apellido</label><input type="text" id="ins-nombre" required></div>
+                <div class="campo-grupo"><label>Correo Electrónico</label><input type="email" id="ins-email" required></div>
+                <div class="campo-grupo"><label>Número de Teléfono</label><input type="tel" id="ins-tel" required></div>
+                <button type="submit" class="btn-anotarse" ${cuposReales <= 0 ? 'disabled style="background:#ccc; cursor:not-allowed;"' : ''}>
+                    ${cuposReales <= 0 ? 'Cupos Agotados' : 'Confirmar mi Lugar'}
+                </button>
+            </form>
+        `;
+    } else {
+        bloqueInscripcion = `
+            <div class="form-inscripcion" style="text-align: center; padding: 20px;">
+                <h3 style="color: #f6961a; margin-top: 0; font-size: 1.3rem;">Inscripciones Cerradas</h3>
+                <p style="color: #555; margin-bottom: 0; font-weight: bold;">Próximamente habilitaremos el sistema para que puedas reservar tu lugar en este taller.</p>
+            </div>
+        `;
+    }
+
     modalContenedor.innerHTML = `
         <div class="modal-content">
             <button class="btn-cerrar" onclick="cerrarModal()">×</button>
@@ -155,22 +229,18 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
                 ${taller.resumen}
             </p>
             <p><strong>Cupos disponibles:</strong> <span id="modal-cupos">${cuposReales}</span> / ${taller.cupoMaximo}</p>
-            <form id="form-registro" class="form-inscripcion">
-                <h3>¡Inscríbete a este taller!</h3>
-                <div class="campo-grupo"><label>Nombre y Apellido</label><input type="text" id="ins-nombre" required></div>
-                <div class="campo-grupo"><label>Correo Electrónico</label><input type="email" id="ins-email" required></div>
-                <div class="campo-grupo"><label>Número de Teléfono</label><input type="tel" id="ins-tel" required></div>
-                <button type="submit" class="btn-anotarse" ${cuposReales <= 0 ? 'disabled style="background:#ccc; cursor:not-allowed;"' : ''}>
-                    ${cuposReales <= 0 ? 'Cupos Agotados' : 'Confirmar mi Lugar'}
-                </button>
-            </form>
+            
+            ${bloqueInscripcion}
         </div>
     `;
     modalContenedor.classList.add('active');
-    document.getElementById('form-registro').onsubmit = function(e) {
-        e.preventDefault();
-        procesarInscripcion(taller, moduloKey, diaKey);
-    };
+    
+    if (INSCRIPCIONES_ABIERTAS) {
+        document.getElementById('form-registro').onsubmit = function(e) {
+            e.preventDefault();
+            procesarInscripcion(taller, moduloKey, diaKey);
+        };
+    }
 }
 
 window.cerrarModal = function() {
@@ -178,7 +248,7 @@ window.cerrarModal = function() {
 }
 
 // ==========================================
-// SISTEMA DE INSCRIPCIÓN (CORREGIDO SESIÓN)
+// SISTEMA DE INSCRIPCIÓN 
 // ==========================================
 window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
     const nombre = document.getElementById('ins-nombre').value.trim();
@@ -231,7 +301,6 @@ window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
             }
         } else {
             localStorage.setItem('usuarioActivo', JSON.stringify(usuarioGuardar));
-            
             showCustomAlert('success', `¡Excelente, <strong>${nombre}</strong>! Tu lugar ha sido reservado con éxito.`);
             cerrarModal();
             await renderizarAgenda();
@@ -248,9 +317,6 @@ window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
     }
 };
 
-// ==========================================
-// MODAL DE CONFIRMACIÓN ASÍNCRONO
-// ==========================================
 window.mostrarConfirmacion = function(mensaje) {
     return new Promise((resolve) => {
         const overlay = document.getElementById('custom-confirm-overlay');
@@ -307,13 +373,11 @@ function renderizarContenidoPerfil() {
                 <label>Teléfono</label>
                 <input type="tel" id="login-tel">
             </div>
-            <button class="btn-anotarse" id="btn-ejecutar-login">Ingresar</button>
+            <button class="btn-anotarse btn-perfil" id="btn-ejecutar-login">Ingresar</button>
         `;
         
         const btnLogin = document.getElementById('btn-ejecutar-login');
-        if (btnLogin) {
-            btnLogin.addEventListener('click', window.validarUsuario);
-        }
+        if (btnLogin) btnLogin.addEventListener('click', window.validarUsuario);
         
     } else {
         perfilContenido.innerHTML = `
@@ -332,9 +396,7 @@ function renderizarContenidoPerfil() {
         `;
         
         const btnLogout = document.getElementById('btn-ejecutar-logout');
-        if (btnLogout) {
-            btnLogout.addEventListener('click', window.cerrarSesion);
-        }
+        if (btnLogout) btnLogout.addEventListener('click', window.cerrarSesion);
         
         cargarTalleresUsuario(usuarioActivo);
     }
@@ -350,10 +412,7 @@ window.validarUsuario = async function() {
     }
 
     const btn = document.getElementById('btn-ejecutar-login');
-    if(btn) {
-        btn.innerText = 'Buscando...';
-        btn.disabled = true;
-    }
+    if(btn) { btn.innerText = 'Buscando...'; btn.disabled = true; }
 
     try {
         const { data: usuario, error } = await supabase
@@ -459,29 +518,23 @@ function renderizarSponsors() {
     if (!sponsorsGrid) return;
     sponsorsGrid.innerHTML = '';
     
-    const todosLosSponsors = [...congresoData.sponsors.diamante, ...congresoData.sponsors.oro];
-    todosLosSponsors.forEach(sponsor => {
+    congresoData.sponsors.principales.forEach(sponsor => {
         const card = document.createElement('a'); 
         card.className = 'sponsor-card';
         card.href = sponsor.url;
         card.target = "_blank";
         card.innerHTML = `
             <img src="${sponsor.logo}" alt="Logo de ${sponsor.nombre}">
-            <h4>${sponsor.nombre}</h4>
+            <h4 style="font-size:1.2rem; color: var(--dark); margin-top:10px;">${sponsor.nombre}</h4>
         `;
         sponsorsGrid.appendChild(card);
     });
 }
 
-// ==========================================
-// RENDERIZAR HERO SLIDER (FONDOS ROTATIVOS)
-// ==========================================
 window.iniciarHeroSlider = function() {
     const heroSection = document.querySelector('.hero-section');
     if (!heroSection) return;
 
-    // IMPORTANTE: Asegúrate de que estos nombres coincidan EXACTAMENTE 
-    // con mayúsculas/minúsculas de cómo están en tu carpeta de GitHub.
     const imagenesFondo = [
         'Imagenes/HeroTitle.jpg',
         'Imagenes/HeroTitle2.jpg',
@@ -513,47 +566,15 @@ window.iniciarHeroSlider = function() {
 };
 
 // ==========================================
-// RENDERIZAR EXPOSITORES (CARRUSEL PAGINADO)
+// RENDERIZAR EXPOSITORES (CARRUSEL DE 5 ESTRELLAS)
 // ==========================================
-window.expositoresDinamicos = [];
 window.paginaExpositores = 0;
-
-function obtenerPonentesUnicos() {
-    const ponentesSet = new Set();
-    Object.values(congresoData.cronograma).forEach(dia => {
-        ['manana', 'tarde'].forEach(turno => {
-            if (dia.modulos[turno]) {
-                dia.modulos[turno].forEach(taller => {
-                    if (taller.ponente && taller.ponente.trim() !== "" && !taller.ponente.toLowerCase().includes("por confirmar") && !taller.ponente.toLowerCase().includes("por definir")) {
-                        ponentesSet.add(taller.ponente);
-                    }
-                });
-            }
-        });
-    });
-    return Array.from(ponentesSet);
-}
 
 function renderizarExpositores() {
     const container = document.getElementById('speakers-container');
     if (!container) return;
     
-    const ponentes = obtenerPonentesUnicos();
-    
-    // Generamos los objetos robustos para todos, fusionando con los que ya tenemos en data.js
-    window.expositoresDinamicos = ponentes.map(nombre => {
-        const expRegistrado = congresoData.expositores.find(e => e.nombre.toLowerCase().includes(nombre.toLowerCase()));
-        if (expRegistrado) return expRegistrado;
-        
-        return {
-            id: 'gen-' + nombre.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-            nombre: nombre,
-            avatar: nombre.substring(0, 2).toUpperCase(),
-            titulo: "Tallerista ABJ",
-            bio: "Información detallada sobre su trayectoria próximamente.",
-            web: ""
-        };
-    });
+    window.expositoresDinamicos = congresoData.expositores;
     
     mostrarPaginaExpositores();
 }
@@ -572,16 +593,15 @@ window.mostrarPaginaExpositores = function() {
     let htmlCards = '<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">';
     ponentesPagina.forEach(exp => {
         htmlCards += `
-            <div class="speaker-card" style="width: 200px; cursor: pointer; flex-shrink: 0;" onclick="abrirModalExpositor('${exp.id}')">
+            <div class="speaker-card" style="width: 220px; cursor: pointer; flex-shrink: 0;" onclick="abrirModalExpositor('${exp.id}')">
                 <div class="speaker-avatar">${exp.avatar}</div>
-                <h3 style="font-size: 1rem; color: var(--dark);">${exp.nombre}</h3>
-                <p style="font-size: 0.85rem; color: var(--secondary); font-weight: bold; margin:0;">${exp.titulo}</p>
+                <h3 style="font-size: 1.1rem; color: #046b33;">${exp.nombre}</h3>
+                <p style="font-size: 0.9rem; color: #f6961a; font-weight: bold; margin:0;">${exp.titulo}</p>
             </div>
         `;
     });
     htmlCards += '</div>';
 
-    // Controles de Paginación
     const botones = `
         <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
             <button class="cta-button btn-perfil" style="padding: 8px 15px; margin: 0; opacity: ${window.paginaExpositores > 0 ? '1' : '0.5'}; cursor: ${window.paginaExpositores > 0 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(-1)" ${window.paginaExpositores === 0 ? 'disabled' : ''}>⬅ Anterior</button>
@@ -604,9 +624,6 @@ window.cambiarPaginaExpositores = function(direccion) {
     mostrarPaginaExpositores();
 }
 
-// ==========================================
-// MODAL DE EXPOSITORES E INTERCONEXIÓN
-// ==========================================
 window.abrirModalExpositor = function(expId) {
     const expositor = window.expositoresDinamicos.find(e => e.id === expId);
     if (!expositor) return;
@@ -617,8 +634,7 @@ window.abrirModalExpositor = function(expId) {
         ['manana', 'tarde'].forEach(turno => {
             if (dia.modulos && dia.modulos[turno]) {
                 dia.modulos[turno].forEach(taller => {
-                    // Validamos ignorando mayúsculas y espacios
-                    if (taller.ponente.trim().toLowerCase() === expositor.nombre.trim().toLowerCase()) {
+                    if (taller.ponente.trim().toLowerCase().includes(expositor.nombre.trim().toLowerCase())) {
                         talleresHTML += `
                             <li style="margin-bottom: 12px; list-style: none;">
                                 📍 <a href="javascript:void(0)" 
@@ -635,24 +651,20 @@ window.abrirModalExpositor = function(expId) {
         });
     });
 
-    if (talleresHTML === '') talleresHTML = '<p style="color: #999; font-style: italic;">Sin talleres asignados aún.</p>';
-
-    const enlaceWeb = expositor.web 
-        ? `<a href="${expositor.web}" target="_blank" class="cta-button" style="padding: 8px 15px; font-size: 0.9rem; margin-top: 0;">Visitar su Portal</a>` : '';
+    if (talleresHTML === '') talleresHTML = '<p style="color: #999; font-style: italic;">Sin talleres de cupo asignados aún.</p>';
 
     if (modalExpositor) {
         modalExpositor.innerHTML = `
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalExpositor()">×</button>
                 <div class="speaker-avatar" style="width: 120px; height: 120px; font-size: 3rem; margin: 0 auto 15px auto;">${expositor.avatar}</div>
-                <h2 style="margin: 0; color: var(--dark);">${expositor.nombre}</h2>
-                <h4 style="color: var(--secondary); margin-top: 5px;">${expositor.titulo}</h4>
+                <h2 style="margin: 0; color: #046b33;">${expositor.nombre}</h2>
+                <h4 style="color: #f6961a; margin-top: 5px;">${expositor.titulo}</h4>
                 <p style="font-size: 1.05rem; line-height: 1.6;">${expositor.bio}</p>
-                ${enlaceWeb}
                 
                 <hr style="border: 1px dashed #ccc; margin: 25px 0;">
                 
-                <h3 style="text-align: left; color: var(--primary); font-size: 1.2rem;">Talleres que dicta:</h3>
+                <h3 style="text-align: left; color: #046b33; font-size: 1.2rem;">Talleres que dicta:</h3>
                 <ul style="text-align: left; padding: 0;">
                     ${talleresHTML}
                 </ul>
@@ -670,7 +682,6 @@ window.abrirDetalleTallerPorIds = function(tallerId, moduloKey, diaKey) {
     const talleres = congresoData.cronograma[diaKey].modulos[moduloKey];
     const taller = talleres.find(t => t.id === tallerId);
     if(taller) {
-        // Al tocar el link cruzado, abrimos directamente el taller
         abrirDetalleTaller(taller, moduloKey, diaKey, taller.cupoMaximo);
     }
 }
@@ -695,7 +706,7 @@ window.mostrarFormularioEdicion = function() {
         </div>
         
         <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button class="btn-anotarse" id="btn-guardar-datos" onclick="window.guardarNuevosDatos()" style="margin-top: 0;">Guardar</button>
+            <button class="btn-anotarse btn-perfil" id="btn-guardar-datos" onclick="window.guardarNuevosDatos()" style="margin-top: 0;">Guardar</button>
             <button class="btn-anotarse" onclick="renderizarContenidoPerfil()" style="margin-top: 0; background-color: #E2E8F0; color: var(--dark);">Cancelar</button>
         </div>
     `;
@@ -796,6 +807,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    iniciarTabsAgenda();
     renderizarAgenda();
     renderizarSponsors();
     renderizarExpositores();
