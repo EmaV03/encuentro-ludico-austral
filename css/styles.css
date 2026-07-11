@@ -28,12 +28,14 @@ header {
     z-index: 900;
 }
 
+/* Ajustes de PC: Contenedor más ancho y espaciado seguro */
 header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px; 
+    max-width: 1350px; 
     margin: 0 auto;    
+    gap: 20px;
 }
 
 .logo {
@@ -43,19 +45,23 @@ header nav {
     text-transform: uppercase;
 }
 
+/* Ajustes de PC: Centrado vertical y gap optimizado */
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 25px;
+    align-items: center;
+    gap: 18px;
     margin: 0;
     padding: 0;
 }
 
+/* Ajustes de PC: Prohibido el salto de línea en los enlaces */
 .nav-links li a {
     text-decoration: none;
     color: var(--dark); 
-    font-size: 1.05rem; 
+    font-size: 1rem; 
     font-weight: 600;
+    white-space: nowrap;
     transition: color 0.3s ease, transform 0.2s ease;
 }
 
@@ -80,15 +86,17 @@ header nav {
     padding: 40px 20px; 
 }
 
+/* Ajustes de PC: Padding optimizado y sin salto de línea */
 .cta-button {
     background-color: var(--primary);
     color: var(--white);
-    padding: 12px 28px;
+    padding: 10px 22px;
     text-decoration: none;
     border-radius: var(--border-radius);
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem;
     display: inline-block;
+    white-space: nowrap;
     transition: background 0.3s, transform 0.2s;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
     margin-top: 15px;
@@ -583,7 +591,10 @@ header nav {
     header { padding: 10px; }
     header nav { flex-direction: column; gap: 15px; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
-    .nav-links li a { font-size: 0.95rem; }
+    
+    /* Protegemos el diseño móvil, permitiendo que los textos se adapten */
+    .nav-links li a { font-size: 0.95rem; white-space: normal; } 
+    
     .hero-section { padding: 30px 15px; min-height: auto; }
     .hero-section h1 { font-size: 1.8rem; line-height: 1.2; }
     .hero-section p { font-size: 1rem; }
