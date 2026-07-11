@@ -555,108 +555,54 @@ window.iniciarHeroSlider = function() {
 };
 
 // ==========================================
-// RENDERIZAR EXPOSITORES (CARRUSEL DE 5 ESTRELLAS)
+// RENDERIZAR EXPOSITORES (GRILLA DE 5 ESTRELLAS Y MODAL)
 // ==========================================
-window.paginaExpositores = 0;
-
 window.renderizarExpositores = function() {
     const container = document.getElementById('speakers-container');
     if (!container) return;
     
-    window.expositoresDinamicos = congresoData.expositores;
+    // Mapeamos los expositores para asignarles dinámicamente su imagen (Ponente1.jpg, etc.)
+    window.expositoresDinamicos = congresoData.expositores.map((exp, index) => {
+        return {
+            ...exp,
+            foto: `Imagenes/Ponente${index + 1}.jpg`
+        };
+    });
     
-    window.mostrarPaginaExpositores();
-};
-
-window.mostrarPaginaExpositores = function() {
-    const container = document.getElementById('speakers-container');
-    if (!container) return;
-
-    const itemsPorPagina = 4;
-    const totalPaginas = Math.ceil(window.expositoresDinamicos.length / itemsPorPagina);
+    // Contenedor Flexbox configurado para intentar alinear los 5 en una fila en pantallas grandes
+    let htmlCards = '<div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; max-width: 100%;">';
     
-    const inicio = window.paginaExpositores * itemsPorPagina;
-    const fin = inicio + itemsPorPagina;
-    const ponentesPagina = window.expositoresDinamicos.slice(inicio, fin);
-    
-    let htmlCards = '<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">';
-    ponentesPagina.forEach(exp => {
+    window.expositoresDinamicos.forEach(exp => {
         htmlCards += `
-            <div class="speaker-card" style="width: 220px; cursor: pointer; flex-shrink: 0;" onclick="abrirModalExpositor('${exp.id}')">
-                <div class="speaker-avatar">${exp.avatar}</div>
-                <h3 style="font-size: 1.1rem; color: #046b33;">${exp.nombre}</h3>
-                <p style="font-size: 0.9rem; color: #f6961a; font-weight: bold; margin:0;">${exp.titulo}</p>
+            <div class="speaker-card" style="width: 200px; cursor: pointer; flex-shrink: 0; padding: 20px 15px;" onclick="abrirModalExpositor('${exp.id}')">
+                <img src="${exp.foto}" alt="${exp.nombre}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto; display: block;">
+                <h3 style="font-size: 1.05rem; color: #046b33;">${exp.nombre}</h3>
+                <p style="font-size: 0.85rem; color: #f6961a; font-weight: bold; margin:0;">${exp.titulo}</p>
             </div>
         `;
     });
     htmlCards += '</div>';
 
-    const botones = `
-        <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
-            <button class="cta-button btn-perfil" style="padding: 8px 15px; margin: 0; opacity: ${window.paginaExpositores > 0 ? '1' : '0.5'}; cursor: ${window.paginaExpositores > 0 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(-1)" ${window.paginaExpositores === 0 ? 'disabled' : ''}>⬅ Anterior</button>
-            <span style="font-weight: bold; color: var(--dark);">Página ${window.paginaExpositores + 1} de ${totalPaginas}</span>
-            <button class="cta-button btn-perfil" style="padding: 8px 15px; margin: 0; opacity: ${window.paginaExpositores < totalPaginas - 1 ? '1' : '0.5'}; cursor: ${window.paginaExpositores < totalPaginas - 1 ? 'pointer' : 'not-allowed'}; box-shadow: none;" onclick="cambiarPaginaExpositores(1)" ${window.paginaExpositores >= totalPaginas - 1 ? 'disabled' : ''}>Siguiente ➡</button>
-        </div>
-    `;
-
-    container.innerHTML = htmlCards + botones;
-};
-
-window.cambiarPaginaExpositores = function(direccion) {
-    const itemsPorPagina = 4;
-    const totalPaginas = Math.ceil(window.expositoresDinamicos.length / itemsPorPagina);
-    
-    window.paginaExpositores += direccion;
-    if (window.paginaExpositores < 0) window.paginaExpositores = 0;
-    if (window.paginaExpositores >= totalPaginas) window.paginaExpositores = totalPaginas - 1;
-    
-    window.mostrarPaginaExpositores();
+    container.innerHTML = htmlCards;
 };
 
 window.abrirModalExpositor = function(expId) {
     const expositor = window.expositoresDinamicos.find(e => e.id === expId);
     if (!expositor) return;
 
-    let talleresHTML = '';
-    Object.keys(congresoData.cronograma).forEach(diaKey => {
-        const dia = congresoData.cronograma[diaKey];
-        ['manana', 'tarde'].forEach(turno => {
-            if (dia.modulos && dia.modulos[turno]) {
-                dia.modulos[turno].forEach(taller => {
-                    if (taller.ponente.trim().toLowerCase().includes(expositor.nombre.trim().toLowerCase())) {
-                        talleresHTML += `
-                            <li style="margin-bottom: 12px; list-style: none;">
-                                📍 <a href="javascript:void(0)" 
-                                   onclick="cerrarModalExpositor(); abrirDetalleTallerPorIds('${taller.id}', '${turno}', '${diaKey}')" 
-                                   class="link-taller-cruzado">
-                                    ${taller.titulo} <br>
-                                    <span style="font-size: 0.85rem; color: #666;">(${dia.fecha} - Turno ${turno.toUpperCase()})</span>
-                                </a>
-                            </li>
-                        `;
-                    }
-                });
-            }
-        });
-    });
-
-    if (talleresHTML === '') talleresHTML = '<p style="color: #999; font-style: italic;">Sin talleres de cupo asignados aún.</p>';
-
     if (modalExpositor) {
         modalExpositor.innerHTML = `
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalExpositor()">×</button>
-                <div class="speaker-avatar" style="width: 120px; height: 120px; font-size: 3rem; margin: 0 auto 15px auto;">${expositor.avatar}</div>
+                <img src="${expositor.foto}" alt="${expositor.nombre}" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto;">
                 <h2 style="margin: 0; color: #046b33;">${expositor.nombre}</h2>
                 <h4 style="color: #f6961a; margin-top: 5px;">${expositor.titulo}</h4>
                 <p style="font-size: 1.05rem; line-height: 1.6;">${expositor.bio}</p>
                 
                 <hr style="border: 1px dashed #ccc; margin: 25px 0;">
                 
-                <h3 style="text-align: left; color: #046b33; font-size: 1.2rem;">Talleres que dicta:</h3>
-                <ul style="text-align: left; padding: 0;">
-                    ${talleresHTML}
-                </ul>
+                <h3 style="text-align: left; color: #046b33; font-size: 1.2rem;">Ponencia que dicta:</h3>
+                <p style="color: #999; font-style: italic; text-align: left; margin-top: 5px;">De momento esta información no está disponible.</p>
             </div>
         `;
         modalExpositor.classList.add('active');
@@ -665,14 +611,6 @@ window.abrirModalExpositor = function(expId) {
 
 window.cerrarModalExpositor = function() {
     if (modalExpositor) modalExpositor.classList.remove('active');
-};
-
-window.abrirDetalleTallerPorIds = function(tallerId, moduloKey, diaKey) {
-    const talleres = congresoData.cronograma[diaKey].modulos[moduloKey];
-    const taller = talleres.find(t => t.id === tallerId);
-    if(taller) {
-        window.abrirDetalleTaller(taller, moduloKey, diaKey, taller.cupoMaximo);
-    }
 };
 
 // ==========================================
@@ -717,12 +655,12 @@ window.cambiarOrg = function(orgId, element) {
         'homo-ludens': {
             titulo: 'Homo Ludens',
             color: '#046b33', 
-            texto: 'Somos una organización con más de 10 años de trayectoria dedicada a promover la cultura lúdica en todas sus formas. (Texto temporal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.)'
+            texto: 'Este gran evento está organizado por <strong>Homo Ludens</strong> quien lleva mas de 10 años trabajando en difundir la cultura lúdica en el país. El evento ya fue declarado de interés municipal y legislativo por su impacto en la innovación educativa.'
         },
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
             color: '#f6961a', 
-            texto: 'Nuestra rama educativa se enfoca en llevar el poder de los juegos de mesa directamente a las aulas y a los profesionales de la enseñanza. (Texto temporal: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.)'
+            texto: 'Nuestra rama educativa se enfoca en llevar el poder de los juegos de mesa directamente a las aulas y a los profesionales de la enseñanza.'
         }
     };
 
