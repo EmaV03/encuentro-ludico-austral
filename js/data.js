@@ -52,6 +52,12 @@ export const congresoData = {
             { nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" }
         ]
     },
+    editoriales: [
+        { id: "ed-1", nombre: "Editorial Uno", logo: "Imagenes/Sponsor1.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Disponibles para probar en la ludoteca principal del evento y en tiendas especializadas." },
+        { id: "ed-2", nombre: "Editorial Dos", logo: "Imagenes/Sponsor2.jpg", instagram: "https://instagram.com/congresoabj", web: "", dondeEncontrar: "Venta directa exclusiva en nuestro stand durante los 3 días del congreso." },
+        { id: "ed-3", nombre: "Editorial Tres", logo: "Imagenes/Sponsor3.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Puedes adquirir nuestro catálogo completo a través de nuestra web oficial." },
+        { id: "ed-4", nombre: "Editorial Cuatro", logo: "Imagenes/Sponsor4.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Nuestros juegos estarán exhibidos en la zona de demostración con preventa exclusiva." }
+    ],
     agendaGeneral: [
         {
             id: "dia1",
@@ -97,7 +103,7 @@ export const congresoData = {
                 manana: [
                     { id: "d1-m-1", titulo: "Ludificación de la enseñanza en Ciencias Sociales", ponente: "Ricardo Lema", resumen: "Eje Temático: Educación.", cupoMaximo: 30 },
                     { id: "d1-m-2", titulo: "“La gran revolución” Juego de rol masivo", ponente: "Franco Toffoli", resumen: "Eje Temático: Educación / Familia.", cupoMaximo: 30 },
-                    { id: "d1-m-3", titulo: "Ajedrez 4.0", ponente: "Mariano Avalos", resumen: "Herramientas de pensamiento estratégico.", cupoMaximo: 30 },
+                    { id: "d1-m-3", titulo: "Taller por definir", ponente: "---", resumen: "Por definir", cupoMaximo: 30 },
                     { id: "d1-m-4", titulo: "Juegos cooperativos no competitivos", ponente: "Luciana Ballestero", resumen: "Abordaje desde la neuroeducación.", cupoMaximo: 30 },
                     { id: "d1-m-5", titulo: "Bienestar emocional", ponente: "Dayana Rubira", resumen: "El juego como puente para aprender, sentir y crear.", cupoMaximo: 30 },
                     { id: "d1-m-6", titulo: "No es juego, es cerebro aprendiendo", ponente: "Natalia Felicetti", resumen: "Neurociencia aplicada al juego.", cupoMaximo: 30 },
@@ -139,7 +145,7 @@ export const congresoData = {
             fecha: "Lunes 17 de Agosto",
             modulos: {
                 manana: [
-                    { id: "d3-m-1", titulo: "Taller (Por definir)", ponente: "Sofo", resumen: "Detalles próximamente.", cupoMaximo: 30 },
+                    { id: "d3-m-1", titulo: "Taller (Por definir)", ponente: "Fernando Ortiz", resumen: "Detalles próximamente.", cupoMaximo: 30 },
                     { id: "d3-m-2", titulo: "Juegos de bazas", ponente: "Fabian Martinez", resumen: "Mecánicas y aplicación.", cupoMaximo: 30 },
                     { id: "d3-m-3", titulo: "Scrabble para el aula", ponente: "Luis Osvaldo Carestia", resumen: "Desarrollo del lenguaje y vocabulario.", cupoMaximo: 30 },
                     { id: "d3-m-4", titulo: "Juegos para consultorio", ponente: "Micaela Koncurat", resumen: "Eje Temático: Salud.", cupoMaximo: 30 },

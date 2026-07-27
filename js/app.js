@@ -536,11 +536,7 @@ window.iniciarHeroSlider = function() {
     if (!heroSection) return;
 
     const imagenesFondo = [
-        'Imagenes/HeroTitle.jpg',
-        'Imagenes/HeroTitle2.jpg',
-        'Imagenes/HeroTitle3.jpg',
-        'Imagenes/HeroTitle4.jpg',
-        'Imagenes/HeroTitle5.jpg'
+        'Imagenes/image.png',
     ];
 
     let indiceActual = 0;
@@ -674,6 +670,64 @@ window.cambiarOrg = function(orgId, element) {
 };
 
 // ==========================================
+// RENDERIZAR EDITORIALES (ZONA STANDS)
+// ==========================================
+window.renderizarEditoriales = function() {
+    const container = document.getElementById('editoriales-container');
+    if (!container) return;
+
+    let htmlCards = '';
+    congresoData.editoriales.forEach(ed => {
+        htmlCards += `
+            <div class="editorial-card" onclick="abrirModalEditorial('${ed.id}')">
+                <img src="${ed.logo}" alt="${ed.nombre}">
+                <h4>${ed.nombre}</h4>
+            </div>
+        `;
+    });
+    container.innerHTML = htmlCards;
+};
+
+window.abrirModalEditorial = function(id) {
+    const editorial = congresoData.editoriales.find(e => e.id === id);
+    const modal = document.getElementById('modal-editorial');
+    if (!editorial || !modal) return;
+
+    let linksHTML = '';
+    if (editorial.instagram) {
+        linksHTML += `<a href="${editorial.instagram}" target="_blank" class="cta-button btn-perfil" style="padding: 8px 15px; margin: 5px; text-decoration: none;">Instagram</a>`;
+    }
+    if (editorial.web) {
+        linksHTML += `<a href="${editorial.web}" target="_blank" class="cta-button" style="padding: 8px 15px; margin: 5px; background-color: #046b33; text-decoration: none;">Página Web</a>`;
+    }
+
+    modal.innerHTML = `
+        <div class="modal-content" style="text-align: center;">
+            <button class="btn-cerrar" onclick="cerrarModalEditorial()">×</button>
+            <img src="${editorial.logo}" alt="${editorial.nombre}" style="width: 150px; height: 150px; object-fit: contain; margin: 0 auto 15px auto;">
+            <h2 style="margin: 0; color: #f6961a;">${editorial.nombre}</h2>
+            
+            <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                ${linksHTML}
+            </div>
+
+            <hr style="border: 1px dashed #ccc; margin: 20px 0;">
+            
+            <h3 style="text-align: left; color: #046b33; font-size: 1.1rem;">¿Dónde encontrarlos o jugarlos?</h3>
+            <p style="text-align: left; font-size: 1rem; color: #555; background: #F4F4F9; padding: 15px; border-radius: 8px; border-left: 4px solid #f6961a;">
+                ${editorial.dondeEncontrar}
+            </p>
+        </div>
+    `;
+    modal.classList.add('active');
+};
+
+window.cerrarModalEditorial = function() {
+    const modal = document.getElementById('modal-editorial');
+    if (modal) modal.classList.remove('active');
+};
+
+// ==========================================
 // INICIALIZACIÓN GLOBAL
 // ==========================================
 document.addEventListener('keydown', function(event) {
@@ -697,6 +751,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
     if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
     if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
+    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
+    if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
+});
+document.addEventListener('keydown', function(event) {
+    const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');
+    const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
+    const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
+    const isEditorialModalVisible = document.getElementById('modal-editorial') && document.getElementById('modal-editorial').classList.contains('active'); // NUEVO
+
+    if (event.key === 'Escape') {
+        if (isAlertVisible) window.closeCustomAlert();
+        else if (isTallerModalVisible) window.cerrarModal();
+        else if (isExpositorModalVisible) window.cerrarModalExpositor();
+        else if (isEditorialModalVisible) window.cerrarModalEditorial(); // NUEVO
+    }
+    if (event.key === 'Enter' && isAlertVisible) {
+        event.preventDefault();
+        window.closeCustomAlert();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    if(typeof window.iniciarTabsAgenda === 'function') window.iniciarTabsAgenda();
+    if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
+    if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
+    if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
+    if(typeof window.renderizarEditoriales === 'function') window.renderizarEditoriales(); // NUEVO
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
 });

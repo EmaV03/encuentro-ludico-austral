@@ -100,8 +100,11 @@
         </section>
 
         <section id="zona-stands" class="about-section">
-            <h2 style="color: #f6961a;">Zona de Stands</h2>
-            <p>Recorre nuestra exposición comercial con la participación de múltiples editoriales de juegos de mesa de todo el país. Abierto a todo el público.</p>
+            <h2 style="color: #f6961a;">Zona de Stands y Editoriales</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
+            
+            <!-- Contenedor dinámico de editoriales -->
+            <div id="editoriales-container" class="editoriales-slider"></div>
         </section>
 
         <section id="sponsors" class="sponsors-section" style="background-color: var(--white);">
@@ -150,6 +153,7 @@
 
     <div id="modal-contenedor" class="modal-overlay"></div>
     <div id="modal-expositor" class="modal-overlay"></div>
+    <div id="modal-editorial" class="modal-overlay"></div>
     <div id="modal-perfil" class="modal-overlay">
         <div class="modal-content">
             <button class="btn-cerrar" id="btn-cerrar-perfil">×</button>
