@@ -31,7 +31,8 @@
     </header>
 
     <main>
-        <section id="inicio" class="hero-section">
+        <!-- SECCIÓN: Inicio (Hero) -->
+        <section id="inicio" class="hero-section seccion-relativa">
             <div class="hero-content">
                 <h1 style="font-size: 2.8rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">¡Prepárate para el evento del año!</h1>
                 <p style="font-size: 1.2rem;">Asegura tu lugar en el encuentro que transformará la educación.</p>
@@ -45,75 +46,90 @@
 
                 <a href="#talleres" class="cta-button btn-perfil">Ver Cronograma de Talleres</a>
             </div>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="primer-congreso" class="about-section">
-            <h2 style="color: #046b33; font-size: 2.2rem;">1er Congreso Nacional de Aprendizaje Basado en Juego (ABJ)</h2>
-            <p>Primer congreso de ABJ reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.</p>
-            <p>El 1er Congreso Nacional de Aprendizaje Basado en Juego (ABJ) es un espacio de encuentro declarado de interés municipal y legislativo por su destacado impacto en la innovación educativa.</p>
-            <p style="font-weight: bold; color: #f6961a; font-size: 1.2rem;">Se realizará en la ciudad de Bahía Blanca los días 15, 16 y 17 de agosto de 2026.</p>
+        <!-- SECCIÓN: 1er Congreso -->
+        <section id="primer-congreso" class="about-section seccion-relativa">
+            <h2 id="titulo-congreso" class="blur-animated blur-hidden" style="color: #046b33; font-size: 2.2rem;">1er Congreso Nacional de Aprendizaje Basado en Juego (ABJ)</h2>
             
-            <h3 style="color: var(--dark); margin-top: 30px; font-size: 1.5rem;">Ejes Temáticos:</h3>
-            <ul style="text-align: left; max-width: 700px; margin: 15px auto; padding-left: 20px; font-size: 1.1rem; line-height: 1.8;">
-                <li><strong>📚 Educación:</strong> Para transformar los métodos de enseñanza en las aulas.</li>
-                <li><strong>⚕️ Salud:</strong> Para descubrir el juego como una herramienta de bienestar y calidad de vida.</li>
-                <li><strong>👨‍👩‍👧‍👦 Familia:</strong> Para recuperar el tiempo compartido y los vínculos entre generaciones.</li>
+            <!-- REEMPLAZO DEL TYPING POR TEXTO FIJO CON EFECTO BLUR -->
+            <div id="textos-congreso" style="max-width: 800px; margin: 0 auto 15px auto; text-align: center;">
+                <p id="subtitulo-1" class="blur-animated blur-hidden" style="font-size: 1.1rem; color: var(--dark); line-height: 1.8; margin-bottom: 15px;">Primer congreso de ABJ reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.</p>
+                <p id="subtitulo-2" class="blur-animated blur-hidden" style="font-weight: bold; color: #f6961a; font-size: 1.2rem; margin: 0; transition-delay: 0.2s;">Se realizará en la Biblioteca Rivadavia de la ciudad de Bahía Blanca, los días 15, 16 y 17 de agosto de 2026.</p>
+            </div>
+            
+            <h3 id="titulo-ejes" class="blur-animated blur-hidden" style="color: var(--dark); margin-top: 30px; font-size: 1.5rem; transition-delay: 0.2s;">Ejes Temáticos:</h3>
+            <ul id="lista-ejes" style="text-align: left; max-width: 700px; margin: 15px auto; padding-left: 20px; font-size: 1.1rem; line-height: 1.8;">
+                <li class="blur-animated blur-hidden" style="transition-delay: 0.3s;"><strong>📚 Educación:</strong> Para transformar los métodos de enseñanza en las aulas.</li>
+                <li class="blur-animated blur-hidden" style="transition-delay: 0.4s;"><strong>⚕️ Salud:</strong> Para descubrir el juego como una herramienta de bienestar y calidad de vida.</li>
+                <li class="blur-animated blur-hidden" style="transition-delay: 0.5s;"><strong>👨‍👩‍👧‍👦 Familia:</strong> Para recuperar el tiempo compartido y los vínculos entre generaciones.</li>
             </ul>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="quienes-somos" class="about-section" style="background-color: var(--bg-main);">
-            <h2 style="color: #f6961a;">Detrás del Tablero</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Toca nuestros logos para conocer más sobre nuestra historia y misión.</p>
-            
+        <!-- SECCIÓN: Quiénes Somos -->
+        <section id="quienes-somos" class="about-section seccion-relativa" style="background-color: var(--bg-main);">
+            <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Detrás del Tablero</h2>
+            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">Toca nuestros logos para conocer más sobre nuestra historia y misión.</p>
+    
             <div class="org-selector">
                 <img src="Imagenes/Sponsor3.jpg" alt="Homo Ludens" class="org-logo active" onclick="cambiarOrg('homo-ludens', this)">
                 <img src="Imagenes/Sponsor4.jpg" alt="Homo Ludens Educación" class="org-logo" onclick="cambiarOrg('hl-educacion', this)">
             </div>
-            
+    
             <div id="org-content-box" class="org-content-box">
-                <h3 style="color: #046b33; font-size: 1.8rem; margin-top: 0;">Homo Ludens</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark);">Somos una organización con más de 10 años de trayectoria dedicada a promover la cultura lúdica en todas sus formas. (Texto temporal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.)</p>
             </div>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="agenda" class="agenda-section" style="background-color: var(--white);">
-            <h2 style="color: #046b33;">Agenda General</h2>
-            <p style="text-align: center; margin-bottom: 30px;">¡Conoce todas las actividades!</p>
+        <!-- SECCIÓN: Agenda -->
+        <section id="agenda" class="agenda-section seccion-relativa" style="background-color: var(--white);">
+            <h2 style="color: #046b33;" class="blur-animated blur-hidden">Agenda General</h2>
+            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">¡Conoce todas las actividades!</p>
             <div id="tabs-agenda-container" class="tabs-container"></div>
             <div id="contenido-agenda-dinamico" class="tab-content-wrapper"></div>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="ponentes" class="speakers-section">
-            <h2 style="color: #f6961a;">Nuestros Ponentes</h2>
+        <!-- SECCIÓN: Ponentes -->
+        <section id="ponentes" class="speakers-section seccion-relativa">
+            <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Nuestros Ponentes</h2>
             <div id="speakers-container"></div>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="talleres" class="agenda-section" style="background-color: var(--white);">
-            <h2 style="color: #046b33;">Cronograma de Talleres</h2>
-            <p style="text-align: center; margin-bottom: 5px; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
-                ¡Próximamente se habilitará el sistema para reservar tu lugar!
-            </p>
-            <p style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
+        <!-- SECCIÓN: Talleres -->
+        <section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
+            <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
+<p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 5px; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
+    ¡Próximamente se habilitará el sistema para reservar tu lugar!
+</p>
+<p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
             <div id="talleres-container" class="agenda-container">
                 <p>Cargando cronograma...</p>
             </div>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="zona-stands" class="about-section">
-            <h2 style="color: #f6961a;">Zona de Stands y Editoriales</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
-            
-            <!-- Contenedor dinámico de editoriales -->
+        <!-- SECCIÓN: Zona Stands -->
+        <section id="zona-stands" class="about-section seccion-relativa">
+            <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Zona de Stands y Editoriales</h2>
+<p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
             <div id="editoriales-container" class="editoriales-slider"></div>
+            <div class="gradual-blur-bottom"></div>
         </section>
 
-        <section id="sponsors" class="sponsors-section" style="background-color: var(--white);">
-            <h2 style="color: #046b33;">Nuestros Patrocinadores</h2>
+        <!-- SECCIÓN: Sponsors -->
+        <section id="sponsors" class="sponsors-section seccion-relativa" style="background-color: var(--white);">
+            <h2 style="color: #046b33;" class="blur-animated blur-hidden">Nuestros Patrocinadores</h2>
             <div class="sponsors-grid" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
             </div>
+            <div class="gradual-blur-bottom"></div>
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="complex-footer">
         <div class="footer-container">
             <div class="footer-col">
@@ -151,6 +167,7 @@
         </div>
     </footer>
 
+    <!-- MODALES Y ALERTAS -->
     <div id="modal-contenedor" class="modal-overlay"></div>
     <div id="modal-expositor" class="modal-overlay"></div>
     <div id="modal-editorial" class="modal-overlay"></div>

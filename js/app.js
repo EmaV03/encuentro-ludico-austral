@@ -640,18 +640,19 @@ window.iniciarContador = function() {
 };
 
 // ==========================================
-// LÓGICA DE QUIÉNES SOMOS INTERACTIVO
+// LÓGICA DE QUIÉNES SOMOS INTERACTIVO (CON SPLIT-TEXT Y TYPING)
 // ==========================================
 window.cambiarOrg = function(orgId, element) {
     const logos = document.querySelectorAll('.org-logo');
     logos.forEach(logo => logo.classList.remove('active'));
     element.classList.add('active');
 
+    // Mantenemos los textos originales sin etiquetas HTML adentro para no romper el efecto typing
     const orgData = {
         'homo-ludens': {
             titulo: 'Homo Ludens',
             color: '#046b33', 
-            texto: 'Este gran evento está organizado por <strong>Homo Ludens</strong> quien lleva mas de 10 años trabajando en difundir la cultura lúdica en el país. El evento ya fue declarado de interés municipal y legislativo por su impacto en la innovación educativa.'
+            texto: 'Este gran evento está organizado por Homo Ludens quien lleva mas de 10 años trabajando en difundir la cultura lúdica en el país. El evento ya fue declarado de interés municipal y legislativo por su impacto en la innovación educativa.'
         },
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
@@ -663,10 +664,46 @@ window.cambiarOrg = function(orgId, element) {
     const contentBox = document.getElementById('org-content-box');
     const data = orgData[orgId];
     
+    // 1. Armamos la estructura base añadiendo un ID al párrafo para capturarlo
     contentBox.innerHTML = `
-        <h3 style="color: ${data.color}; font-size: 1.8rem; margin-top: 0;">${data.titulo}</h3>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark);">${data.texto}</p>
+        <h3 id="titulo-animado" style="color: ${data.color}; font-size: 1.8rem; margin-top: 0; display: inline-block;"></h3>
+        <p id="texto-animado" style="font-size: 1.1rem; line-height: 1.8; color: var(--dark); margin-top: 15px; min-height: 80px;"></p>
     `;
+
+    // 2. Lógica de SplitText para el Título
+    const tituloEl = document.getElementById('titulo-animado');
+    const caracteres = data.titulo.split(''); 
+    
+    caracteres.forEach((char, index) => {
+        const span = document.createElement('span');
+        span.innerHTML = char === ' ' ? '&nbsp;' : char;
+        span.className = 'char-anim';
+        span.style.animationDelay = `${index * 0.08}s`; 
+        tituloEl.appendChild(span);
+    });
+
+    // 3. Lógica de Typing para el texto negro inferior
+    const textoEl = document.getElementById('texto-animado');
+    let indexTexto = 0;
+    
+    // Si el usuario hace clic rápido entre logos, limpiamos el intervalo anterior
+    if (window.typingOrgInterval) clearInterval(window.typingOrgInterval);
+
+    // Calculamos cuánto tarda el título en aparecer completo (80ms por letra + un pequeño margen)
+    const delayTitulo = (caracteres.length * 80) + 200;
+
+    // Disparamos el typing una vez que el título ya está visible
+    setTimeout(() => {
+        window.typingOrgInterval = setInterval(() => {
+            if (indexTexto < data.texto.length) {
+                textoEl.innerHTML = data.texto.substring(0, indexTexto + 1) + '<span class="typing-cursor"></span>';
+                indexTexto++;
+            } else {
+                textoEl.innerHTML = data.texto; // Finaliza y elimina el cursor
+                clearInterval(window.typingOrgInterval);
+            }
+        }, 15); // Velocidad de tipeo: 15ms por letra
+    }, delayTitulo);
 };
 
 // ==========================================
@@ -727,18 +764,76 @@ window.cerrarModalEditorial = function() {
     if (modal) modal.classList.remove('active');
 };
 
+window.iniciarAnimacionesScroll = function() {
+    // 1. OBSERVER GLOBAL PARA EFECTO BLUR (Títulos, Textos y Ejes)
+    const blurElements = document.querySelectorAll('.blur-animated');
+    
+    const observerBlur = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('blur-hidden');
+            } else {
+                entry.target.classList.add('blur-hidden');
+            }
+        });
+    }, { threshold: 0.15 });
+
+    blurElements.forEach(el => observerBlur.observe(el));
+
+    // 2. OBSERVER PARA QUIÉNES SOMOS (Autodisparo de Split-Text logos)
+    const seccionNosotros = document.getElementById('quienes-somos');
+    const orgContentBox = document.getElementById('org-content-box');
+    
+    if (seccionNosotros) {
+        const observerNosotros = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const orgActiva = document.querySelector('.org-logo.active');
+                    if(orgActiva && orgContentBox.innerHTML.trim() === '') {
+                        const idOrg = orgActiva.alt === 'Homo Ludens Educación' ? 'hl-educacion' : 'homo-ludens';
+                        window.cambiarOrg(idOrg, orgActiva);
+                    }
+                } else {
+                    if(orgContentBox) orgContentBox.innerHTML = '';
+                }
+            });
+        }, { threshold: 0.4 });
+        observerNosotros.observe(seccionNosotros);
+    }
+};
+
+window.renderizarEditoriales = function() {
+    const container = document.getElementById('editoriales-container');
+    if (!container) return;
+
+    // Restauramos la grilla estándar sin circular gallery ni cover flow
+    let htmlCards = '<div class="editoriales-slider">';
+    congresoData.editoriales.forEach(ed => {
+        htmlCards += `
+            <div class="editorial-card" onclick="abrirModalEditorial('${ed.id}')">
+                <img src="${ed.logo}" alt="${ed.nombre}">
+                <h4>${ed.nombre}</h4>
+            </div>
+        `;
+    });
+    htmlCards += '</div>';
+    container.innerHTML = htmlCards;
+};
+
 // ==========================================
-// INICIALIZACIÓN GLOBAL
+// INICIALIZACIÓN GLOBAL (LIMPIA Y ÚNICA)
 // ==========================================
 document.addEventListener('keydown', function(event) {
     const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');
     const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
     const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
+    const isEditorialModalVisible = document.getElementById('modal-editorial') && document.getElementById('modal-editorial').classList.contains('active');
 
     if (event.key === 'Escape') {
         if (isAlertVisible) window.closeCustomAlert();
         else if (isTallerModalVisible) window.cerrarModal();
         else if (isExpositorModalVisible) window.cerrarModalExpositor();
+        else if (isEditorialModalVisible) window.cerrarModalEditorial();
     }
     if (event.key === 'Enter' && isAlertVisible) {
         event.preventDefault();
@@ -751,33 +846,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
     if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
     if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
+    if(typeof window.renderizarEditoriales === 'function') window.renderizarEditoriales();
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
-});
-document.addEventListener('keydown', function(event) {
-    const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');
-    const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
-    const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
-    const isEditorialModalVisible = document.getElementById('modal-editorial') && document.getElementById('modal-editorial').classList.contains('active'); // NUEVO
-
-    if (event.key === 'Escape') {
-        if (isAlertVisible) window.closeCustomAlert();
-        else if (isTallerModalVisible) window.cerrarModal();
-        else if (isExpositorModalVisible) window.cerrarModalExpositor();
-        else if (isEditorialModalVisible) window.cerrarModalEditorial(); // NUEVO
-    }
-    if (event.key === 'Enter' && isAlertVisible) {
-        event.preventDefault();
-        window.closeCustomAlert();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    if(typeof window.iniciarTabsAgenda === 'function') window.iniciarTabsAgenda();
-    if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
-    if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
-    if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
-    if(typeof window.renderizarEditoriales === 'function') window.renderizarEditoriales(); // NUEVO
-    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
-    if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
+    if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
 });
