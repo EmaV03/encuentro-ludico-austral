@@ -28,7 +28,6 @@ header {
     z-index: 900;
 }
 
-/* Ajustes de PC: Contenedor más ancho y espaciado seguro */
 header nav {
     display: flex;
     justify-content: space-between;
@@ -45,7 +44,6 @@ header nav {
     text-transform: uppercase;
 }
 
-/* Ajustes de PC: Centrado vertical y gap optimizado */
 .nav-links {
     list-style: none;
     display: flex;
@@ -55,7 +53,6 @@ header nav {
     padding: 0;
 }
 
-/* Ajustes de PC: Prohibido el salto de línea en los enlaces */
 .nav-links li a {
     text-decoration: none;
     color: var(--dark); 
@@ -86,7 +83,6 @@ header nav {
     padding: 40px 20px; 
 }
 
-/* Ajustes de PC: Padding optimizado y sin salto de línea */
 .cta-button {
     background-color: var(--primary);
     color: var(--white);
@@ -609,25 +605,11 @@ header nav {
     50% { opacity: 0; }
 }
 
-/* =========================================
-   EFECTO SPLIT-TEXT (ANIMACIÓN DE TÍTULOS)
-   ========================================= */
 @keyframes bounceInText {
-    0% { 
-        opacity: 0; 
-        transform: translateY(40px); 
-    }
-    60% { 
-        opacity: 1; 
-        transform: translateY(-10px); 
-    }
-    80% { 
-        transform: translateY(5px); 
-    }
-    100% { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
+    0% { opacity: 0; transform: translateY(40px); }
+    60% { opacity: 1; transform: translateY(-10px); }
+    80% { transform: translateY(5px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .char-anim {
@@ -636,17 +618,11 @@ header nav {
     animation: bounceInText 0.8s cubic-bezier(0.28, 0.84, 0.42, 1) forwards;
 }
 
-/* =========================================
-   DISEÑO RESPONSIVO (TELÉFONOS MÓVILES)
-   ========================================= */
 @media screen and (max-width: 768px) {
     header { padding: 10px; }
     header nav { flex-direction: column; gap: 15px; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
-    
-    /* Protegemos el diseño móvil, permitiendo que los textos se adapten */
     .nav-links li a { font-size: 0.95rem; white-space: normal; } 
-    
     .hero-section { padding: 30px 15px; min-height: auto; }
     .hero-section h1 { font-size: 1.8rem; line-height: 1.2; }
     .hero-section p { font-size: 1rem; }
@@ -665,6 +641,7 @@ header nav {
     .countdown-box { width: 55px; height: 55px; }
     .countdown-box span { font-size: 1.2rem; }
 }
+
 /* =========================================
    ZONA DE STANDS (EDITORIALES)
    ========================================= */
@@ -672,7 +649,7 @@ header nav {
     display: flex;
     gap: 20px;
     justify-content: center;
-    flex-wrap: wrap; /* Permite que bajen de línea si la pantalla es chica */
+    flex-wrap: wrap; 
     margin-bottom: 20px;
 }
 
@@ -710,33 +687,20 @@ header nav {
 /* =========================================
    EFECTO GRADUAL BLUR (TRANSICIÓN DE SECCIONES)
    ========================================= */
-/* =========================================
-   EFECTO GRADUAL BLUR (TRANSICIÓN DE SECCIONES)
-   ========================================= */
 .seccion-relativa {
     position: relative; 
 }
 
 .gradual-blur-bottom {
     position: absolute;
-    /* Desplazamos el div hacia abajo exactamente la mitad de su altura */
-    /* Esto hace que invada visualmente la sección siguiente */
     bottom: -3.5rem; 
     left: 0;
     width: 100%;
     height: 7rem; 
-    
-    /* Aumentamos el blur para mayor notoriedad */
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    
-    /* Nueva Máscara Simétrica: 
-       Se desvanece hacia arriba (0%) y hacia abajo (100%), 
-       siendo más fuerte justo en la unión de las secciones (50%) */
     mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-    
     pointer-events: none;
-    /* Z-index elevado para asegurar que se pinte por encima del fondo de la siguiente sección */
     z-index: 50; 
 }

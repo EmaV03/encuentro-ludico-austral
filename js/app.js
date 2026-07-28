@@ -4,7 +4,6 @@ import { congresoData } from './data.js';
 // ==========================================
 // LLAVE MAESTRA: CONTROL DE INSCRIPCIONES
 // ==========================================
-// Cambia 'false' por 'true' cuando quieras que la gente pueda anotarse a los talleres.
 const INSCRIPCIONES_ABIERTAS = false; 
 
 // ==========================================
@@ -59,7 +58,7 @@ const alertBtn = document.getElementById('custom-alert-btn');
 if (alertBtn) alertBtn.addEventListener('click', window.closeCustomAlert);
 
 // ==========================================
-// RENDERIZAR AGENDA GENERAL (TABS) - CORREGIDO
+// RENDERIZAR AGENDA GENERAL (TABS)
 // ==========================================
 window.iniciarTabsAgenda = function() {
     const tabsContainer = document.getElementById('tabs-agenda-container');
@@ -73,7 +72,6 @@ window.iniciarTabsAgenda = function() {
     });
     tabsContainer.innerHTML = tabsHTML;
 
-    // Mostrar el primer día por defecto
     window.cambiarDiaAgenda(congresoData.agendaGeneral[0].id);
 };
 
@@ -194,7 +192,6 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
     const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; 
     
-    // Evaluamos la Llave Maestra para ver qué mostramos
     let bloqueInscripcion = '';
     if (INSCRIPCIONES_ABIERTAS) {
         bloqueInscripcion = `
@@ -557,7 +554,6 @@ window.renderizarExpositores = function() {
     const container = document.getElementById('speakers-container');
     if (!container) return;
     
-    // Mapeamos los expositores para asignarles dinámicamente su imagen (Ponente1.jpg, etc.)
     window.expositoresDinamicos = congresoData.expositores.map((exp, index) => {
         return {
             ...exp,
@@ -565,7 +561,6 @@ window.renderizarExpositores = function() {
         };
     });
     
-    // Contenedor Flexbox configurado para intentar alinear los 5 en una fila en pantallas grandes
     let htmlCards = '<div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; max-width: 100%;">';
     
     window.expositoresDinamicos.forEach(exp => {
@@ -640,14 +635,13 @@ window.iniciarContador = function() {
 };
 
 // ==========================================
-// LÓGICA DE QUIÉNES SOMOS INTERACTIVO (CON SPLIT-TEXT Y TYPING)
+// LÓGICA DE QUIÉNES SOMOS INTERACTIVO
 // ==========================================
 window.cambiarOrg = function(orgId, element) {
     const logos = document.querySelectorAll('.org-logo');
     logos.forEach(logo => logo.classList.remove('active'));
     element.classList.add('active');
 
-    // Mantenemos los textos originales sin etiquetas HTML adentro para no romper el efecto typing
     const orgData = {
         'homo-ludens': {
             titulo: 'Homo Ludens',
@@ -664,13 +658,11 @@ window.cambiarOrg = function(orgId, element) {
     const contentBox = document.getElementById('org-content-box');
     const data = orgData[orgId];
     
-    // 1. Armamos la estructura base añadiendo un ID al párrafo para capturarlo
     contentBox.innerHTML = `
         <h3 id="titulo-animado" style="color: ${data.color}; font-size: 1.8rem; margin-top: 0; display: inline-block;"></h3>
         <p id="texto-animado" style="font-size: 1.1rem; line-height: 1.8; color: var(--dark); margin-top: 15px; min-height: 80px;"></p>
     `;
 
-    // 2. Lógica de SplitText para el Título
     const tituloEl = document.getElementById('titulo-animado');
     const caracteres = data.titulo.split(''); 
     
@@ -682,90 +674,41 @@ window.cambiarOrg = function(orgId, element) {
         tituloEl.appendChild(span);
     });
 
-    // 3. Lógica de Typing para el texto negro inferior
-    const textoEl = document.getElementById('texto-animado');
     let indexTexto = 0;
     
-    // Si el usuario hace clic rápido entre logos, limpiamos el intervalo anterior
+    // LIMPIEZA RIGUROSA DE TIMERS PREVIOS
     if (window.typingOrgInterval) clearInterval(window.typingOrgInterval);
+    if (window.typingOrgTimeout) clearTimeout(window.typingOrgTimeout);
 
-    // Calculamos cuánto tarda el título en aparecer completo (80ms por letra + un pequeño margen)
     const delayTitulo = (caracteres.length * 80) + 200;
 
-    // Disparamos el typing una vez que el título ya está visible
-    setTimeout(() => {
+    // GUARDAMOS EL TIMEOUT EN UNA VARIABLE GLOBAL
+    window.typingOrgTimeout = setTimeout(() => {
         window.typingOrgInterval = setInterval(() => {
+            // BUSCAMOS EL ELEMENTO EN TIEMPO REAL
+            const textoEl = document.getElementById('texto-animado');
+            
+            // SI EL USUARIO HIZO SCROLL Y EL ELEMENTO YA NO EXISTE, ABORTAMOS DE FORMA SEGURA
+            if (!textoEl) {
+                clearInterval(window.typingOrgInterval);
+                return;
+            }
+
             if (indexTexto < data.texto.length) {
                 textoEl.innerHTML = data.texto.substring(0, indexTexto + 1) + '<span class="typing-cursor"></span>';
                 indexTexto++;
             } else {
-                textoEl.innerHTML = data.texto; // Finaliza y elimina el cursor
+                textoEl.innerHTML = data.texto; 
                 clearInterval(window.typingOrgInterval);
             }
-        }, 15); // Velocidad de tipeo: 15ms por letra
+        }, 15); 
     }, delayTitulo);
 };
 
 // ==========================================
-// RENDERIZAR EDITORIALES (ZONA STANDS)
+// ANIMACIONES DE SCROLL 
 // ==========================================
-window.renderizarEditoriales = function() {
-    const container = document.getElementById('editoriales-container');
-    if (!container) return;
-
-    let htmlCards = '';
-    congresoData.editoriales.forEach(ed => {
-        htmlCards += `
-            <div class="editorial-card" onclick="abrirModalEditorial('${ed.id}')">
-                <img src="${ed.logo}" alt="${ed.nombre}">
-                <h4>${ed.nombre}</h4>
-            </div>
-        `;
-    });
-    container.innerHTML = htmlCards;
-};
-
-window.abrirModalEditorial = function(id) {
-    const editorial = congresoData.editoriales.find(e => e.id === id);
-    const modal = document.getElementById('modal-editorial');
-    if (!editorial || !modal) return;
-
-    let linksHTML = '';
-    if (editorial.instagram) {
-        linksHTML += `<a href="${editorial.instagram}" target="_blank" class="cta-button btn-perfil" style="padding: 8px 15px; margin: 5px; text-decoration: none;">Instagram</a>`;
-    }
-    if (editorial.web) {
-        linksHTML += `<a href="${editorial.web}" target="_blank" class="cta-button" style="padding: 8px 15px; margin: 5px; background-color: #046b33; text-decoration: none;">Página Web</a>`;
-    }
-
-    modal.innerHTML = `
-        <div class="modal-content" style="text-align: center;">
-            <button class="btn-cerrar" onclick="cerrarModalEditorial()">×</button>
-            <img src="${editorial.logo}" alt="${editorial.nombre}" style="width: 150px; height: 150px; object-fit: contain; margin: 0 auto 15px auto;">
-            <h2 style="margin: 0; color: #f6961a;">${editorial.nombre}</h2>
-            
-            <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                ${linksHTML}
-            </div>
-
-            <hr style="border: 1px dashed #ccc; margin: 20px 0;">
-            
-            <h3 style="text-align: left; color: #046b33; font-size: 1.1rem;">¿Dónde encontrarlos o jugarlos?</h3>
-            <p style="text-align: left; font-size: 1rem; color: #555; background: #F4F4F9; padding: 15px; border-radius: 8px; border-left: 4px solid #f6961a;">
-                ${editorial.dondeEncontrar}
-            </p>
-        </div>
-    `;
-    modal.classList.add('active');
-};
-
-window.cerrarModalEditorial = function() {
-    const modal = document.getElementById('modal-editorial');
-    if (modal) modal.classList.remove('active');
-};
-
 window.iniciarAnimacionesScroll = function() {
-    // 1. OBSERVER GLOBAL PARA EFECTO BLUR (Títulos, Textos y Ejes)
     const blurElements = document.querySelectorAll('.blur-animated');
     
     const observerBlur = new IntersectionObserver((entries) => {
@@ -780,7 +723,6 @@ window.iniciarAnimacionesScroll = function() {
 
     blurElements.forEach(el => observerBlur.observe(el));
 
-    // 2. OBSERVER PARA QUIÉNES SOMOS (Autodisparo de Split-Text logos)
     const seccionNosotros = document.getElementById('quienes-somos');
     const orgContentBox = document.getElementById('org-content-box');
     
@@ -795,6 +737,10 @@ window.iniciarAnimacionesScroll = function() {
                     }
                 } else {
                     if(orgContentBox) orgContentBox.innerHTML = '';
+                    
+                    // DESTRUIR TIMERS AL SALIR DE LA PANTALLA
+                    if (window.typingOrgInterval) clearInterval(window.typingOrgInterval);
+                    if (window.typingOrgTimeout) clearTimeout(window.typingOrgTimeout);
                 }
             });
         }, { threshold: 0.4 });
@@ -802,11 +748,13 @@ window.iniciarAnimacionesScroll = function() {
     }
 };
 
+// ==========================================
+// RENDERIZAR EDITORIALES (ZONA STANDS)
+// ==========================================
 window.renderizarEditoriales = function() {
     const container = document.getElementById('editoriales-container');
     if (!container) return;
 
-    // Restauramos la grilla estándar sin circular gallery ni cover flow
     let htmlCards = '<div class="editoriales-slider">';
     congresoData.editoriales.forEach(ed => {
         htmlCards += `
@@ -821,7 +769,7 @@ window.renderizarEditoriales = function() {
 };
 
 // ==========================================
-// INICIALIZACIÓN GLOBAL (LIMPIA Y ÚNICA)
+// INICIALIZACIÓN GLOBAL
 // ==========================================
 document.addEventListener('keydown', function(event) {
     const isAlertVisible = customAlertOverlay && !customAlertOverlay.classList.contains('hidden');

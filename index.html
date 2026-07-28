@@ -53,7 +53,6 @@
         <section id="primer-congreso" class="about-section seccion-relativa">
             <h2 id="titulo-congreso" class="blur-animated blur-hidden" style="color: #046b33; font-size: 2.2rem;">1er Congreso Nacional de Aprendizaje Basado en Juego (ABJ)</h2>
             
-            <!-- REEMPLAZO DEL TYPING POR TEXTO FIJO CON EFECTO BLUR -->
             <div id="textos-congreso" style="max-width: 800px; margin: 0 auto 15px auto; text-align: center;">
                 <p id="subtitulo-1" class="blur-animated blur-hidden" style="font-size: 1.1rem; color: var(--dark); line-height: 1.8; margin-bottom: 15px;">Primer congreso de ABJ reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.</p>
                 <p id="subtitulo-2" class="blur-animated blur-hidden" style="font-weight: bold; color: #f6961a; font-size: 1.2rem; margin: 0; transition-delay: 0.2s;">Se realizará en la Biblioteca Rivadavia de la ciudad de Bahía Blanca, los días 15, 16 y 17 de agosto de 2026.</p>
@@ -78,6 +77,7 @@
                 <img src="Imagenes/Sponsor4.jpg" alt="Homo Ludens Educación" class="org-logo" onclick="cambiarOrg('hl-educacion', this)">
             </div>
     
+            <!-- EL INTERIOR NO LLEVA BLUR PARA PROTEGER EL TYPING EFFECT -->
             <div id="org-content-box" class="org-content-box">
             </div>
             <div class="gradual-blur-bottom"></div>
@@ -102,10 +102,10 @@
         <!-- SECCIÓN: Talleres -->
         <section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
             <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
-<p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 5px; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
-    ¡Próximamente se habilitará el sistema para reservar tu lugar!
-</p>
-<p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
+            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 5px; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
+                ¡Próximamente se habilitará el sistema para reservar tu lugar!
+            </p>
+            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
             <div id="talleres-container" class="agenda-container">
                 <p>Cargando cronograma...</p>
             </div>
@@ -115,7 +115,7 @@
         <!-- SECCIÓN: Zona Stands -->
         <section id="zona-stands" class="about-section seccion-relativa">
             <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Zona de Stands y Editoriales</h2>
-<p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
+            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
             <div id="editoriales-container" class="editoriales-slider"></div>
             <div class="gradual-blur-bottom"></div>
         </section>
@@ -123,8 +123,7 @@
         <!-- SECCIÓN: Sponsors -->
         <section id="sponsors" class="sponsors-section seccion-relativa" style="background-color: var(--white);">
             <h2 style="color: #046b33;" class="blur-animated blur-hidden">Nuestros Patrocinadores</h2>
-            <div class="sponsors-grid" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
-            </div>
+            <div class="sponsors-grid" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;"></div>
             <div class="gradual-blur-bottom"></div>
         </section>
     </main>
