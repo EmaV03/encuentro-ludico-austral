@@ -735,17 +735,22 @@ header nav {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--dark); /* Usa el fondo oscuro de tu paleta */
+    background-color: var(--dark);
     padding: 12px 30px;
     border-radius: 50px;
     font-weight: 800;
     font-size: 1.1rem;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    /* Previene desbordamientos visuales en móviles */
+    overflow: hidden; 
 }
 
 .shiny-text-base {
     color: var(--white);
+    position: relative;
+    /* Aseguramos que la base se mantenga en el nivel 1 */
+    z-index: 1; 
 }
 
 .shiny-text-shine {
@@ -754,13 +759,17 @@ header nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f6961a; /* Naranja/Dorado institucional */
+    color: #f6961a;
     pointer-events: none;
+    /* Forzamos que la capa de brillo esté por encima */
+    z-index: 2; 
+    /* Forzamos la aceleración por hardware en móviles */
+    transform: translateZ(0); 
     -webkit-mask-image: linear-gradient(to right, transparent 30%, #000 50%, transparent 70%);
     mask-image: linear-gradient(to right, transparent 30%, #000 50%, transparent 70%);
-    -webkit-mask-size: 150% auto;
-    mask-size: 150% auto;
-    animation: shinyPillSweep 2s ease-in-out infinite;
+    -webkit-mask-size: 200% auto;
+    mask-size: 200% auto;
+    animation: shinyPillSweep 2.5s ease-in-out infinite;
 }
 
 @keyframes shinyPillSweep {
