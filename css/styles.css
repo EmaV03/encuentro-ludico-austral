@@ -739,11 +739,11 @@ header nav {
     padding: 12px 30px;
     border-radius: 50px;
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.1rem; /* Tamaño para PC */
     letter-spacing: 0.5px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    /* Previene desbordamientos visuales en móviles */
     overflow: hidden; 
+    white-space: nowrap; /* Obliga al texto a no saltar de línea */
 }
 
 .shiny-text-base {
@@ -775,4 +775,12 @@ header nav {
 @keyframes shinyPillSweep {
     0% { -webkit-mask-position: 200%; mask-position: 200%; }
     100% { -webkit-mask-position: -100%; mask-position: -100%; }
+}
+
+/* REGLA PARA MÓVILES */
+@media screen and (max-width: 768px) {
+    .shiny-pill {
+        font-size: 0.75rem; /* Letra más pequeña solo en celulares */
+        padding: 10px 20px; /* Reducimos un poco el relleno para que entre bien */
+    }
 }
