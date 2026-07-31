@@ -877,14 +877,18 @@ document.addEventListener('keydown', function(event) {
     const isTallerModalVisible = modalContenedor && modalContenedor.classList.contains('active');
     const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
     const isEditorialModalVisible = document.getElementById('modal-editorial') && document.getElementById('modal-editorial').classList.contains('active');
-    const isActividadModalVisible = document.getElementById('modal-actividad') && document.getElementById('modal-actividad').classList.contains('active'); // Nueva variable
+    const isActividadModalVisible = document.getElementById('modal-actividad') && document.getElementById('modal-actividad').classList.contains('active');
+    
+    // ¡Nueva variable añadida para las creadoras!
+    const isCreadoraModalVisible = modalCreadora && modalCreadora.classList.contains('active'); 
 
     if (event.key === 'Escape') {
         if (isAlertVisible) window.closeCustomAlert();
         else if (isTallerModalVisible) window.cerrarModal();
         else if (isExpositorModalVisible) window.cerrarModalExpositor();
         else if (isEditorialModalVisible) window.cerrarModalEditorial();
-        else if (isActividadModalVisible) window.cerrarModalActividad(); // Nuevo cierre
+        else if (isActividadModalVisible) window.cerrarModalActividad();
+        else if (isCreadoraModalVisible) window.cerrarModalCreadora();
     }
     if (event.key === 'Enter' && isAlertVisible) {
         event.preventDefault();
