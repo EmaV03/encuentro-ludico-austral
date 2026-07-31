@@ -855,5 +855,17 @@ body {
     #titulo-congreso {
         font-size: 1.7rem; /* Un poco más de jerarquía para el título principal, pero contenido */
     }
-}
+    /* =========================================
+       AJUSTES MOBILE: Z-INDEX Y BLUR
+       ========================================= */
+    .gradual-blur-bottom {
+        height: 4rem; /* Reducimos el tamaño del difuminado en móviles */
+        bottom: -2rem; 
+    }
+    
+    .about-section h2, 
+    .about-section p {
+        position: relative;
+        z-index: 10; /* Forzamos a que el texto quede por encima del efecto blur de la sección anterior */
+    }
 }
