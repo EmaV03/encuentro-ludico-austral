@@ -9,26 +9,68 @@
 </head>
 <body>
 
-    <header id="main-header">
-        <nav>
-            <div class="logo">
-                <a href="#">
-                    <img src="Imagenes/Copia de BANNER HORIZONTAL.png" alt="Logo ABJ Congreso" style="max-height: 70px; width: auto; display: block; transition: transform 0.2s;">
-                </a>
+    <header id="main-header" class="card-nav-header">
+    <nav class="top-nav-bar">
+        <!-- IZQUIERDA: Botón Hamburguesa -->
+        <button id="menu-toggle" class="hamburger-btn" aria-label="Abrir menú">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- CENTRO: Logo -->
+        <div class="logo-center">
+            <a href="#inicio">
+                <img src="Imagenes/Copia de BANNER HORIZONTAL.png" alt="Logo ABJ Congreso" style="max-height: 60px; width: auto; display: block; transition: transform 0.2s;">
+            </a>
+        </div>
+
+        <!-- DERECHA: Botón Perfil -->
+        <div class="profile-right">
+            <a href="javascript:void(0)" id="btn-abrir-perfil" class="cta-button btn-perfil" style="margin-top: 0; padding: 8px 18px;">Mi Perfil</a>
+        </div>
+    </nav>
+
+    <!-- MENÚ DESPLEGABLE TIPO CARD NAV -->
+    <div id="card-nav-menu" class="card-nav-menu hidden">
+        <div class="card-nav-grid">
+            
+            <!-- Tarjeta 1: El Evento -->
+            <div class="nav-card" style="background-color: #2D3142; color: #FFFFFF;">
+                <h3>El Evento</h3>
+                <ul>
+                    <li><a href="#inicio" class="card-link">Inicio</a></li>
+                    <li><a href="#primer-congreso" class="card-link">1er Congreso</a></li>
+                    <li><a href="#quienes-somos" class="card-link">Nosotros</a></li>
+                    <li><a href="#instituciones" class="card-link">Instituciones Presentes</a></li>
+                </ul>
             </div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#primer-congreso">1er Congreso</a></li>
-                <li><a href="#quienes-somos">Nosotros</a></li>
-                <li><a href="#agenda">Agenda</a></li>
-                <li><a href="#ponentes">Ponentes</a></li>
-                <li><a href="#talleres">Talleres</a></li>
-                <li><a href="#zona-stands">Zona Stands</a></li>
-                <li><a href="#sponsors">Sponsors</a></li>
-                <li><a href="javascript:void(0)" id="btn-abrir-perfil" class="cta-button btn-perfil" style="margin-top: 0; padding: 8px 18px;">Mi Perfil</a></li>
-            </ul>
-        </nav>
-    </header>
+
+            <!-- Tarjeta 2: Cronograma -->
+            <div class="nav-card" style="background-color: #046b33; color: #FFFFFF;">
+                <h3>Cronograma</h3>
+                <ul>
+                    <li><a href="#agenda" class="card-link">Agenda General</a></li>
+                    <li><a href="#ponentes" class="card-link">Ponentes</a></li>
+                    <li><a href="#talleres" class="card-link">Talleres Prácticos</a></li>
+                    <li><a href="#actividades-extra" class="card-link">Actividades Extra</a></li>
+                </ul>
+            </div>
+
+            <!-- Tarjeta 3: Exposición y Contacto -->
+            <div class="nav-card" style="background-color: #f6961a; color: #2D3142;">
+                <h3 style="color: #2D3142;">Exposición y Más</h3>
+                <ul>
+                    <li><a href="#zona-stands" class="card-link" style="color: #2D3142;">Zona Stands</a></li>
+                    <li><a href="#sponsors" class="card-link" style="color: #2D3142;">Sponsors</a></li>
+                    <hr style="border-color: rgba(45, 49, 66, 0.2); margin: 10px 0;">
+                    <li><a href="#contacto" class="card-link" style="color: #2D3142; font-weight: 800;">📞 Contacto</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</header>
 
     <main>
         <!-- SECCIÓN: Inicio (Hero) -->
@@ -218,7 +260,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="complex-footer">
+    <footer id="contacto" class="complex-footer">
         <div class="footer-container">
             <div class="footer-col">
                 <img src="Imagenes/LogoABJ.png" alt="Logo ABJ" style="max-width: 200px; margin-bottom: 15px; background: white; padding: 10px; border-radius: 8px;">

@@ -26,6 +26,33 @@ const modalExpositor = document.getElementById('modal-expositor');
 const modalCreadora = document.getElementById('modal-creadora');
 const modalEditorial = document.getElementById('modal-editorial');
 const modalActividad = document.getElementById('modal-actividad');
+// ==========================================
+// CARD NAV LOGIC
+// ==========================================
+const menuToggleBtn = document.getElementById('menu-toggle');
+const cardNavMenu = document.getElementById('card-nav-menu');
+const cardLinks = document.querySelectorAll('.card-link');
+
+if (menuToggleBtn && cardNavMenu) {
+    menuToggleBtn.addEventListener('click', () => {
+        const isClosed = cardNavMenu.classList.contains('hidden');
+        if (isClosed) {
+            cardNavMenu.classList.remove('hidden');
+            menuToggleBtn.classList.add('open');
+        } else {
+            cardNavMenu.classList.add('hidden');
+            menuToggleBtn.classList.remove('open');
+        }
+    });
+
+    // Cerrar el menú automáticamente cuando se hace clic en un enlace interno
+    cardLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            cardNavMenu.classList.add('hidden');
+            menuToggleBtn.classList.remove('open');
+        });
+    });
+}
 
 if (!localStorage.getItem('inscripcionesCongreso')) {
     localStorage.setItem('inscripcionesCongreso', JSON.stringify([]));
