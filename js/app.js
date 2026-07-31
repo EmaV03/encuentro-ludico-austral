@@ -734,7 +734,7 @@ window.cerrarModalExpositor = function() {
 // CONTADOR EN CUENTA REGRESIVA
 // ==========================================
 window.iniciarContador = function() {
-    const fechaInicio = new Date('August 15, 2026 14:00:00').getTime();
+    const fechaInicio = new Date('2026-08-15T14:00:00').getTime();
 
     const actualizarReloj = setInterval(function() {
         const ahora = new Date().getTime();
