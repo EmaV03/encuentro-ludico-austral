@@ -69,6 +69,7 @@ body {
 .hamburger-btn.open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* Contenedor del Menú Desplegable */
+/* Contenedor del Menú Desplegable */
 .card-nav-menu {
     position: absolute;
     top: 100%;
@@ -79,6 +80,10 @@ body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform-origin: top;
+    
+    max-height: calc(100vh - 85px); /* Calcula el alto total de la pantalla menos el alto del header */
+    overflow-y: auto; /* Activa la barra de desplazamiento vertical automática */
+    padding-bottom: 50px; /* Un poco de espacio extra al final para que la última tarjeta no quede pegada al borde */
 }
 
 .card-nav-menu.hidden {
