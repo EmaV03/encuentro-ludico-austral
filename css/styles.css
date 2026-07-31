@@ -845,4 +845,15 @@ body {
         font-size: 0.75rem; /* Letra más pequeña solo en celulares */
         padding: 10px 20px; /* Reducimos un poco el relleno para que entre bien */
     }
+    .about-section h2, .speakers-section h2, .agenda-section h2, .sponsors-section h2 {
+        font-size: 1.6rem; /* Reducimos de 2rem a 1.6rem */
+        padding: 0 10px;
+        line-height: 1.3;
+        margin-bottom: 15px;
+    }
+    
+    #titulo-congreso {
+        font-size: 1.7rem; /* Un poco más de jerarquía para el título principal, pero contenido */
+    }
+}
 }
