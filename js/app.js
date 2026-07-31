@@ -905,31 +905,41 @@ document.addEventListener('keydown', function(event) {
     const isExpositorModalVisible = modalExpositor && modalExpositor.classList.contains('active');
     const isEditorialModalVisible = document.getElementById('modal-editorial') && document.getElementById('modal-editorial').classList.contains('active');
     const isActividadModalVisible = document.getElementById('modal-actividad') && document.getElementById('modal-actividad').classList.contains('active');
+    const isCreadoraModalVisible = document.getElementById('modal-creadora') && document.getElementById('modal-creadora').classList.contains('active');
     
-    // ¡Nueva variable añadida para las creadoras!
-    const isCreadoraModalVisible = modalCreadora && modalCreadora.classList.contains('active'); 
+    // Nuevas variables para Perfil y Menú Nav
+    const modalPerfil = document.getElementById('modal-perfil');
+    const isPerfilModalVisible = modalPerfil && modalPerfil.classList.contains('active');
+    
+    const cardNavMenu = document.getElementById('card-nav-menu');
+    const isMenuVisible = cardNavMenu && !cardNavMenu.classList.contains('hidden');
 
     if (event.key === 'Escape') {
-        if (isAlertVisible) window.closeCustomAlert();
-        else if (isTallerModalVisible) window.cerrarModal();
-        else if (isExpositorModalVisible) window.cerrarModalExpositor();
-        else if (isEditorialModalVisible) window.cerrarModalEditorial();
-        else if (isActividadModalVisible) window.cerrarModalActividad();
-        else if (isCreadoraModalVisible) window.cerrarModalCreadora();
+        if (isAlertVisible) {
+            window.closeCustomAlert();
+        } else if (isTallerModalVisible) {
+            window.cerrarModal();
+        } else if (isExpositorModalVisible) {
+            window.cerrarModalExpositor();
+        } else if (isEditorialModalVisible) {
+            window.cerrarModalEditorial();
+        } else if (isActividadModalVisible) {
+            window.cerrarModalActividad();
+        } else if (isCreadoraModalVisible) {
+            window.cerrarModalCreadora();
+        } else if (isPerfilModalVisible) {
+            // Cierra la ventana del perfil
+            modalPerfil.classList.remove('active'); 
+        } else if (isMenuVisible) {
+            // Cierra el menú desplegable y restaura el ícono de hamburguesa
+            cardNavMenu.classList.add('hidden'); 
+            const menuToggleBtn = document.getElementById('menu-toggle');
+            if (menuToggleBtn) menuToggleBtn.classList.remove('open');
+        }
     }
+    
     if (event.key === 'Enter' && isAlertVisible) {
         event.preventDefault();
         window.closeCustomAlert();
     }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    if(typeof window.iniciarTabsAgenda === 'function') window.iniciarTabsAgenda();
-    if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
-    if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
-    if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
-    if(typeof window.renderizarEditoriales === 'function') window.renderizarEditoriales();
-    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
-    if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
-    if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
 });
