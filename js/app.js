@@ -943,3 +943,14 @@ document.addEventListener('keydown', function(event) {
         window.closeCustomAlert();
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    if(typeof window.iniciarTabsAgenda === 'function') window.iniciarTabsAgenda();
+    if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
+    if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
+    if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
+    if(typeof window.renderizarEditoriales === 'function') window.renderizarEditoriales();
+    if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
+    if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
+    if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
+});
