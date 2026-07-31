@@ -4,6 +4,44 @@ export const congresoData = {
         descripcion: "Reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.",
         organizador: "Homo Ludens"
     },
+    // Añadir dentro de export const congresoData = { ... }
+    creadoras: [
+        {
+            id: "crea-sv",
+            nombre: "Sandra Vissani",
+            rol: "Finanzas",
+            foto: "Imagenes/Creadora1.jpg", // Asegúrate de tener estas imágenes
+            bio: "Información detallada sobre Sandra Vissani. Experta en..."
+        },
+        {
+            id: "crea-nj",
+            nombre: "Natalia Jiménez",
+            rol: "Presidenta",
+            foto: "Imagenes/Creadora2.jpg",
+            bio: "Información detallada sobre Natalia Jiménez. Liderando con visión..."
+        },
+        {
+            id: "crea-jr",
+            nombre: "Johanna Ramac",
+            rol: "Secretaria",
+            foto: "Imagenes/Creadora3.jpg",
+            bio: "Información detallada sobre Johanna Ramac. Organizadora implacable..."
+        },
+        {
+            id: "crea-rr",
+            nombre: "Roberta Ruiz",
+            rol: "Vicepresidenta",
+            foto: "Imagenes/Creadora4.jpg",
+            bio: "Información detallada sobre Roberta Ruiz. Apoyo estratégico en..."
+        },
+        {
+            id: "crea-ga",
+            nombre: "Gabita",
+            rol: "Comunicación",
+            foto: "Imagenes/Creadora5.jpg",
+            bio: "Información detallada sobre Gabita. La voz del congreso..."
+        }
+    ],
     expositores: [
         { 
             id: "exp-or", 
@@ -57,6 +95,21 @@ export const congresoData = {
         { id: "ed-2", nombre: "Editorial Dos", logo: "Imagenes/Sponsor2.jpg", instagram: "https://instagram.com/congresoabj", web: "", dondeEncontrar: "Venta directa exclusiva en nuestro stand durante los 3 días del congreso." },
         { id: "ed-3", nombre: "Editorial Tres", logo: "Imagenes/Sponsor3.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Puedes adquirir nuestro catálogo completo a través de nuestra web oficial." },
         { id: "ed-4", nombre: "Editorial Cuatro", logo: "Imagenes/Sponsor4.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Nuestros juegos estarán exhibidos en la zona de demostración con preventa exclusiva." }
+    ],
+    // Añadir dentro de export const congresoData = { ... }
+    actividadesExtra: [
+        {
+            id: "act-1",
+            nombre: "Actividad Extra 1",
+            imagen: "Imagenes/Actividad1.jpg", // Reemplaza con tu imagen
+            descripcion: "Descripción detallada de la primera actividad extra. Aquí puedes incluir horarios, cupos, requisitos especiales o de qué trata la dinámica."
+        },
+        {
+            id: "act-2",
+            nombre: "Actividad Extra 2",
+            imagen: "Imagenes/Actividad2.jpg",
+            descripcion: "Información sobre la segunda actividad. Detalles adicionales que los asistentes necesiten conocer para participar."
+        }
     ],
     agendaGeneral: [
         {
