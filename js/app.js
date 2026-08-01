@@ -874,6 +874,67 @@ window.iniciarAnimacionesScroll = function() {
     }
 };
 
+window.iniciarSliderInstituciones = function() {
+    const track = document.getElementById('instituciones-track');
+    if (!track) return;
+
+    // Renderizar HTML
+    let html = '';
+    congresoData.instituciones.forEach(inst => {
+        html += `
+            <a href="${inst.url}" target="_blank" class="institucion-slide">
+                <img src="${inst.logo}" alt="${inst.nombre}">
+                <h4 style="margin:0; font-size:1rem; color:#046b33;">${inst.nombre}</h4>
+            </a>
+        `;
+    });
+    track.innerHTML = html;
+
+    // Lógica de movimiento
+    let indiceActual = 0;
+    let intervaloSlider;
+    
+    function moverSlider(direccion) {
+        // Calculamos cuántos elementos se muestran según el ancho de pantalla
+        const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
+        const maxIndice = congresoData.instituciones.length - itemsVisibles;
+
+        if (direccion === 'next') {
+            indiceActual = indiceActual >= maxIndice ? 0 : indiceActual + 1;
+        } else {
+            indiceActual = indiceActual <= 0 ? maxIndice : indiceActual - 1;
+        }
+
+        const slideWidth = track.children[0].getBoundingClientRect().width;
+        // 20px es el gap del flex
+        track.style.transform = `translateX(-${indiceActual * (slideWidth + 20)}px)`;
+    }
+
+    // Botones manuales
+    document.getElementById('btn-next-inst').addEventListener('click', () => {
+        moverSlider('next');
+        reiniciarIntervalo();
+    });
+    document.getElementById('btn-prev-inst').addEventListener('click', () => {
+        moverSlider('prev');
+        reiniciarIntervalo();
+    });
+
+    // Auto-play cada 10 segundos
+    function iniciarIntervalo() {
+        intervaloSlider = setInterval(() => moverSlider('next'), 10000);
+    }
+    function reiniciarIntervalo() {
+        clearInterval(intervaloSlider);
+        iniciarIntervalo();
+    }
+
+    iniciarIntervalo();
+};
+
+// No olvides llamarla en tu DOMContentLoaded (al final de tu app.js):
+// if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
+
 // ==========================================
 // RENDERIZAR EDITORIALES (ZONA STANDS)
 // ==========================================
@@ -953,4 +1014,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
     if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
+    if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
 });

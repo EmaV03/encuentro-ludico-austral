@@ -307,24 +307,32 @@ body {
 
 .sponsors-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 20px;
-    align-items: center;
+    /* Ajusta dinámicamente las columnas asegurando un ancho mínimo */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    /* align-items: stretch es la clave principal. Obliga a que todas las tarjetas en la misma fila tengan la altura de la tarjeta más alta */
+    align-items: stretch; 
     justify-items: center;
 }
 
 .sponsor-card {
     background: var(--white);
     border-radius: var(--border-radius);
-    padding: 15px;
+    padding: 20px;
     box-shadow: var(--shadow);
     width: 100%;
-    max-width: 200px;
+    max-width: 300px;
     text-align: center;
     border: 2px solid #E2E8F0;
     transition: transform 0.2s, border-color 0.2s;
     text-decoration: none;
-    display: block;
+    
+    /* Convertimos el interior de la tarjeta en un contenedor Flex para alinear sus elementos */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el texto hacia abajo y el logo hacia arriba */
+    align-items: center;
+    height: 100%; /* Le indicamos a la tarjeta que ocupe toda la altura que el grid le otorga */
 }
 
 .sponsor-card:hover {
@@ -333,11 +341,12 @@ body {
 }
 
 .sponsor-card img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-    border-radius: 4px;
+    width: 100%;
+    /* Fijamos una altura estricta para el contenedor de la imagen */
+    height: 110px; 
+    /* object-fit: contain asegura que el logo escale para entrar en la caja de 110px de alto sin deformarse ni estirarse */
+    object-fit: contain; 
+    margin-bottom: 15px;
 }
 
 .sponsors-grid .sponsor-card {
@@ -868,4 +877,52 @@ body {
         position: relative;
         z-index: 10; /* Forzamos a que el texto quede por encima del efecto blur de la sección anterior */
     }
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: var(--shadow);
+}
+.slider-btn:hover { background: var(--dark); }
+
+.institucion-slide {
+    flex: 0 0 calc(25% - 15px); /* 4 elementos a la par en PC */
+    box-sizing: border-box;
+    text-align: center;
+    background: var(--bg-main);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    text-decoration: none; /* Porque será un link */
+    color: var(--dark);
+    border: 2px solid #E2E8F0;
+    transition: transform 0.3s, border-color 0.3s;
+}
+.institucion-slide:hover {
+    transform: translateY(-5px);
+    border-color: #046b33;
+}
+.institucion-slide img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Mobile-First: Ajustes para pantallas más pequeñas */
+@media screen and (max-width: 900px) {
+    .institucion-slide { flex: 0 0 calc(50% - 10px); } /* 2 a la par en tablets */
+}
+@media screen and (max-width: 600px) {
+    .institucion-slide { flex: 0 0 100%; } /* 1 a la par en móviles */
 }

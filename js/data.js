@@ -87,7 +87,8 @@ export const congresoData = {
     sponsors: {
         principales: [ 
             { nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
-            { nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" }
+            { nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
+            { nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/sponsor5.jpeg", url: "https://www.hjescobar.com.ar/" }
         ]
     },
     editoriales: [
@@ -110,6 +111,16 @@ export const congresoData = {
             imagen: "Imagenes/Actividad2.jpg",
             descripcion: "Información sobre la segunda actividad. Detalles adicionales que los asistentes necesiten conocer para participar."
         }
+    ],
+    instituciones: [
+        { id: "inst-1", nombre: "Espacio Ridens", logo: "Imagenes/institución1.png", url: "https://www.instagram.com/espacioridens/" },
+        { id: "inst-2", nombre: "Instituto Superior Don Bosco", logo: "Imagenes/institución2.png", url: "https://www.instagram.com/donbosco_rosario/" },
+        { id: "inst-3", nombre: "Instituto Yuguets", logo: "Imagenes/institución3.png", url: "https://www.instagram.com/institutoyuguets/" },
+        { id: "inst-4", nombre: "Ludicamente", logo: "Imagenes/institución4.png", url: "https://www.instagram.com/ludicamente_juegos/" },
+        { id: "inst-5", nombre: "MiniMundos", logo: "Imagenes/institución5.png", url: "https://www.instagram.com/minimundos2022/" },
+        { id: "inst-6", nombre: "Piedra Libre", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
+        { id: "inst-7", nombre: "Zapada Ludica", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
+        { id: "inst-8", nombre: "Institución 8", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/" }
     ],
     agendaGeneral: [
         {

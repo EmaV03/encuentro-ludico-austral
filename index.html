@@ -211,20 +211,20 @@
 
         <!-- SECCIÓN: Instituciones Presentes -->
         <section id="instituciones" class="about-section seccion-relativa" style="background-color: var(--white);">
-            <h2 style="color: #046b33;" class="blur-animated blur-hidden">Instituciones Presentes</h2>
-            <div class="editoriales-slider">
-                <!-- Molde para instituciones (Usa el mismo formato que editoriales) -->
-                <div class="editorial-card">
-                    <div style="height: 120px; background: #E2E8F0; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">Logo Institución</div>
-                    <h4>Nombre Institución</h4>
-                </div>
-                <div class="editorial-card">
-                    <div style="height: 120px; background: #E2E8F0; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">Logo Institución</div>
-                    <h4>Nombre Institución</h4>
-                </div>
-            </div>
-            <div class="gradual-blur-bottom"></div>
-        </section>
+    <h2 style="color: #046b33;" class="blur-animated blur-hidden">Instituciones Presentes</h2>
+    
+    <!-- Contenedor del Slider -->
+    <div class="slider-wrapper" style="position: relative; max-width: 1000px; margin: 0 auto; overflow: hidden; padding: 0 40px;">
+        <button id="btn-prev-inst" class="slider-btn" style="left: 0;">&#10094;</button>
+        
+        <div id="instituciones-track" style="display: flex; transition: transform 0.5s ease-in-out; gap: 20px;">
+            <!-- Se inyectará vía JS -->
+        </div>
+        
+        <button id="btn-next-inst" class="slider-btn" style="right: 0;">&#10095;</button>
+    </div>
+    <div class="gradual-blur-bottom"></div>
+</section>
 
 <!-- SECCIÓN: Actividades Extra -->
 <section id="actividades-extra" class="about-section seccion-relativa" style="background-color: var(--bg-main);">
@@ -263,7 +263,7 @@
     <footer id="contacto" class="complex-footer">
         <div class="footer-container">
             <div class="footer-col">
-                <img src="Imagenes/LogoABJ.png" alt="Logo ABJ" style="max-width: 200px; margin-bottom: 15px; background: white; padding: 10px; border-radius: 8px;">
+                <img src="Imagenes/LogoABJ (1).png" alt="Logo ABJ" style="max-width: 200px; margin-bottom: 15px; background: white; padding: 10px; border-radius: 8px;">
                 <p style="color: #f6961a; font-weight: bold; font-size: 1.1rem;">15, 16 y 17 de Agosto, 2026</p>
                 <p>📍 <a href="https://maps.google.com/?q=Biblioteca+Rivadavia,+Bahía+Blanca,+Provincia+de+Buenos+Aires" target="_blank" style="color: #cbd5e1; text-decoration: none; border-bottom: 1px dotted #cbd5e1;">Sede del Congreso: Biblioteca Rivadavia<br>Bahía Blanca, Buenos Aires, Argentina.</a></p>
             </div>
