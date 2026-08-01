@@ -88,7 +88,7 @@ export const congresoData = {
         principales: [ 
             { nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
             { nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
-            { nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/sponsor5.jpeg", url: "https://www.hjescobar.com.ar/" }
+            { nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjescobar.com.ar/" }
         ]
     },
     editoriales: [
