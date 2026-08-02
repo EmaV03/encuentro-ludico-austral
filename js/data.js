@@ -4,41 +4,41 @@ export const congresoData = {
         descripcion: "Reunirá a docentes, profesionales de la salud, estudiantes y diseñadores de juegos para explorar el uso de los juegos de mesa como herramientas pedagógicas y de transformación social.",
         organizador: "Homo Ludens"
     },
-    // Añadir dentro de export const congresoData = { ... }
+
     creadoras: [
         {
             id: "crea-sv",
             nombre: "Sandra Vissani",
             rol: "Finanzas",
-            foto: "Imagenes/Creadora1.jpg", // Asegúrate de tener estas imágenes
+            foto: "Imagenes/creador1.png",
             bio: "Información detallada sobre Sandra Vissani. Experta en..."
         },
         {
             id: "crea-nj",
             nombre: "Natalia Jiménez",
             rol: "Presidenta",
-            foto: "Imagenes/Creadora2.jpg",
-            bio: "Información detallada sobre Natalia Jiménez. Liderando con visión..."
+            foto: "Imagenes/creador3.png",
+            bio: "Maestra especialista en educación infantil. Máster en educación socio constructivista.Guía montessori"
         },
         {
             id: "crea-jr",
             nombre: "Johanna Ramac",
             rol: "Secretaria",
-            foto: "Imagenes/Creadora3.jpg",
+            foto: "Imagenes/creador2.png",
             bio: "Información detallada sobre Johanna Ramac. Organizadora implacable..."
         },
         {
             id: "crea-rr",
             nombre: "Roberta Ruiz",
             rol: "Vicepresidenta",
-            foto: "Imagenes/Creadora4.jpg",
+            foto: "Imagenes/creador4.png",
             bio: "Información detallada sobre Roberta Ruiz. Apoyo estratégico en..."
         },
         {
             id: "crea-ga",
             nombre: "Gabita",
             rol: "Comunicación",
-            foto: "Imagenes/Creadora5.jpg",
+            foto: "Imagenes/creador5.png",
             bio: "Información detallada sobre Gabita. La voz del congreso..."
         }
     ],
@@ -97,7 +97,7 @@ export const congresoData = {
         { id: "ed-3", nombre: "Editorial Tres", logo: "Imagenes/Sponsor3.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Puedes adquirir nuestro catálogo completo a través de nuestra web oficial." },
         { id: "ed-4", nombre: "Editorial Cuatro", logo: "Imagenes/Sponsor4.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Nuestros juegos estarán exhibidos en la zona de demostración con preventa exclusiva." }
     ],
-    // Añadir dentro de export const congresoData = { ... }
+
     actividadesExtra: [
         {
             id: "act-1",
@@ -120,7 +120,11 @@ export const congresoData = {
         { id: "inst-5", nombre: "MiniMundos", logo: "Imagenes/institución5.png", url: "https://www.instagram.com/minimundos2022/" },
         { id: "inst-6", nombre: "Piedra Libre", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
         { id: "inst-7", nombre: "Zapada Ludica", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
-        { id: "inst-8", nombre: "Institución 8", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/" }
+        { id: "inst-8", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/" },
+        { id: "inst-9", nombre: "GeniaTeka", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
+        { id: "inst-10", nombre: "Asociación Argentina de Juegos de Mesa", logo: "Imagenes/institución10.png", url: "https://www.instagram.com/argentinajuegosdemesa/" },
+        { id: "inst-11", nombre: "Detenerse a Jugar", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
+        { id: "inst-12", nombre: "Consultoría Educativa NJ", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" }
     ],
     agendaGeneral: [
         {
