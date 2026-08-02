@@ -981,26 +981,71 @@ window.iniciarSliderInstituciones = function() {
 // if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
 
 // ==========================================
-// RENDERIZAR EDITORIALES (ZONA STANDS)
+// RENDERIZAR EDITORIALES (NUEVO SLIDER)
 // ==========================================
-window.renderizarEditoriales = function() {
-    const container = document.getElementById('editoriales-container');
-    if (!container) return;
+window.iniciarSliderEditoriales = function() {
+    const track = document.getElementById('editoriales-track');
+    if (!track) return;
 
-    let htmlCards = '<div class="editoriales-slider">';
+    // Renderizar HTML en el Track
+    let html = '';
     congresoData.editoriales.forEach(ed => {
-        htmlCards += `
-            <div class="editorial-card" onclick="abrirModalEditorial('${ed.id}')">
-                <img src="${ed.logo}" alt="${ed.nombre}">
-                <h4>${ed.nombre}</h4>
+        // Reutilizamos la clase institucion-slide para heredar los estilos del slider flex
+        html += `
+            <div class="institucion-slide editorial-card" onclick="abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
+                <img src="${ed.logo}" alt="${ed.nombre}" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
+                <h4 style="color: #046b33; margin: 0; font-size: 1.1rem;">${ed.nombre}</h4>
             </div>
         `;
     });
-    htmlCards += '</div>';
-    container.innerHTML = htmlCards;
+    track.innerHTML = html;
+
+    // Lógica de movimiento
+    let indiceActual = 0;
+    let intervaloSlider;
+    
+    function moverSlider(direccion) {
+        const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
+        const maxIndice = congresoData.editoriales.length - itemsVisibles;
+
+        // Si no hay suficientes elementos para deslizar, no hacemos nada
+        if (maxIndice <= 0) return;
+
+        if (direccion === 'next') {
+            indiceActual = indiceActual >= maxIndice ? 0 : indiceActual + 1;
+        } else {
+            indiceActual = indiceActual <= 0 ? maxIndice : indiceActual - 1;
+        }
+
+        const slideWidth = track.children[0].getBoundingClientRect().width;
+        // 20px es el gap configurado
+        track.style.transform = `translateX(-${indiceActual * (slideWidth + 20)}px)`;
+    }
+
+    // Eventos de los botones
+    document.getElementById('btn-next-edit').addEventListener('click', () => {
+        moverSlider('next');
+        reiniciarIntervalo();
+    });
+    document.getElementById('btn-prev-edit').addEventListener('click', () => {
+        moverSlider('prev');
+        reiniciarIntervalo();
+    });
+
+    // Auto-play
+    function iniciarIntervalo() {
+        intervaloSlider = setInterval(() => moverSlider('next'), 10000);
+    }
+    function reiniciarIntervalo() {
+        clearInterval(intervaloSlider);
+        iniciarIntervalo();
+    }
+
+    // Solo iniciar auto-play si hay suficientes elementos
+    if (congresoData.editoriales.length > (window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1))) {
+        iniciarIntervalo();
+    }
 };
-
-
 
 // ==========================================
 // INICIALIZACIÓN GLOBAL
@@ -1055,7 +1100,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
     if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
     if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
-    if(typeof window.renderizarEditoriales === 'function') window.renderizarEditoriales();
+    
+    // Nueva llamada al slider de editoriales
+    if(typeof window.iniciarSliderEditoriales === 'function') window.iniciarSliderEditoriales();
+    
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
     if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();

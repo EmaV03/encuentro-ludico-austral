@@ -106,10 +106,16 @@ export const congresoData = {
         ]
     },
     editoriales: [
-        { id: "ed-1", nombre: "Editorial Uno", logo: "Imagenes/Sponsor1.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Disponibles para probar en la ludoteca principal del evento y en tiendas especializadas." },
-        { id: "ed-2", nombre: "Editorial Dos", logo: "Imagenes/Sponsor2.jpg", instagram: "https://instagram.com/congresoabj", web: "", dondeEncontrar: "Venta directa exclusiva en nuestro stand durante los 3 días del congreso." },
-        { id: "ed-3", nombre: "Editorial Tres", logo: "Imagenes/Sponsor3.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Puedes adquirir nuestro catálogo completo a través de nuestra web oficial." },
-        { id: "ed-4", nombre: "Editorial Cuatro", logo: "Imagenes/Sponsor4.jpg", instagram: "https://instagram.com/congresoabj", web: "https://www.google.com", dondeEncontrar: "Nuestros juegos estarán exhibidos en la zona de demostración con preventa exclusiva." }
+        { id: "ed-1", nombre: "Espiritu Guerrero", logo: "Imagenes/editorial1.png", instagram: "https://www.instagram.com/espirituguerreroeditor/", web: "https://www.espirituguerrero.com.ar/cl/quienes-somos/", dondeEncontrar: "Disponibles para probar en la ludoteca principal del evento y en tiendas especializadas." },
+        { id: "ed-2", nombre: "Pulga Escapista", logo: "Imagenes/editorial2.png", instagram: "https://www.instagram.com/pulgaescapista/", web: "https://pulgaescapista.com.ar/", dondeEncontrar: "Venta directa exclusiva en nuestro stand durante los 3 días del congreso." },
+        { id: "ed-3", nombre: "Jugandera", logo: "Imagenes/editorial3.png", instagram: "https://www.instagram.com/jugandera.ok/", web: "https://www.jugandera.com/", dondeEncontrar: "Puedes adquirir nuestro catálogo completo a través de nuestra web oficial." },
+        { id: "ed-4", nombre: "Compostate Bien El Juego", logo: "Imagenes/editorial4.png", instagram: "https://www.instagram.com/compostate.bien/", web: "https://compostatebien.com.ar/", dondeEncontrar: "Nuestros juegos estarán exhibidos en la zona de demostración con preventa exclusiva." },
+        { id: "ed-5", nombre: "El Dragon Azul", logo: "Imagenes/editorial5.png", instagram: "https://www.instagram.com/eddragonazul/", web: "https://eldragonazul.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-6", nombre: "Ruibal", logo: "Imagenes/editorial6.png", instagram: "https://www.instagram.com/ruibaljuegos/", web: "https://ruibalgames.com/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." },
+        { id: "ed-7", nombre: "Kabuki", logo: "Imagenes/editorial7.png", instagram: "https://www.instagram.com/kabukieljuegoparaactuar/", web: "https://kabukieljuego.com/", dondeEncontrar: "Puedes adquirir nuestros juegos en nuestro stand y en tiendas especializadas." },
+        { id: "ed-8", nombre: "MultiVerso", logo: "Imagenes/editorial8.png", instagram: "https://www.instagram.com/juegosmultiverso/", web: "https://juegosmultiverso.mitiendanube.com/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-9", nombre: "Koan Juegos de Mesa", logo: "Imagenes/editorial9.png", instagram: "https://www.instagram.com/koan.juegos/", web: "https://www.koanjuegos.com/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." },
+        { id: "ed-10", nombre: "Carton Pintado", logo: "Imagenes/editorial10.png", instagram: "https://www.instagram.com/cartonpintado/", web: "https://cartonpintadojuegos.empretienda.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
     ],
 
     actividadesExtra: [

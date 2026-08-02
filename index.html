@@ -216,12 +216,23 @@
         </section>
 
         <!-- SECCIÓN: Zona Stands -->
-        <section id="zona-stands" class="about-section seccion-relativa">
-            <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Zona de Stands y Editoriales</h2>
-            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
-            <div id="editoriales-container" class="editoriales-slider"></div>
-            <div class="gradual-blur-bottom"></div>
-        </section>
+<section id="zona-stands" class="about-section seccion-relativa">
+    <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Zona de Stands y Editoriales</h2>
+    <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px;">Conoce a las editoriales de juegos de mesa que nos acompañan. Haz clic en cada logo para más información.</p>
+    
+    <!-- NUEVO: Contenedor del Slider para Editoriales -->
+    <div class="slider-wrapper" style="position: relative; max-width: 1000px; margin: 0 auto; overflow: hidden; padding: 0 40px;">
+        <button id="btn-prev-edit" class="slider-btn" style="left: 0;">&#10094;</button>
+        
+        <div id="editoriales-track" style="display: flex; transition: transform 0.5s ease-in-out; gap: 20px;">
+            <!-- Las tarjetas se inyectarán vía JS -->
+        </div>
+        
+        <button id="btn-next-edit" class="slider-btn" style="right: 0;">&#10095;</button>
+    </div>
+    
+    <div class="gradual-blur-bottom"></div>
+</section>
 
         <!-- SECCIÓN: Instituciones Presentes -->
         <section id="instituciones" class="about-section seccion-relativa" style="background-color: var(--white);">
