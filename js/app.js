@@ -634,7 +634,7 @@ window.darseDeBaja = async function(inscripcionId, tituloTaller) {
 };
 
 // ==========================================
-// RENDERIZAR SPONSORS
+// RENDERIZAR SPONSORS (CON EXCEPCIÓN PARA BIBLIOTECA)
 // ==========================================
 window.renderizarSponsors = function() {
     const sponsorsGrid = document.querySelector('.sponsors-grid');
@@ -642,16 +642,58 @@ window.renderizarSponsors = function() {
     sponsorsGrid.innerHTML = '';
     
     congresoData.sponsors.principales.forEach(sponsor => {
-        const card = document.createElement('a'); 
-        card.className = 'sponsor-card';
-        card.href = sponsor.url;
-        card.target = "_blank";
-        card.innerHTML = `
-            <img src="${sponsor.logo}" alt="Logo de ${sponsor.nombre}">
-            <h4 style="font-size:1.2rem; color: var(--dark); margin-top:10px;">${sponsor.nombre}</h4>
-        `;
-        sponsorsGrid.appendChild(card);
+        if (sponsor.id === "sp-biblio") {
+            // Lógica EXCLUSIVA para la Biblioteca Rivadavia (Abre Modal)
+            const card = document.createElement('div'); 
+            card.className = 'sponsor-card';
+            card.style.cursor = 'pointer'; 
+            card.onclick = () => window.abrirModalSponsor(JSON.stringify(sponsor));
+            
+            card.innerHTML = `
+                <img src="${sponsor.logo}" alt="Logo de ${sponsor.nombre}">
+                <h4 style="font-size:1.2rem; color: var(--dark); margin-top:10px;">${sponsor.nombre}</h4>
+            `;
+            sponsorsGrid.appendChild(card);
+        } else {
+            // Lógica ESTÁNDAR para el resto de los sponsors (Enlace Directo)
+            const card = document.createElement('a'); 
+            card.className = 'sponsor-card';
+            card.href = sponsor.url;
+            card.target = "_blank";
+            
+            card.innerHTML = `
+                <img src="${sponsor.logo}" alt="Logo de ${sponsor.nombre}">
+                <h4 style="font-size:1.2rem; color: var(--dark); margin-top:10px;">${sponsor.nombre}</h4>
+            `;
+            sponsorsGrid.appendChild(card);
+        }
     });
+};
+
+window.abrirModalSponsor = function(sponsorDataStr) {
+    const sponsor = JSON.parse(sponsorDataStr);
+    const modalSponsor = document.getElementById('modal-sponsor');
+    
+    if (modalSponsor) {
+        modalSponsor.innerHTML = `
+            <div class="modal-content" style="text-align: center;">
+                <button class="btn-cerrar" onclick="cerrarModalSponsor()">×</button>
+                <img src="${sponsor.logo}" alt="${sponsor.nombre}" style="max-width: 200px; height: 110px; object-fit: contain; margin: 0 auto 15px auto;">
+                <h2 style="margin: 0; color: #046b33;">${sponsor.nombre}</h2>
+                <hr style="border: 1px dashed #ccc; margin: 15px 0;">
+                <p style="font-size: 1.05rem; line-height: 1.6; text-align: left;">${sponsor.descripcion}</p>
+                <div style="margin-top: 25px;">
+                    <a href="${sponsor.url}" target="_blank" class="cta-button" style="background-color: var(--secondary); width: 100%; display: block; text-decoration: none;">🌐 Visitar Sitio Web</a>
+                </div>
+            </div>
+        `;
+        modalSponsor.classList.add('active');
+    }
+};
+
+window.cerrarModalSponsor = function() {
+    const modalSponsor = document.getElementById('modal-sponsor');
+    if (modalSponsor) modalSponsor.classList.remove('active');
 };
 
 window.iniciarHeroSlider = function() {
@@ -885,6 +927,9 @@ window.iniciarSliderInstituciones = function() {
             <a href="${inst.url}" target="_blank" class="institucion-slide">
                 <img src="${inst.logo}" alt="${inst.nombre}">
                 <h4 style="margin:0; font-size:1rem; color:#046b33;">${inst.nombre}</h4>
+                <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #666; font-weight: 500;">
+                    📍 ${inst.ubicacion}
+                </p>
             </a>
         `;
     });

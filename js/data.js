@@ -86,9 +86,18 @@ export const congresoData = {
     ],
     sponsors: {
         principales: [ 
-            { nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
-            { nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
-            { nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjescobar.com.ar/" }
+            { id: "sp-1", nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
+            { id: "sp-2", nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
+            { id: "sp-3", nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjescobar.com.ar/" },
+            { id: "sp-4", nombre: "Municipio de Bahía Blanca", logo: "Imagenes/Sponsor7.png", url: "https://www.bahia.gob.ar/" },
+            // Agregamos la Biblioteca con su ID específico
+            { 
+                id: "sp-biblio", 
+                nombre: "Biblioteca Popular Bernardino Rivadavia", 
+                logo: "Imagenes/institucion8.jpg", 
+                url: "https://www.abrbp.org.ar/",
+                descripcion: "Sede oficial del 1er Congreso Nacional de Aprendizaje Basado en Juego. Un espacio histórico dedicado a la cultura y el conocimiento." 
+            }
         ]
     },
     editoriales: [
@@ -113,18 +122,18 @@ export const congresoData = {
         }
     ],
     instituciones: [
-        { id: "inst-1", nombre: "Espacio Ridens", logo: "Imagenes/institución1.png", url: "https://www.instagram.com/espacioridens/" },
-        { id: "inst-2", nombre: "Instituto Superior Don Bosco", logo: "Imagenes/institución2.png", url: "https://www.instagram.com/donbosco_rosario/" },
-        { id: "inst-3", nombre: "Instituto Yuguets", logo: "Imagenes/institución3.png", url: "https://www.instagram.com/institutoyuguets/" },
-        { id: "inst-4", nombre: "Ludicamente", logo: "Imagenes/institución4.png", url: "https://www.instagram.com/ludicamente_juegos/" },
-        { id: "inst-5", nombre: "MiniMundos", logo: "Imagenes/institución5.png", url: "https://www.instagram.com/minimundos2022/" },
-        { id: "inst-6", nombre: "Piedra Libre", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
-        { id: "inst-7", nombre: "Zapada Ludica", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
-        { id: "inst-8", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/" },
-        { id: "inst-9", nombre: "GeniaTeka", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
-        { id: "inst-10", nombre: "Asociación Argentina de Juegos de Mesa", logo: "Imagenes/institución10.png", url: "https://www.instagram.com/argentinajuegosdemesa/" },
-        { id: "inst-11", nombre: "Detenerse a Jugar", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
-        { id: "inst-12", nombre: "Consultoría Educativa NJ", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" }
+        { id: "inst-1", nombre: "Espacio Ridens", ubicacion: "Villa Maria", logo: "Imagenes/institución1.png", url: "https://www.instagram.com/espacioridens/" },
+        { id: "inst-2", nombre: "Instituto Superior Don Bosco", ubicacion: "Rosario", logo: "Imagenes/institución2.png", url: "https://www.instagram.com/donbosco_rosario/" },
+        { id: "inst-3", nombre: "Instituto Yuguets", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución3.png", url: "https://www.instagram.com/institutoyuguets/" },
+        { id: "inst-4", nombre: "Ludicamente", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución4.png", url: "https://www.instagram.com/ludicamente_juegos/" },
+        { id: "inst-5", nombre: "MiniMundos", ubicacion: "Bahía Blanca", logo: "Imagenes/institución5.png", url: "https://www.instagram.com/minimundos2022/" },
+        { id: "inst-6", nombre: "Piedra Libre", ubicacion: "Bahía Blanca", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
+        { id: "inst-7", nombre: "Zapada Ludica", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
+        { id: "inst-8", nombre: "Asociación Argentina de Juegos de Mesa", ubicacion: "Nacional", logo: "Imagenes/institución10.png", url: "https://www.instagram.com/argentinajuegosdemesa/" },
+        { id: "inst-9", nombre: "Detenerse a Jugar", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
+        { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
+        { id: "inst-11", nombre: "GeniaTeka", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
+        { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" }
     ],
     agendaGeneral: [
         {
