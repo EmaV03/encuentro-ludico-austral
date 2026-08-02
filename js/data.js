@@ -8,10 +8,10 @@ export const congresoData = {
     creadoras: [
         {
             id: "crea-sv",
-            nombre: "Sandra Vissani",
+            nombre: "Sandra E. Vissani",
             rol: "Finanzas",
             foto: "Imagenes/creador1.png",
-            bio: "Información detallada sobre Sandra Vissani. Experta en..."
+            bio: "Master en Gamificacion y Narrativa transmedia. Técnica Nac. en recreación. Técnica ludotecaria con especialización en creación de juegos y juguetes. Diplomada Univ. en creación de juegos de mesa. Coach lúdica empresarial"
         },
         {
             id: "crea-nj",
@@ -25,14 +25,14 @@ export const congresoData = {
             nombre: "Johanna Ramac",
             rol: "Secretaria",
             foto: "Imagenes/creador2.png",
-            bio: "Información detallada sobre Johanna Ramac. Organizadora implacable..."
+            bio: "Estudiante avanzada en ciencias de la educación"
         },
         {
             id: "crea-rr",
             nombre: "Roberta Ruiz",
             rol: "Vicepresidenta",
             foto: "Imagenes/creador4.png",
-            bio: "Información detallada sobre Roberta Ruiz. Apoyo estratégico en..."
+            bio: "Profesional en ciencias de la educación"
         },
         {
             id: "crea-ga",
@@ -49,7 +49,8 @@ export const congresoData = {
             avatar: "OR", 
             titulo: "Magisterio especializado en juegos y didáctica", 
             bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", 
-            web: "" 
+            web: "",
+            ponencia: "Sábado: Del juego al aprendizaje, cómo adaptar juegos al aula sin perder su magia."
         },
         { 
             id: "exp-fo", 
@@ -57,7 +58,8 @@ export const congresoData = {
             avatar: "FO", 
             titulo: "Doctor en Educación", 
             bio: "Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO. Maestro en administración educativa, especializado en estrategias para el aprendizaje. Licenciado en Diseño.", 
-            web: "" 
+            web: "",
+            ponencia: "Domingo 09:30 - 10:30: Cuando jugar transforma el aprendizaje: el ABJ como puente hacia la transferencia del conocimiento."
         },
         { 
             id: "exp-se", 
@@ -65,7 +67,8 @@ export const congresoData = {
             avatar: "SE", 
             titulo: "Licenciada en Psicología Clínica", 
             bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", 
-            web: "" 
+            web: "",
+            ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Alejandra Pytel)."
         },
         { 
             id: "exp-rl", 
@@ -73,7 +76,8 @@ export const congresoData = {
             avatar: "RL", 
             titulo: "Doctor en Ocio y Desarrollo Humano", 
             bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", 
-            web: "" 
+            web: "",
+            ponencia: "Lunes: De la Recreación a la Ludificación: fundamentos para un aprendizaje mediado por la lúdica."
         },
         { 
             id: "exp-ap", 
@@ -81,7 +85,8 @@ export const congresoData = {
             avatar: "AP", 
             titulo: "Licenciada en Psicología MP 3182", 
             bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", 
-            web: "" 
+            web: "",
+            ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Solange Estevez)."
         }
     ],
     sponsors: {
@@ -143,7 +148,7 @@ export const congresoData = {
             eventos: [
                 { hora: "9:00hs", titulo: "ACREDITACIÓN" },
                 { hora: "9:30hs", titulo: "APERTURA" },
-                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL - Oriol Ripoll" },
                 { hora: "14:00HS", titulo: "TALLERES" },
                 { hora: "15:45HS", titulo: "TALLERES" },
                 { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
@@ -154,8 +159,8 @@ export const congresoData = {
             dia: "2º DÍA",
             fecha: "DOMINGO 16",
             eventos: [
-                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL" },
-                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL - Fernando Ortiz Cueva" },
+                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL - Solange Estevez y Alejandra Pytel" },
                 { hora: "14:00HS", titulo: "TALLERES" },
                 { hora: "15:45HS", titulo: "TALLERES" },
                 { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
@@ -166,7 +171,7 @@ export const congresoData = {
             dia: "3er DÍA",
             fecha: "LUNES 17",
             eventos: [
-                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL" },
+                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL - Ricardo Lema Álvarez" },
                 { hora: "10:30hs", titulo: "TALLERES" },
                 { hora: "14:00HS", titulo: "CIERRE" },
                 { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }

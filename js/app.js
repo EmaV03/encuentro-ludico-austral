@@ -761,7 +761,7 @@ window.abrirModalExpositor = function(expId) {
                 <hr style="border: 1px dashed #ccc; margin: 25px 0;">
                 
                 <h3 style="text-align: left; color: #046b33; font-size: 1.2rem;">Ponencia que dicta:</h3>
-                <p style="color: #999; font-style: italic; text-align: left; margin-top: 5px;">De momento esta información no está disponible.</p>
+                <p style="color: #555; text-align: left; margin-top: 5px; font-weight: bold;">${expositor.ponencia ? expositor.ponencia : 'De momento esta información no está disponible.'}</p>
             </div>
         `;
         modalExpositor.classList.add('active');
