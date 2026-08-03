@@ -110,7 +110,7 @@ export const congresoData = {
         { id: "inst-6", nombre: "Piedra Libre", ubicacion: "Bahía Blanca", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
         { id: "inst-7", nombre: "Zapada Ludica", ubicacion: "Sedes varias", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
         { id: "inst-8", nombre: "Asociación Argentina de Juegos de Mesa", ubicacion: "Nacional", logo: "Imagenes/institución10.png", url: "https://www.instagram.com/argentinajuegosdemesa/" },
-        { id: "inst-9", nombre: "Detenerse a Jugar", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
+        { id: "inst-9", nombre: "Detenerse a Jugar", ubicacion: "Buenos Aires", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
         { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Bahía Blanca", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
         { id: "inst-11", nombre: "GeniaTeka", ubicacion: "San Martin, Prov. Buenos Aires", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
         { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" },
