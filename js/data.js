@@ -27,11 +27,11 @@ export const congresoData = {
             `}
     ],
     expositores: [
-        { id: "exp-or", nombre: "Oriol Ripoll", avatar: "OR", titulo: "Magisterio especializado en juegos y didáctica", bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", web: "", ponencia: "Sábado: Del juego al aprendizaje, cómo adaptar juegos al aula sin perder su magia." },
-        { id: "exp-fo", nombre: "Fernando Ortiz Cueva", avatar: "FO", titulo: "Doctor en Educación", bio: "Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO. Maestro en administración educativa, especializado en estrategias para el aprendizaje. Licenciado en Diseño.", web: "", ponencia: "Domingo 09:30 - 10:30: Cuando jugar transforma el aprendizaje: el ABJ como puente hacia la transferencia del conocimiento." },
-        { id: "exp-se", nombre: "Lic. Solange Estevez", avatar: "SE", titulo: "Licenciada en Psicología Clínica", bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Alejandra Pytel)." },
-        { id: "exp-rl", nombre: "Dr. Ricardo Lema Álvarez", avatar: "RL", titulo: "Doctor en Ocio y Desarrollo Humano", bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", web: "", ponencia: "Lunes: De la Recreación a la Ludificación: fundamentos para un aprendizaje mediado por la lúdica." },
-        { id: "exp-ap", nombre: "Lic. Alejandra Pytel", avatar: "AP", titulo: "Licenciada en Psicología MP 3182", bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Solange Estevez)." }
+        { id: "exp-or", nombre: "Oriol Ripoll <img src='https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Catalonia.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Cataluña'>", avatar: "OR", titulo: "Magisterio especializado en juegos y didáctica", bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", web: "", ponencia: "Sábado 10:30 - 12:00: Del juego al aprendizaje, cómo adaptar juegos al aula sin perder su magia." },
+        { id: "exp-fo", nombre: "Fernando Ortiz Cueva <img src='https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='México'>", avatar: "FO", titulo: "Doctor en Educación", bio: "Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO. Maestro en administración educativa, especializado en estrategias para el aprendizaje. Licenciado en Diseño.", web: "", ponencia: "Domingo 09:30 - 10:30: Cuando jugar transforma el aprendizaje: el ABJ como puente hacia la transferencia del conocimiento." },
+        { id: "exp-se", nombre: "Lic. Solange Estevez <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "SE", titulo: "Licenciada en Psicología Clínica", bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Alejandra Pytel)." },
+        { id: "exp-rl", nombre: "Dr. Ricardo Lema Álvarez <img src='https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Uruguay'>", avatar: "RL", titulo: "Doctor en Ocio y Desarrollo Humano", bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", web: "", ponencia: "Lunes 9:30 - 10:30: De la Recreación a la Ludificación: fundamentos para un aprendizaje mediado por la lúdica." },
+        { id: "exp-ap", nombre: "Lic. Alejandra Pytel <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "AP", titulo: "Licenciada en Psicología MP 3182", bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Solange Estevez)." }
     ],
     sponsors: {
         principales: [ 
@@ -57,7 +57,7 @@ export const congresoData = {
         { id: "ed-11", nombre: "Top Toys", logo: "Imagenes/editorial11.png", instagram: "https://www.instagram.com/top_toysok/", web: "https://www.toptoys.ar/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." }
     ],
     actividadesExtra: [
-        { id: "act-1", nombre: "Actividad Extra 1", imagen: "Imagenes/Actividad1.jpg", descripcion: `
+        { id: "act-1", nombre: "CICO", imagen: "Imagenes/actextra1.png", descripcion: `
                 <div style="text-align: left;">
                     <p style="margin-top: 0;"><strong>📅 Viernes 14/8 | ⏰ 15:30 hrs | 🗣️ Charla Oriol Ripoll</strong><br>
                     <strong>Juegos para llevar en el bolsillo - Taller en abierto para familias</strong><br>
@@ -84,7 +84,7 @@ export const congresoData = {
                 <strong>📍 Lugar:</strong> Quincho Estación Homoludens (Av. Cerri 715, Bahía Blanca)</p>
                 <p><strong>💵 Aranceles:</strong><br>
                 • General: $30.000 por persona<br>
-                • Descuento especial (Asistentes al Congreso): $15.000 por persona</p>
+                • Descuento especial (Asistentes al Congreso y participantes de Bahía Prototipos 2025): $15.000 por persona</p>
                 <p><strong>💡 ¿Qué incluye el encuentro?</strong></p>
                 <ul style="text-align: left; padding-left: 20px; margin-top: 5px;">
                     <li style="margin-bottom: 8px;"><strong>Charla y taller práctico:</strong> "¿Qué es un buen juego? Evaluar prototipos con mirada crítica" a cargo de Oriol Ripoll - Barcelona, España (Cofundador de 'Jocs al segon', profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología).</li>
@@ -92,9 +92,8 @@ export const congresoData = {
                     <li style="margin-bottom: 8px;">Criterios prácticos para evaluar prototipos y cómo adaptarlos a juegos aplicados al aprendizaje.</li>
                     <li style="margin-bottom: 8px;">Espacio de presentación, prueba de prototipos y devolución en vivo de Oriol Ripoll y Fernando Ortiz. Además estarán presentes del programa Bahia Prototipos los profesores Fabian Martinez Torre y el diseñador Julio Vecchione (ambos de Bs As).</li>
                 </ul>
-                <p style="background: #FFF9F0; padding: 10px; border-left: 4px solid #f6961a; font-style: italic; margin-top: 15px;">
-                    <strong>*Actividad adicional:*</strong> Vení el lunes de 15 a 17 hrs a probar tus juegos para todo el público en la Biblioteca Rivadavia (Av. Colón 31).
-                </p>
+                <p><strong>✨ Actividades complementarias:</strong><br>
+                • El lunes 17 de 15 a 17 hrs trae tu prototipo para que el público pueda probar tus juegos en la Biblioteca Rivadavia (Av. Colón 31).</p>
             ` 
         }
     ],
@@ -118,7 +117,7 @@ export const congresoData = {
         {
             id: "dia1", dia: "1er DÍA", fecha: "SÁBADO 15",
             eventos: [
-                { hora: "9:00hs", titulo: "ACREDITACIÓN" },
+                { hora: "9:00hs", titulo: "ACREDITACIÓN (AV. COLÓN 31)" },
                 { hora: "9:30hs", titulo: "APERTURA" },
                 { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL - Oriol Ripoll" },
                 { hora: "14:00HS", titulo: "TALLERES" },

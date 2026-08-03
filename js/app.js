@@ -186,7 +186,7 @@ window.abrirModalActividad = function(actId) {
         modalActividad.innerHTML = `
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalActividad()">×</button>
-                <div style="height: 150px; background-color: #000000; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
+                <div style="height: 150px; background-color: #FFFF; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
                     <img src="${actividad.imagen}" alt="${actividad.nombre}" onerror="this.style.display='none';" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
                 </div>
                 <h2 style="margin: 0; color: #046b33;">${actividad.nombre}</h2>
@@ -892,7 +892,7 @@ window.cambiarOrg = function(orgId, element) {
         'homo-ludens': {
             titulo: 'Homo Ludens',
             color: '#046b33', 
-            texto: 'Casa Homo Ludens es un espacio pionero en Bahía Blanca dedicado al universo del juego y las experiencias inmersivas. Con diez años de trayectoria en la ciudad, nació como una casa abierta a la comunidad para disfrutar de juegos de mesa y no tardó en expandirse, transformándose en el referente local de las salas de escape y el diseño de experiencias lúdicas. A lo largo de esta década, Homo Ludens ha sabido reinventarse y abrirse paso en distintas áreas, consolidándose como un ícono de la cultura del juego y el entretenimiento en Bahía Blanca.'
+            texto: 'Casa Homo Ludens es un espacio pionero en Argentina dedicado al universo del juego y las experiencias inmersivas. Con diez años de trayectoria en la ciudad Bahía Blanca, nació como una casa abierta a la comunidad para disfrutar de juegos de mesa y no tardó en expandirse, transformándose en el referente local de las salas de escape y el diseño de experiencias lúdicas. A lo largo de esta década, Homo Ludens ha sabido reinventarse y abrirse paso en distintas áreas, consolidándose como un ícono de la cultura del juego y el entretenimiento en todo el país. Además la empresa se ha expandido con distintas sucursales, franquicias y asesorías tanto en Argentina como Brasil.'
         },
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
