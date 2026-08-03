@@ -55,7 +55,9 @@ export const congresoData = {
         { id: "ed-9", nombre: "Koan Juegos de Mesa", logo: "Imagenes/editorial9.png", instagram: "https://www.instagram.com/koan.juegos/", web: "https://www.koanjuegos.com/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." },
         { id: "ed-10", nombre: "Carton Pintado", logo: "Imagenes/editorial10.png", instagram: "https://www.instagram.com/cartonpintado/", web: "https://cartonpintadojuegos.empretienda.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-11", nombre: "Top Toys", logo: "Imagenes/editorial11.png", instagram: "https://www.instagram.com/top_toysok/", web: "https://www.toptoys.ar/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." },
-        { id: "ed-12", nombre: "Busca Prehistoria", logo: "Imagenes/institucion14.png", instagram: "https://www.instagram.com/buscaypintaprehistoria/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
+        { id: "ed-12", nombre: "Busca Prehistoria", logo: "Imagenes/institucion14.png", instagram: "https://www.instagram.com/buscaypintaprehistoria/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-13", nombre: "Tekun", logo: "Imagenes/editorial13.png", instagram: "https://www.instagram.com/tekunjuegos/", web: "https://tekunjuegos.com/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-14", nombre: "Colorido Juegos", logo: "Imagenes/editorial12.png", instagram: "https://www.instagram.com/coloridojuegos/", web: "https://coloridojuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
     ],
     actividadesExtra: [
         { id: "act-1", nombre: "CICO", imagen: "Imagenes/actextra1.png", descripcion: `
@@ -101,17 +103,17 @@ export const congresoData = {
     instituciones: [
         { id: "inst-1", nombre: "Espacio Ridens", ubicacion: "Villa Maria", logo: "Imagenes/institución1.png", url: "https://www.instagram.com/espacioridens/" },
         { id: "inst-2", nombre: "Instituto Superior Don Bosco", ubicacion: "Rosario", logo: "Imagenes/institución2.png", url: "https://www.instagram.com/donbosco_rosario/" },
-        { id: "inst-3", nombre: "Instituto Yuguets", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución3.png", url: "https://www.instagram.com/institutoyuguets/" },
+        { id: "inst-3", nombre: "Instituto Yuguets", ubicacion: "Buenos Aires", logo: "Imagenes/institución3.png", url: "https://www.instagram.com/institutoyuguets/" },
         { id: "inst-4", nombre: "Ludicamente", ubicacion: "CABA/AMBA", logo: "Imagenes/institución4.png", url: "https://www.instagram.com/ludicamente_juegos/" },
         { id: "inst-5", nombre: "MiniMundos", ubicacion: "Bahía Blanca", logo: "Imagenes/institución5.png", url: "https://www.instagram.com/minimundos2022/" },
         { id: "inst-6", nombre: "Piedra Libre", ubicacion: "Bahía Blanca", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
         { id: "inst-7", nombre: "Zapada Ludica", ubicacion: "Sedes varias", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
         { id: "inst-8", nombre: "Asociación Argentina de Juegos de Mesa", ubicacion: "Nacional", logo: "Imagenes/institución10.png", url: "https://www.instagram.com/argentinajuegosdemesa/" },
         { id: "inst-9", nombre: "Detenerse a Jugar", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
-        { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
-        { id: "inst-11", nombre: "GeniaTeka", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
+        { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Bahía Blanca", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
+        { id: "inst-11", nombre: "GeniaTeka", ubicacion: "San Martin, Prov. Buenos Aires", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
         { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" },
-        { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Bahía Blanca", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" }
+        { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Buenos Aires", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" }
     ],
     agendaGeneral: [
         {
