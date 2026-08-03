@@ -897,7 +897,7 @@ window.cambiarOrg = function(orgId, element) {
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
             color: '#f6961a', 
-            texto: 'Nuestra rama educativa se enfoca en llevar el poder de los juegos de mesa directamente a las aulas y a los profesionales de la enseñanza.'
+            texto: '<p>Homo ludens Educación es un programa pedagógico surgido en Homo ludens, en Bahía Blanca, que promueve el Aprendizaje Basado en Juegos (ABJ) para transformar la experiencia educativa en todos los niveles educativos. A través del juego de mesa y diversas dinámicas de ingenio, la iniciativa busca integrar los contenidos educativos con la diversión, ofreciendo talleres educativos que muestran como mediante el juego de mesa se pueden reforzar áreas clave como la matemática, la comprensión lectora, la lógica y el pensamiento crítico. Además, mediante su proyecto "De la mesa al aula", llevan tableros, juegos de mesa y estrategias de trabajo en equipo directamente a escuelas y jardines, convirtiendo el aula en un espacio colaborativo donde aprender se vuelve una experiencia motivadora y significativa. Tambien desde el año pasado se implementa el Programa "Biblios ludicas" en bibliotecas publicas de todo el pais. Ambos programas se realizan gracias al acompañamiento de Cultura de la Cooperativa Obrera. Además Homo ludens educación cuenta con un club docente con el objetivo de dar a conocer los juegos y sus aplicaciones aulicas'
         }
     };
 

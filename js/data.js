@@ -29,16 +29,16 @@ export const congresoData = {
     expositores: [
         { id: "exp-or", nombre: "Oriol Ripoll <img src='https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Catalonia.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Cataluña'>", avatar: "OR", titulo: "Magisterio especializado en juegos y didáctica", bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", web: "", ponencia: "Sábado 10:30 - 12:00: Del juego al aprendizaje, cómo adaptar juegos al aula sin perder su magia." },
         { id: "exp-fo", nombre: "Fernando Ortiz Cueva <img src='https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='México'>", avatar: "FO", titulo: "Doctor en Educación", bio: "Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO. Maestro en administración educativa, especializado en estrategias para el aprendizaje. Licenciado en Diseño.", web: "", ponencia: "Domingo 09:30 - 10:30: Cuando jugar transforma el aprendizaje: el ABJ como puente hacia la transferencia del conocimiento." },
-        { id: "exp-se", nombre: "Lic. Solange Estevez <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "SE", titulo: "Licenciada en Psicología Clínica", bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Alejandra Pytel)." },
-        { id: "exp-rl", nombre: "Dr. Ricardo Lema Álvarez <img src='https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Uruguay'>", avatar: "RL", titulo: "Doctor en Ocio y Desarrollo Humano", bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", web: "", ponencia: "Lunes 9:30 - 10:30: De la Recreación a la Ludificación: fundamentos para un aprendizaje mediado por la lúdica." },
-        { id: "exp-ap", nombre: "Lic. Alejandra Pytel <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "AP", titulo: "Licenciada en Psicología MP 3182", bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Solange Estevez)." }
+        { id: "exp-se", nombre: "Solange Estevez <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "SE", titulo: "Licenciada en Psicología Clínica", bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Alejandra Pytel)." },
+        { id: "exp-rl", nombre: "Ricardo Lema Álvarez <img src='https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Uruguay'>", avatar: "RL", titulo: "Doctor en Ocio y Desarrollo Humano", bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", web: "", ponencia: "Lunes 9:30 - 10:30: De la Recreación a la Ludificación: fundamentos para un aprendizaje mediado por la lúdica." },
+        { id: "exp-ap", nombre: "Alejandra Pytel <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "AP", titulo: "Licenciada en Psicología", bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Solange Estevez)." }
     ],
     sponsors: {
         principales: [ 
             { id: "sp-1", nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
             { id: "sp-2", nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
             { id: "sp-3", nombre: "Cooperativa Obrera", logo: "Imagenes/sponsor7.png", url: "https://www.cooperativaobrera.coop/" },
-            { id: "sp-4", nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjescobar.com.ar/" },
+            { id: "sp-4", nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjbahiablanca.com.ar/" },
             { id: "sp-5", nombre: "Municipio de Bahía Blanca", logo: "Imagenes/Sponsor6.jpeg", url: "https://www.bahia.gob.ar/" },
             { id: "sp-biblio", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/", descripcion: "La Asociación Bernardino Rivadavia - Biblioteca Popular es uno de los faros culturales más antiguos e importantes del sur argentino. Ubicada en Avenida Colón 31, en pleno centro histórico de Bahía Blanca, su trayectoria está íntimamente ligada al desarrollo e identidad de la ciudad." }
         ]
@@ -66,6 +66,7 @@ export const congresoData = {
                     <p><strong>📅 Viernes 14/8 | ⏰ 16:45 hrs | 🎭 Happening Teatral</strong><br>
                     Es una experiencia de teatro inmersivo y juego comunitario basada en el cuento clásico de Caperucita Roja. A diferencia del teatro tradicional, no hay un escenario distante ni espectadores pasivos: todos los chicos y familias son protagonistas.<br>
                     A través del arte, las canciones y la caracterización, transformamos el espacio para reflexionar sobre el cuidado, la compañía y la construcción del camino colectivo.</p>
+                    <p><em>Con casi 30 años de trayectoria, el Instituto Superior Yuguets nació en 1996 como el Centro Yuguets Argentina, una ONG dedicada a investigar y difundir el valor transformador del juego. A partir de esa sólida experiencia territorial, la institución evolucionó hasta consolidarse como un centro educativo pionero que combina el trabajo de campo con la formación académica oficial. Es la casa de la primera Tecnicatura en Ludotecas con Diseño de Juegos y Juguetes, además de ofrecer una variada propuesta de cursos online para profesionales del ámbito educativo, social y recreativo.</em></p>
                     
                     <p><strong>📅 Sábado 15/8 | ⏰ 16:30 hrs | 🏆 Profesor Ricardo Acuña</strong><br>
                     <strong>"Beneficios de los Juegos y Deportes Alternativos"</strong><br>
@@ -73,7 +74,6 @@ export const congresoData = {
                     
                     <hr style="border: 1px dashed #ccc; margin: 15px 0;">
                     
-                    <p><em>Con casi 30 años de trayectoria, el Instituto Superior Yuguets nació en 1996 como el Centro Yuguets Argentina, una ONG dedicada a investigar y difundir el valor transformador del juego. A partir de esa sólida experiencia territorial, la institución evolucionó hasta consolidarse como un centro educativo pionero que combina el trabajo de campo con la formación académica oficial. Es la casa de la primera Tecnicatura en Ludotecas con Diseño de Juegos y Juguetes, además de ofrecer una variada propuesta de cursos online para profesionales del ámbito educativo, social y recreativo.</em></p>
                 </div>
             ` 
         },
@@ -93,7 +93,7 @@ export const congresoData = {
                     <li style="margin-bottom: 8px;">Espacio de presentación, prueba de prototipos y devolución en vivo de Oriol Ripoll y Fernando Ortiz. Además estarán presentes del programa Bahia Prototipos los profesores Fabian Martinez Torre y el diseñador Julio Vecchione (ambos de Bs As).</li>
                 </ul>
                 <p><strong>✨ Actividades complementarias:</strong><br>
-                • El lunes 17 de 15 a 17 hrs trae tu prototipo para que el público pueda probar tus juegos en la Biblioteca Rivadavia (Av. Colón 31).</p>
+                • Si estás desarrollando un juego y buscas feedback real para llevarlo al siguiente nivel, ¡esta es tu oportunidad! Este lunes 17 de agosto, entre las 15 y las 17 hs, abrimos las puertas a jugadores para que prueben tu proyecto en vivo. Y si querés continuar puliendo mecánicas o ajustando detalles, acordate de que Estación Homoludens te espera todos los miércoles y domingos para seguir jugando y testeando.</p>
             ` 
         }
     ],
@@ -119,29 +119,29 @@ export const congresoData = {
             eventos: [
                 { hora: "9:00hs", titulo: "ACREDITACIÓN (AV. COLÓN 31)" },
                 { hora: "9:30hs", titulo: "APERTURA" },
-                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL - Oriol Ripoll" },
+                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL: ORIOL RIPOLL" },
                 { hora: "14:00HS", titulo: "TALLERES" },
                 { hora: "15:45HS", titulo: "TALLERES" },
-                { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
+                { hora: "DE 12HS A 19HS", titulo: "STANDS DE EDITORIALES" }
             ]
         },
         {
             id: "dia2", dia: "2º DÍA", fecha: "DOMINGO 16",
             eventos: [
-                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL - Fernando Ortiz Cueva" },
-                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL - Solange Estevez y Alejandra Pytel" },
+                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL: FERNANDO ORTIZ CUEVA" },
+                { hora: "10:30hs", titulo: "PONENCIA MAGISTRAL: SOLANGE ESTEVEZ Y ALEJANDRA PYTEL" },
                 { hora: "14:00HS", titulo: "TALLERES" },
                 { hora: "15:45HS", titulo: "TALLERES" },
-                { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
+                { hora: "DE 12HS A 19HS", titulo: "STANDS DE EDITORIALES" }
             ]
         },
         {
             id: "dia3", dia: "3er DÍA", fecha: "LUNES 17",
             eventos: [
-                { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL - Ricardo Lema Álvarez" },
+                { hora: "9:30hs", titulo: "CONFERENCIA: RICARDO LEMA ÁLVAREZ" },
                 { hora: "10:30hs", titulo: "TALLERES" },
                 { hora: "12:30HS", titulo: "CIERRE" },
-                { hora: "DE 10:30HS A 17HS", titulo: "EXPOSITORES y Zona Prototipos" }
+                { hora: "DE 14:00HS A 17HS", titulo: "STANDS DE EDITORIALES Y ZONA PROTOTIPOS" }
             ]
         }
     ],
@@ -158,7 +158,7 @@ export const congresoData = {
                     { id: "d1-m-6", titulo: "Decidir para aprender: creación de aventuras point & click en contextos educativos", ponente: "Marisa Conde", aula: "Aula Juvenil", resumen: "Diseñar y prototipar una experiencia de juego serio tipo point & click que promueva el aprendizaje significativo mediante la toma de decisiones en contextos educativos. (TRAER COMPU)", cupoMaximo: 20 }
                 ],
                 tarde: [
-                    { id: "d1-t-1", titulo: "Los juegos y sus possibilities desde una mirada editorial", ponente: "La regadera, Dragón Azul y Su2ku", aula: "Museo 3", resumen: "El encuentro propone un formato de conversatorio activo que combina el testeo directo de los juegos con la reflexión compartida sobre experiencias de implementación.", cupoMaximo: 20 },
+                    { id: "d1-t-1", titulo: "Los juegos y sus possibilities desde una mirada editorial", ponente: "Dragón Azul y Su2ku", aula: "Museo 3", resumen: "El encuentro propone un formato de conversatorio activo que combina el testeo directo de los juegos con la reflexión compartida sobre experiencias de implementación.", cupoMaximo: 20 },
                     { id: "d1-t-2", titulo: "Colorido Juegos su aplicación a contextos educativos", ponente: "Micaela Koncurat", aula: "Aula Niños", resumen: "Los participantes experimentarán los juegos de la editorial Colorido y se reflexionará sobre sus posibles aplicaciones según objetivos de aprendizaje y edades.", cupoMaximo: 20 },
                     { id: "d1-t-3", titulo: "Juegos matemáticos y de ciencias sociales en primaria", ponente: "Fernando Ezcurra", aula: "Aula Juvenil", resumen: "Muestra de juegos realizados por niños y niñas  de escuelas primarias de la Ciudad de Buenos Aires. Ver cómo un mismo juego sirve para trabajar transversalmente algunos contenidos de la escolaridad.", cupoMaximo: 20 },
                     { id: "d1-t-4", titulo: "QuoriDUA: Caminos para Aprender Jugando", ponente: "Liliana Mendez", aula: "Museo 2", resumen: "Identificar barreras para enseñar y aprender, diseño universal de aprendizaje y juego. Quoridor inclusivo, reversionando las prácticas.", cupoMaximo: 20 },
