@@ -19,7 +19,7 @@ export const congresoData = {
             <p>Guía montessori</p>
             ` },
         { id: "crea-jr", nombre: "Johanna Ramac", rol: "Secretaria", foto: "Imagenes/creador2.png", bio: "Estudiante avanzada en ciencias de la educación" },
-        { id: "crea-rr", nombre: "Roberta Ruiz", rol: "Vicepresidenta", foto: "Imagenes/creador4.png", bio: "Profesional en ciencias de la educación" },
+        { id: "crea-rr", nombre: "Roberta Ruiz Rivas", rol: "Vicepresidenta", foto: "Imagenes/creador4.png", bio: "Profesional en ciencias de la educación" },
         { id: "crea-ga", nombre: "Gabita", rol: "Comunicación", foto: "Imagenes/creador5.png", bio: `
             <p>Productora audiovisual</p>
             <p>Dirección de Adquisiciones de los canales Encuentro</p>
@@ -53,10 +53,30 @@ export const congresoData = {
         { id: "ed-7", nombre: "Kabuki", logo: "Imagenes/editorial7.png", instagram: "https://www.instagram.com/kabukieljuegoparaactuar/", web: "https://kabukieljuego.com/", dondeEncontrar: "Puedes adquirir nuestros juegos en nuestro stand y en tiendas especializadas." },
         { id: "ed-8", nombre: "MultiVerso", logo: "Imagenes/editorial8.png", instagram: "https://www.instagram.com/juegosmultiverso/", web: "https://juegosmultiverso.mitiendanube.com/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-9", nombre: "Koan Juegos de Mesa", logo: "Imagenes/editorial9.png", instagram: "https://www.instagram.com/koan.juegos/", web: "https://www.koanjuegos.com/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." },
-        { id: "ed-10", nombre: "Carton Pintado", logo: "Imagenes/editorial10.png", instagram: "https://www.instagram.com/cartonpintado/", web: "https://cartonpintadojuegos.empretienda.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
+        { id: "ed-10", nombre: "Carton Pintado", logo: "Imagenes/editorial10.png", instagram: "https://www.instagram.com/cartonpintado/", web: "https://cartonpintadojuegos.empretienda.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-11", nombre: "Top Toys", logo: "Imagenes/editorial11.png", instagram: "https://www.instagram.com/top_toysok/", web: "https://www.toptoys.ar/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." }
     ],
     actividadesExtra: [
-        { id: "act-1", nombre: "Actividad Extra 1", imagen: "Imagenes/Actividad1.jpg", descripcion: "Descripción detallada de la primera actividad extra. Aquí puedes incluir horarios, cupos, requisitos especiales o de qué trata la dinámica." },
+        { id: "act-1", nombre: "Actividad Extra 1", imagen: "Imagenes/Actividad1.jpg", descripcion: `
+                <div style="text-align: left;">
+                    <p style="margin-top: 0;"><strong>📅 Viernes 14/8 | ⏰ 15:30 hrs | 🗣️ Charla Oriol Ripoll</strong><br>
+                    <strong>Juegos para llevar en el bolsillo - Taller en abierto para familias</strong><br>
+                    Taller práctico para descubrir juegos sencillos y familiares, con los materiales que puedes llevar en el bolso o en el bolsillo. Es una batería de juegos que puedan usarse en momentos de espera, viajes o tiempos muertos. No solo veremos ejemplos, sino que pensaremos juntos cómo adaptarlos a distintas edades y situaciones familiares.</p>
+                    
+                    <p><strong>📅 Viernes 14/8 | ⏰ 16:45 hrs | 🎭 Happening Teatral</strong><br>
+                    Es una experiencia de teatro inmersivo y juego comunitario basada en el cuento clásico de Caperucita Roja. A diferencia del teatro tradicional, no hay un escenario distante ni espectadores pasivos: todos los chicos y familias son protagonistas.<br>
+                    A través del arte, las canciones y la caracterización, transformamos el espacio para reflexionar sobre el cuidado, la compañía y la construcción del camino colectivo.</p>
+                    
+                    <p><strong>📅 Sábado 15/8 | ⏰ 16:30 hrs | 🏆 Profesor Ricardo Acuña</strong><br>
+                    <strong>"Beneficios de los Juegos y Deportes Alternativos"</strong><br>
+                    ¿Qué pasa cuando rompemos las reglas tradicionales del deporte e introducimos nuevas formas de jugar? En esta charla, Ricardo Acuña —referente mundial en la materia— nos invita a explorar el universo de los juegos y deportes alternativos como potentes herramientas de inclusión, encuentro y desarrollo integral. A través de su trayectoria recorriendo el mundo y fundando organizaciones como CODASPORTS y la WASG, Ricardo compartirá una mirada transformadora sobre lo lúdico: una invitación a descubrir disciplinas no convencionales y a reimaginar el juego como una nueva manera de habitar el mundo.</p>
+                    
+                    <hr style="border: 1px dashed #ccc; margin: 15px 0;">
+                    
+                    <p><em>Con casi 30 años de trayectoria, el Instituto Superior Yuguets nació en 1996 como el Centro Yuguets Argentina, una ONG dedicada a investigar y difundir el valor transformador del juego. A partir de esa sólida experiencia territorial, la institución evolucionó hasta consolidarse como un centro educativo pionero que combina el trabajo de campo con la formación académica oficial. Es la casa de la primera Tecnicatura en Ludotecas con Diseño de Juegos y Juguetes, además de ofrecer una variada propuesta de cursos online para profesionales del ámbito educativo, social y recreativo.</em></p>
+                </div>
+            ` 
+        },
         { id: "act-2", nombre: "Bahía Prototipos", imagen: "Imagenes/actextra2.png", descripcion: `
             <p style="margin-top: 0;">¡Sumate a una jornada imperdible de análisis, diseño y testing de juegos!</p>
                 <p><strong>📅 Fecha:</strong> Domingo 16 de agosto de 2026<br>
@@ -82,10 +102,10 @@ export const congresoData = {
         { id: "inst-1", nombre: "Espacio Ridens", ubicacion: "Villa Maria", logo: "Imagenes/institución1.png", url: "https://www.instagram.com/espacioridens/" },
         { id: "inst-2", nombre: "Instituto Superior Don Bosco", ubicacion: "Rosario", logo: "Imagenes/institución2.png", url: "https://www.instagram.com/donbosco_rosario/" },
         { id: "inst-3", nombre: "Instituto Yuguets", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución3.png", url: "https://www.instagram.com/institutoyuguets/" },
-        { id: "inst-4", nombre: "Ludicamente", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución4.png", url: "https://www.instagram.com/ludicamente_juegos/" },
+        { id: "inst-4", nombre: "Ludicamente", ubicacion: "CABA/AMBA", logo: "Imagenes/institución4.png", url: "https://www.instagram.com/ludicamente_juegos/" },
         { id: "inst-5", nombre: "MiniMundos", ubicacion: "Bahía Blanca", logo: "Imagenes/institución5.png", url: "https://www.instagram.com/minimundos2022/" },
         { id: "inst-6", nombre: "Piedra Libre", ubicacion: "Bahía Blanca", logo: "Imagenes/institución6.png", url: "https://www.instagram.com/piedralibrerecreacion/" },
-        { id: "inst-7", nombre: "Zapada Ludica", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
+        { id: "inst-7", nombre: "Zapada Ludica", ubicacion: "Sedes varias", logo: "Imagenes/institución7.png", url: "https://www.instagram.com/zapadaludicala/" },
         { id: "inst-8", nombre: "Asociación Argentina de Juegos de Mesa", ubicacion: "Nacional", logo: "Imagenes/institución10.png", url: "https://www.instagram.com/argentinajuegosdemesa/" },
         { id: "inst-9", nombre: "Detenerse a Jugar", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institucion11.jpg", url: "https://www.facebook.com/Dtenerseajugar/" },
         { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
