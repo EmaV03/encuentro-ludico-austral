@@ -6,11 +6,25 @@ export const congresoData = {
     },
 
     creadoras: [
-        { id: "crea-sv", nombre: "Sandra E. Vissani", rol: "Finanzas", foto: "Imagenes/creador1.png", bio: "Master en Gamificacion y Narrativa transmedia. Técnica Nac. en recreación. Técnica ludotecaria con especialización en creación de juegos y juguetes. Diplomada Univ. en creación de juegos de mesa. Coach lúdica empresarial" },
-        { id: "crea-nj", nombre: "Natalia Jiménez", rol: "Presidenta", foto: "Imagenes/creador3.png", bio: "Maestra especialista en educación infantil. Máster en educación socio constructivista.Guía montessori" },
+        { id: "crea-sv", nombre: "Sandra E. Vissani", rol: "Finanzas", foto: "Imagenes/creador1.png", bio: `
+            <p>Master en Gamificacion y Narrativa transmedia</p>
+            <p>Técnica Nac. en recreación</p>
+            <p>Técnica ludotecaria con especialización en creación de juegos y juguetes</p>
+            <p>Diplomada Univ. en creación de juegos de mesa</p>
+            <p>Coach lúdica empresarial</p>
+            `},
+        { id: "crea-nj", nombre: "Natalia Jiménez", rol: "Presidenta", foto: "Imagenes/creador3.png", bio: `
+            <p>Maestra especialista en educación infantil</p>
+            <p>Máster en educación socio constructivista</p>
+            <p>Guía montessori</p>
+            ` },
         { id: "crea-jr", nombre: "Johanna Ramac", rol: "Secretaria", foto: "Imagenes/creador2.png", bio: "Estudiante avanzada en ciencias de la educación" },
         { id: "crea-rr", nombre: "Roberta Ruiz", rol: "Vicepresidenta", foto: "Imagenes/creador4.png", bio: "Profesional en ciencias de la educación" },
-        { id: "crea-ga", nombre: "Gabita", rol: "Comunicación", foto: "Imagenes/creador5.png", bio: "Información detallada sobre Gabita. La voz del congreso..." }
+        { id: "crea-ga", nombre: "Gabita", rol: "Comunicación", foto: "Imagenes/creador5.png", bio: `
+            <p>Productora audiovisual</p>
+            <p>Dirección de Adquisiciones de los canales Encuentro</p>
+            <p>Pakapaka y Deportv</p>
+            `}
     ],
     expositores: [
         { id: "exp-or", nombre: "Oriol Ripoll", avatar: "OR", titulo: "Magisterio especializado en juegos y didáctica", bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", web: "", ponencia: "Sábado: Del juego al aprendizaje, cómo adaptar juegos al aula sin perder su magia." },
@@ -43,7 +57,26 @@ export const congresoData = {
     ],
     actividadesExtra: [
         { id: "act-1", nombre: "Actividad Extra 1", imagen: "Imagenes/Actividad1.jpg", descripcion: "Descripción detallada de la primera actividad extra. Aquí puedes incluir horarios, cupos, requisitos especiales o de qué trata la dinámica." },
-        { id: "act-2", nombre: "Bahía Prototipos", imagen: "Imagenes/actextra2.png", descripcion: "Información sobre la segunda actividad. Detalles adicionales que los asistentes necesiten conocer para participar." }
+        { id: "act-2", nombre: "Bahía Prototipos", imagen: "Imagenes/actextra2.png", descripcion: `
+            <p style="margin-top: 0;">¡Sumate a una jornada imperdible de análisis, diseño y testing de juegos!</p>
+                <p><strong>📅 Fecha:</strong> Domingo 16 de agosto de 2026<br>
+                <strong>⏰ Horario:</strong> 19:30 hs<br>
+                <strong>📍 Lugar:</strong> Quincho Estación Homoludens (Av. Cerri 715, Bahía Blanca)</p>
+                <p><strong>💵 Aranceles:</strong><br>
+                • General: $30.000 por persona<br>
+                • Descuento especial (Asistentes al Congreso): $15.000 por persona</p>
+                <p><strong>💡 ¿Qué incluye el encuentro?</strong></p>
+                <ul style="text-align: left; padding-left: 20px; margin-top: 5px;">
+                    <li style="margin-bottom: 8px;"><strong>Charla y taller práctico:</strong> "¿Qué es un buen juego? Evaluar prototipos con mirada crítica" a cargo de Oriol Ripoll - Barcelona, España (Cofundador de 'Jocs al segon', profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología).</li>
+                    <li style="margin-bottom: 8px;"><strong>Charla:</strong> "Imaginar, Construir y Probar: el sello mexicano para crear prototipos" a cargo de Fernando Ortiz - Guadalajara, México (Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO, Maestro en administración educativa, especializado en estrategias para el aprendizaje, Licenciado en Diseño).</li>
+                    <li style="margin-bottom: 8px;">Criterios prácticos para evaluar prototipos y cómo adaptarlos a juegos aplicados al aprendizaje.</li>
+                    <li style="margin-bottom: 8px;">Espacio de presentación, prueba de prototipos y devolución en vivo de Oriol Ripoll y Fernando Ortiz. Además estarán presentes del programa Bahia Prototipos los profesores Fabian Martinez Torre y el diseñador Julio Vecchione (ambos de Bs As).</li>
+                </ul>
+                <p style="background: #FFF9F0; padding: 10px; border-left: 4px solid #f6961a; font-style: italic; margin-top: 15px;">
+                    <strong>*Actividad adicional:*</strong> Vení el lunes de 15 a 17 hrs a probar tus juegos para todo el público en la Biblioteca Rivadavia (Av. Colón 31).
+                </p>
+            ` 
+        }
     ],
     instituciones: [
         { id: "inst-1", nombre: "Espacio Ridens", ubicacion: "Villa Maria", logo: "Imagenes/institución1.png", url: "https://www.instagram.com/espacioridens/" },
@@ -58,7 +91,8 @@ export const congresoData = {
         { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
         { id: "inst-11", nombre: "GeniaTeka", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
         { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" },
-        { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Bahía Blanca", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" }
+        { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Bahía Blanca", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" },
+        { id: "inst-14", nombre: "Busca Prehistoria", ubicacion: "Ciudad, Provincia", logo: "Imagenes/institucion14.png", url: "https://www.instagram.com/buscaypintaprehistoria/" }
     ],
     agendaGeneral: [
         {
@@ -87,8 +121,8 @@ export const congresoData = {
             eventos: [
                 { hora: "9:30hs", titulo: "PONENCIA MAGISTRAL - Ricardo Lema Álvarez" },
                 { hora: "10:30hs", titulo: "TALLERES" },
-                { hora: "14:00HS", titulo: "CIERRE" },
-                { hora: "DE 12HS A 19HS", titulo: "EXPOSITORES" }
+                { hora: "12:30HS", titulo: "CIERRE" },
+                { hora: "DE 10:30HS A 17HS", titulo: "EXPOSITORES y Zona Prototipos" }
             ]
         }
     ],
@@ -98,18 +132,18 @@ export const congresoData = {
             modulos: {
                 manana: [
                     { id: "d1-m-1", titulo: "Ludificación de la enseñanza en Ciencias Sociales", ponente: "Ricardo Lema", aula: "Aula Niños", resumen: "La Secuencia Aprendizaje Lúdico (SALú) aplicada a la enseñanza de contenidos de historia y literatura.", cupoMaximo: 30 },
-                    { id: "d1-m-2", titulo: "La gran revolución", ponente: "Franco Toffoli y Gabriel Ferraris", aula: "Sótano", resumen: "Juego de rol masivo para aprender acerca del funcionamiento de la economía y la política de la Revolución Industrial. Juego y reflexión sobre la experiencia.", cupoMaximo: 20 },
+                    { id: "d1-m-2", titulo: "La gran revolución", ponente: "Franco Toffoli y Gabriel Ferraris", aula: "Subsuelo", resumen: "Juego de rol masivo para aprender acerca del funcionamiento de la economía y la política de la Revolución Industrial. Juego y reflexión sobre la experiencia.", cupoMaximo: 20 },
                     { id: "d1-m-3", titulo: "Juegos cooperativos no competitivos desde la neuroeducación", ponente: "Luciana Ballestero", aula: "Coffee break", resumen: "Juegos cooperativos, juegos con propósitos pedagógicos y narrativas lúdicas como parte de la formación integral de las y los estudiantes", cupoMaximo: 20 },
                     { id: "d1-m-4", titulo: "Bienestar emocional: el juego como puente para aprender, sentir y crear", ponente: "Dayana Rubira", aula: "Museo 1", resumen: "Herramientas y recursos para aplicar dinámicas lúdicas de estrategias de registro emocional y expresión creativa, fortalecer vínculos y trabajar la presencia, confianza y participación grupal.", cupoMaximo: 20 },
                     { id: "d1-m-5", titulo: "No es juego, es cerebro aprendiendo", ponente: "Natalia Felicetti", aula: "Museo 3", resumen: "Se recuperarán aportes de la neurobiología para comprender por qué jugar puede activar procesos claves para aprender, crear, equivocarse, tomar decisiones y comprometerse con una tarea.", cupoMaximo: 20 },
                     { id: "d1-m-6", titulo: "Decidir para aprender: creación de aventuras point & click en contextos educativos", ponente: "Marisa Conde", aula: "Aula Juvenil", resumen: "Diseñar y prototipar una experiencia de juego serio tipo point & click que promueva el aprendizaje significativo mediante la toma de decisiones en contextos educativos. (TRAER COMPU)", cupoMaximo: 20 }
                 ],
                 tarde: [
-                    { id: "d1-t-1", titulo: "Los juegos y sus posibilidades desde una mirada editorial", ponente: "La regadera, Dragón Azul y Su2ku", aula: "Museo 3", resumen: "El encuentro propone un formato de conversatorio activo que combina el testeo directo de los juegos con la reflexión compartida sobre experiencias de implementación.", cupoMaximo: 20 },
+                    { id: "d1-t-1", titulo: "Los juegos y sus possibilities desde una mirada editorial", ponente: "La regadera, Dragón Azul y Su2ku", aula: "Museo 3", resumen: "El encuentro propone un formato de conversatorio activo que combina el testeo directo de los juegos con la reflexión compartida sobre experiencias de implementación.", cupoMaximo: 20 },
                     { id: "d1-t-2", titulo: "Colorido Juegos su aplicación a contextos educativos", ponente: "Micaela Koncurat", aula: "Aula Niños", resumen: "Los participantes experimentarán los juegos de la editorial Colorido y se reflexionará sobre sus posibles aplicaciones según objetivos de aprendizaje y edades.", cupoMaximo: 20 },
                     { id: "d1-t-3", titulo: "Juegos matemáticos y de ciencias sociales en primaria", ponente: "Fernando Ezcurra", aula: "Aula Juvenil", resumen: "Muestra de juegos realizados por niños y niñas  de escuelas primarias de la Ciudad de Buenos Aires. Ver cómo un mismo juego sirve para trabajar transversalmente algunos contenidos de la escolaridad.", cupoMaximo: 20 },
                     { id: "d1-t-4", titulo: "QuoriDUA: Caminos para Aprender Jugando", ponente: "Liliana Mendez", aula: "Museo 2", resumen: "Identificar barreras para enseñar y aprender, diseño universal de aprendizaje y juego. Quoridor inclusivo, reversionando las prácticas.", cupoMaximo: 20 },
-                    { id: "d1-t-5", titulo: "La Chatarra Inteligente y el Alma de la Máquina, dispositivos de juego para hacer honor al arte de crear mundos", ponente: "Patricia Bibiana Ramirez y María Rosa Fernandez", aula: "Sótano", resumen: "Aprender con las manos no es solo una metáfora; invitamos, partimos, de la premisa de que las manos tienen su propia memoria y sabiduría. Al manipular lo cotidiano para resolver desafíos algorítmicos, el conocimiento no solo se entiende, sino que se aprehende: se incorpora al cuerpo y a la experiencia vital. (TRAER MATERIALES DE RECICLAJE)", cupoMaximo: 20 },
+                    { id: "d1-t-5", titulo: "La Chatarra Inteligente y el Alma de la Máquina, dispositivos de juego para hacer honor al arte de crear mundos", ponente: "Patricia Bibiana Ramirez y María Rosa Fernandez", aula: "Subsuelo", resumen: "Aprender con las manos no es solo una metáfora; invitamos, partimos, de la premisa de que las manos tienen su propia memoria y sabiduría. Al manipular lo cotidiano para resolver desafíos algorítmicos, el conocimiento no solo se entiende, sino que se aprehende: se incorpora al cuerpo y a la experiencia vital. (TRAER MATERIALES DE RECICLAJE)", cupoMaximo: 20 },
                     { id: "d1-t-6", titulo: "Aulas épicas: el poder de la narrativa y el juego", ponente: "Paula Moyano", aula: "Coffee break", resumen: "Experiencia narrativa inspirada en la mitología. Los participantes vivenciarán una aventura en la que deberán asumir el rol de héroes y enfrentarse a diversos desafíos, poniendo en juego conocimientos, estrategias y trabajo colaborativo. Pensado para alumnos de secundaria.", cupoMaximo: 20 },
                     { id: "d1-t-7", titulo: "ABJ desde la enseñanza oficial", ponente: "Instituto Yuguets", aula: "Museo 1", resumen: "Charla acerca de la formación terciaria en ludotecario, creación de juegos y juguetes. Presentación del juego culturas originarias.", cupoMaximo: 20 }
                 ]
@@ -122,19 +156,19 @@ export const congresoData = {
                     { id: "d2-m-1", titulo: "Del juego al aprendizaje: laboratorio de adaptación para el aula", ponente: "Oriol Ripoll", aula: "Aula Niños", resumen: "Taller práctico donde partiremos de juegos conocidos. Los transformaremos a juegos para gran grupo, veremos todas las formas de adaptarlos a diferentes objetivos de aprendizaje para convertirlos en propuestas educativas reales.", cupoMaximo: 30 },
                     { id: "d2-m-2", titulo: "El juego como gran enlazador de contenidos", ponente: "Marisa Torres", aula: "Aula Juvenil", resumen: "Herramientas y voluntades para implementar el juego en el aula", cupoMaximo: 20 },
                     { id: "d2-m-3", titulo: "Experiencias de juegos y abj en la provincia de mendoza", ponente: "Emanuel Sánchez y Gianina Della Gaspera", aula: "Museo 2", resumen: "Emanuel Sanchez, director de nivel secundario y docente de la licenciatura en cátedra de Lúdica y Juegoteca y espacios de infancia, asesoro proyectos de campamentos educativos, articulando la gestión con la innovación pedagógica nos contará la experiencia de la implementación de juego en Mendoza.", cupoMaximo: 20 },
-                    { id: "d2-m-4", titulo: " Juegos de educación ambiental", ponente: "Pepo Zamora", aula: "Sótano", resumen: "Presentación de juegos de la editorial Compostate bien para presentar metodología y juegos de educación ambiental.", cupoMaximo: 20 },
-                    { id: "d2-m-5", titulo: "Escape rooms educativos", ponente: "Fabian Zamit", aula: "Coffee break", resumen: "El taller pretende acercar a las y los participantes una introducción a las habilidades prácticas y los recursos necesarios para diseñar sus propios Escape Rooms educativos. Conoceremos porque estás experiencias lúdicas, caracterizadas por un contexto delimitado y un objetivo determinado, constituyen un excelente ejemplo de aprendizaje basado en juegos.", cupoMaximo: 20 },
+                    { id: "d2-m-4", titulo: " Juegos de educación ambiental", ponente: "Pepo Zamora", aula: "Subsuelo", resumen: "Presentación de juegos de la editorial Compostate bien para presentar metodología y juegos de educación ambiental.", cupoMaximo: 20 },
+                    { id: "d2-m-5", titulo: " Elige tu propia aventura: Donde las habilidades sociales y la ficción interactiva se encuentran", ponente: "Patricia Biagiotti", aula: "Coffee break", resumen: "Importancia de los procesos creativos en los espacios terapéuticos y en la inclusión educativa.", cupoMaximo: 20 },
                     { id: "d2-m-6", titulo: "Juegos en la secundaria", ponente: "Sandra Enrique", aula: "Museo 3", resumen: "Ludotecas móviles para escuelas basadas en juegos de mesa modificados con enfoque de aprendizaje basado en juegos.", cupoMaximo: 20 },
                     { id: "d2-m-7", titulo: "Juegos para actuar", ponente: "Damián Valgiusti", aula: "Museo 1", resumen: "Metodología Kabuki,comprendiendo como el juego y el teatro pueden convertirse en herramientas para la enseñanza", cupoMaximo: 20 }
                 ],
                 tarde: [
                     { id: "d2-t-1", titulo: "Adolescencias en juego: experiencias de talleres lúdicos", ponente: "Alejandra Pytel & Solange Estevez", aula: "Aula Juvenil", resumen: "Taller experiencial para comprender la dimensionalidad de la comunicación intergeneracional, experiencia del juego como generador de la palabra en espacios reales de interacción. Se invita a los participantes a vivir el juego, como la narrativa necesaria para la construcción adolescente", cupoMaximo: 30 },
-                    { id: "d2-t-2", titulo: "Juegos que se tocan: Aprendizaje basado en Juegos con Scratch y Chimeleta", ponente: "Andrea Rocca", aula: "Sótano", resumen: "Este taller propone dar un paso más: crear juegos que se puedan tocar, intervenir y experimentar físicamente. A partir de la integración de Scratch y Chimeleta, se explorarán propuestas de aprendizaje basado en juegos que combinan programación, interacción tangible y enfoque maker. (TRAER COMPU)", cupoMaximo: 20 },
+                    { id: "d2-t-2", titulo: "Juegos que se tocan: Aprendizaje basado en Juegos con Scratch y Chimeleta", ponente: "Andrea Rocca", aula: "Subsuelo", resumen: "Este taller propone dar un paso más: crear juegos que se puedan tocar, intervenir y experimentar físicamente. A partir de la integración de Scratch y Chimeleta, se explorarán propuestas de aprendizaje basado en juegos que combinan programación, interacción tangible y enfoque maker. (TRAER COMPU)", cupoMaximo: 20 },
                     { id: "d2-t-3", titulo: "Juegos nómadas del mundo", ponente: "Riccardo Acuña", aula: "Museo 1", resumen: "Un viaje para compartir con los pueblos túrquicos sus milenarias propuestas lúdicas tales como Bestemshé, Toguzqumalaq, Mangala, Assyk atu nos acerca a esta fascinante parte de nuestro planeta, con juegos abstractos de tablero lúdicos y competitivos a la vez.", cupoMaximo: 20 },
                     { id: "d2-t-4", titulo: "Jugar a las matemáticas", ponente: "Ángela Vázquez ,Gabriela Esquivel y Evangelina Pinilla", aula: "Aula Niños", resumen: "Vivenciar situaciones, a partir de juegos de mesa, que permitan reconocer los contenidos matemáticos presentes en ellos y sus alcances dentro del Nivel Primario.", cupoMaximo: 20 },
                     { id: "d2-t-5", titulo: "Explora, aprende y disfruta con la colección de juegos expedición, diseñados para sumergirte en la diversidad de la naturaleza Argentina", ponente: "Editorial Tekun", aula: "Museo 2", resumen: "Probar juegos de la editorial Tekun centrados en la educación ambiental y reflexionar acerca de la promoción ambiental y los beneficios de utilizar juegos con finalidades educativas.", cupoMaximo: 20 },
                     { id: "d2-t-6", titulo: "De 0 a 99 años, proyectos de Homo Ludens", ponente: "Equipo de Homo Ludens", aula: "Museo 3", resumen: "Experiencias del juego en distintos ámbitos tales cómo, la tercera edad, en el mundo empresarial, en las escuelas, bibliotecas y demás.", cupoMaximo: 20 },
-                    { id: "d2-t-7", titulo: " Elige tu propia aventura: Donde las habilidades sociales y la ficción interactiva se encuentran", ponente: "Patricia Biagiotti", aula: "Coffee break", resumen: "Importancia de los procesos creativos en los espacios terapéuticos y en la inclusión educativa.", cupoMaximo: 20 }
+                    { id: "d2-t-7", titulo: "Escape rooms educativos", ponente: "Fabian Zamit", aula: "Coffee break", resumen: "El taller pretende acercar a las y los participantes una introducción a las habilidades prácticas y los recursos necesarios para diseñar sus propios Escape Rooms educativos. Conoceremos porque estás experiencias lúdicas, caracterizadas por un contexto delimitado y un objetivo determinado, constituyen un excelente ejemplo de aprendizaje basado en juegos.", cupoMaximo: 20 }
                 ]
             }
         },
@@ -144,7 +178,7 @@ export const congresoData = {
                 manana: [
                     { id: "d3-m-1", titulo: "Resonancia Lúdica, metodología para el diseño de experiencias de ABJ", ponente: "Fernando Ortiz", aula: "Coffee break", resumen: "Ruta estructurada  para convertir una necesidad educativa en una experiencia de ABJ, proporcionando un marco de diseño que permita a docentes, formadores y diseñadores educativos construir propuestas coherentes, significativas y transferibles a diversos contextos de formación.", cupoMaximo: 30 },
                     { id: "d3-m-2", titulo: "Juegos de bazas", ponente: "Fabian Martinez", aula: "Museo 3", resumen: "Las bazas son una mecánica muy popular y un ecosistema perfecto para entrenar habilidades cognitivas, matemáticas, estratégicas y sociales de forma muy orgánica. Pero, ¿Cómo evolucionaron? ¿Qué hago? ¿Cómo la uso? ¿Realmente sirven?", cupoMaximo: 20 },
-                    { id: "d3-m-3", titulo: "Scrabble para el aula", ponente: "Luis Osvaldo Carestia", aula: "Sótano", resumen: "Scrabble como herramienta de enseñanza integral más allá del lenguaje.", cupoMaximo: 20 },
+                    { id: "d3-m-3", titulo: "Scrabble para el aula", ponente: "Luis Osvaldo Carestia", aula: "Subsuelo", resumen: "Scrabble como herramienta de enseñanza integral más allá del lenguaje.", cupoMaximo: 20 },
                     { id: "d3-m-4", titulo: "Enseñar ciencia a través del juego: propuestas experimentales para diferentes contextos y niveles educativos", ponente: "Juliana Bambozzi", aula: "Museo 1", resumen: "Experiencias gamificadas para la enseñanza de ciencias, reflexionando acerca de su potencial para promover la alfabetización científica en diferentes niveles y contextos educativos.", cupoMaximo: 20 },
                     { id: "d3-m-5", titulo: "El diseño del aula. Experiencias de un trayecto de formación docente en ABJ", ponente: "Grupo de Formación docente", aula: "Aula Juvenil", resumen: "Docentes en formación presentan los juegos que diseñaron y adaptaron durante un trayecto de Aprendizaje Basado en Juego para implementar en sus aulas. Las propuestas abarcan distintos niveles y edades . Cada grupo cuenta su objetivo pedagógico y su proceso de diseño, y los participantes del taller juegan y testean los prototipos en vivo.", cupoMaximo: 30 },
                     { id: "d3-m-6", titulo: "Invitar a jugar, una experiencia práctica con personas mayores", ponente: "Alejandra Pytel & Solange Estevez", aula: "Aula Niños", resumen: "Eje Temático: Familia.", cupoMaximo: 30 },

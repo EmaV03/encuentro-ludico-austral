@@ -25,7 +25,7 @@ window.obtenerColorAula = function(aula) {
     if (txt.includes('niños') || txt.includes('ninos')) return '#D97706'; // Amarillo/Ámbar
     if (txt.includes('juvenil')) return '#2563EB'; // Azul
     if (txt.includes('coffee')) return '#DC2626'; // Rojo
-    if (txt.includes('sótano') || txt.includes('sotano')) return '#EA580C'; // Naranja
+    if (txt.includes('subsuelo') || txt.includes('Sub suelo')) return '#EA580C'; // Naranja
     if (txt.includes('museo 1')) return '#16A34A'; // Verde
     if (txt.includes('museo 2')) return '#DB2777'; // Rosado
     if (txt.includes('museo 3')) return '#7C3AED'; // Violeta
@@ -277,20 +277,62 @@ window.renderizarAgenda = async function() {
     const tabla = document.createElement('table');
     tabla.className = 'agenda-table';
 
-    let theadHTML = `<thead><tr><th class="turno-col">Horario</th>`;
+    let theadHTML = `<thead><tr>`;
     diasKeys.forEach(diaKey => {
         theadHTML += `<th>${congresoData.cronograma[diaKey].fecha}</th>`;
     });
     theadHTML += `</tr></thead>`;
     tabla.innerHTML = theadHTML;
 
+    // SE ELIMINÓ LA DECLARACIÓN DUPLICADA DE TBODY QUE ROMPÍA EL SCRIPT
     const tbody = document.createElement('tbody');
     
+    // Objeto para mapear los horarios de inicio globales por turno y día
+    const horariosInicioGlobal = {
+        dia1: { manana: '14:00 hs', tarde: '15:45 hs' },
+        dia2: { manana: '14:00 hs', tarde: '15:45 hs' },
+        dia3: { manana: '10:30 hs' } // Lunes solo tiene turno mañana
+    };
+
     turnos.forEach(turno => {
-        const tr = document.createElement('tr');
-        const textoHora = turno === 'manana' ? '14:00 HRS' : '15:45 HRS';
-        tr.innerHTML = `<td class="turno-col" style="color: var(--primary); font-size: 1.1rem; font-weight: bold;">${textoHora}</td>`;
-        
+        // Verificar si existe al menos un taller en este turno para algún día
+        let hayTalleresEnTurno = false;
+        diasKeys.forEach(diaKey => {
+            if (congresoData.cronograma[diaKey] && congresoData.cronograma[diaKey].modulos && congresoData.cronograma[diaKey].modulos[turno] && congresoData.cronograma[diaKey].modulos[turno].length > 0) {
+                hayTalleresEnTurno = true;
+            }
+        });
+
+        if (!hayTalleresEnTurno) return; // Si no hay talleres en todo el turno (ej. Lunes tarde), saltamos
+
+        // 1. FILA SEPARADORA DE HORARIOS (CORREGIDA CON EL NUEVO DISEÑO)
+        const trHorario = document.createElement('tr');
+        trHorario.className = 'fila-separadora-horario';
+
+        diasKeys.forEach(diaKey => {
+            const tdHorario = document.createElement('td');
+            
+            // Estilos in-line estructurados para crear el efecto de "cinta" divisoria
+            tdHorario.style.backgroundColor = '#E2E8F0'; 
+            tdHorario.style.textAlign = 'center';
+            tdHorario.style.padding = '15px 10px';
+            tdHorario.style.borderTop = '3px solid #cbd5e1';
+            tdHorario.style.borderBottom = '3px solid #cbd5e1';
+            
+            // Verificamos si hay un horario de inicio definido para ese día y turno
+            if (horariosInicioGlobal[diaKey] && horariosInicioGlobal[diaKey][turno]) {
+                // Envolvemos el texto en un "pill" (píldora) para resaltarlo como en tu diseño
+                tdHorario.innerHTML = `<span style="background-color: var(--white); color: #046b33; font-weight: 900; font-size: 0.95rem; padding: 6px 16px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: inline-block; border: 1px solid #cbd5e1;">🕗 Inicio: ${horariosInicioGlobal[diaKey][turno]}</span>`;
+            } else {
+                tdHorario.innerHTML = ``; // Celda vacía si no hay actividad en ese turno/día
+            }
+            
+            trHorario.appendChild(tdHorario);
+        });
+        tbody.appendChild(trHorario);
+
+        // 2. FILA DE TALLERES
+        const trTalleres = document.createElement('tr');
         diasKeys.forEach(diaKey => {
             const td = document.createElement('td');
             const dia = congresoData.cronograma[diaKey];
@@ -315,12 +357,21 @@ window.renderizarAgenda = async function() {
                     
                     const colorAula = window.obtenerColorAula(taller.aula);
                     
+                    // Definimos la etiqueta de horario específico para el taller
+                    let etiquetaHorarioEspecifico = '';
+                    if (horariosInicioGlobal[diaKey] && horariosInicioGlobal[diaKey][turno]) {
+                        etiquetaHorarioEspecifico = `<span style="background-color: var(--dark); color: var(--white); font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">⏰ ${horariosInicioGlobal[diaKey][turno]}</span>`;
+                    }
+                    
                     card.innerHTML = `
                         <h4>${taller.titulo}</h4>
-                        <p style="color: ${colorAula}; font-weight: bold; margin-top: -5px; font-size: 0.85rem; border: 1px solid ${colorAula}; display: inline-block; padding: 2px 8px; border-radius: 12px; background-color: ${colorAula}1A;">
-                            📍 ${taller.aula ? taller.aula : 'Aula a confirmar'}
-                        </p>
-                        <p><strong>Ponente:</strong> ${taller.ponente}</p>
+                        <div style="margin-bottom: 5px;">
+                            <p style="color: ${colorAula}; font-weight: bold; margin: 0; font-size: 0.85rem; border: 1px solid ${colorAula}; display: inline-block; padding: 2px 8px; border-radius: 12px; background-color: ${colorAula}1A;">
+                                📍 ${taller.aula ? taller.aula : 'Aula a confirmar'}
+                            </p>
+                            ${etiquetaHorarioEspecifico}
+                        </div>
+                        <p style="margin-top: 5px;"><strong>Ponente:</strong> ${taller.ponente}</p>
                         <p>Cupos: <span class="${claseCupos}">${cuposReales} / ${taller.cupoMaximo}</span></p>
                     `;
                     card.onclick = () => abrirDetalleTaller(taller, turno, diaKey, cuposReales);
@@ -329,9 +380,9 @@ window.renderizarAgenda = async function() {
             } else {
                 td.innerHTML = '<span style="color: #999; font-style: italic; font-size: 0.9rem;">Sin programación</span>';
             }
-            tr.appendChild(td);
+            trTalleres.appendChild(td);
         });
-        tbody.appendChild(tr);
+        tbody.appendChild(trTalleres);
     });
     tabla.appendChild(tbody);
     wrapper.appendChild(tabla);
@@ -841,7 +892,7 @@ window.cambiarOrg = function(orgId, element) {
         'homo-ludens': {
             titulo: 'Homo Ludens',
             color: '#046b33', 
-            texto: 'Este gran evento está organizado por Homo Ludens quien lleva mas de 10 años trabajando en difundir la cultura lúdica en el país. El evento ya fue declarado de interés municipal y legislativo por su impacto en la innovación educativa.'
+            texto: 'Casa Homo Ludens es un espacio pionero en Bahía Blanca dedicado al universo del juego y las experiencias inmersivas. Con diez años de trayectoria en la ciudad, nació como una casa abierta a la comunidad para disfrutar de juegos de mesa y no tardó en expandirse, transformándose en el referente local de las salas de escape y el diseño de experiencias lúdicas. A lo largo de esta década, Homo Ludens ha sabido reinventarse y abrirse paso en distintas áreas, consolidándose como un ícono de la cultura del juego y el entretenimiento en Bahía Blanca.'
         },
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
