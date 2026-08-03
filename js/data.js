@@ -23,7 +23,7 @@ export const congresoData = {
         principales: [ 
             { id: "sp-1", nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
             { id: "sp-2", nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
-            { id: "sp-3", nombre: "Cooperativa Obrera", logo: "Imagenes/Sponsor7.png", url: "https://www.cooperativaobrera.coop/" },
+            { id: "sp-3", nombre: "Cooperativa Obrera", logo: "Imagenes/sponsor7.png", url: "https://www.cooperativaobrera.coop/" },
             { id: "sp-4", nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjescobar.com.ar/" },
             { id: "sp-5", nombre: "Municipio de Bahía Blanca", logo: "Imagenes/sponsor6.png", url: "https://www.bahia.gob.ar/" },
             { id: "sp-biblio", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/", descripcion: "Sede oficial del 1er Congreso Nacional de Aprendizaje Basado en Juego. Un espacio histórico dedicado a la cultura y el conocimiento." }
