@@ -57,7 +57,8 @@ export const congresoData = {
         { id: "ed-11", nombre: "Top Toys", logo: "Imagenes/editorial11.png", instagram: "https://www.instagram.com/top_toysok/", web: "https://www.toptoys.ar/", dondeEncontrar: "Nuestros juegos estarán disponibles para testeo y venta en la zona de editoriales." },
         { id: "ed-12", nombre: "Busca Prehistoria", logo: "Imagenes/institucion14.png", instagram: "https://www.instagram.com/buscaypintaprehistoria/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-13", nombre: "Tekun", logo: "Imagenes/editorial13.png", instagram: "https://www.instagram.com/tekunjuegos/", web: "https://tekunjuegos.com/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
-        { id: "ed-14", nombre: "Colorido Juegos", logo: "Imagenes/editorial12.png", instagram: "https://www.instagram.com/coloridojuegos/", web: "https://coloridojuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
+        { id: "ed-14", nombre: "Colorido Juegos", logo: "Imagenes/editorial12.png", instagram: "https://www.instagram.com/coloridojuegos/", web: "https://coloridojuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-15", nombre: "Tiempo de Rondas", logo: "Imagenes/editorial14.png", instagram: "https://www.instagram.com/tiempoderondas/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
     ],
     actividadesExtra: [
         { id: "act-1", nombre: "CICO", imagen: "Imagenes/actextra1.png", descripcion: `
@@ -113,7 +114,8 @@ export const congresoData = {
         { id: "inst-10", nombre: "Consultoría Educativa NJ", ubicacion: "Bahía Blanca", logo: "Imagenes/institución12.png", url: "https://www.instagram.com/nj_consultoria_educativa/" },
         { id: "inst-11", nombre: "GeniaTeka", ubicacion: "San Martin, Prov. Buenos Aires", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
         { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" },
-        { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Buenos Aires", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" }
+        { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Buenos Aires", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" },
+        { id: "inst-14", nombre: "Ludics Juegos de Mesa", ubicacion: "CABA", logo: "Imagenes/institucion15.jpg", url: "https://www.facebook.com/ludics.juegosdemesa/" }
     ],
     agendaGeneral: [
         {
