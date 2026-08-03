@@ -40,7 +40,7 @@ export const congresoData = {
             { id: "sp-3", nombre: "Cooperativa Obrera", logo: "Imagenes/sponsor7.png", url: "https://www.cooperativaobrera.coop/" },
             { id: "sp-4", nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjescobar.com.ar/" },
             { id: "sp-5", nombre: "Municipio de Bahía Blanca", logo: "Imagenes/sponsor6.png", url: "https://www.bahia.gob.ar/" },
-            { id: "sp-biblio", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/", descripcion: "Sede oficial del 1er Congreso Nacional de Aprendizaje Basado en Juego. Un espacio histórico dedicado a la cultura y el conocimiento." }
+            { id: "sp-biblio", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/", descripcion: "La Asociación Bernardino Rivadavia - Biblioteca Popular es uno de los faros culturales más antiguos e importantes del sur argentino. Ubicada en Avenida Colón 31, en pleno centro histórico de Bahía Blanca, su trayectoria está íntimamente ligada al desarrollo e identidad de la ciudad." }
         ]
     },
     editoriales: [
