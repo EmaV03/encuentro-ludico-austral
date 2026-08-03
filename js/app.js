@@ -2,9 +2,18 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { congresoData } from './data.js';
 
 // ==========================================
-// LLAVE MAESTRA: CONTROL DE INSCRIPCIONES
+// CONTROL AUTOMÁTICO DE INSCRIPCIONES
 // ==========================================
-const INSCRIPCIONES_ABIERTAS = false; 
+// Fecha de apertura: Año, Mes (0-11, o sea 7 = Agosto), Día, Hora, Minutos
+const FECHA_APERTURA_INSCRIPCIONES = new Date(2026, 7, 4, 10, 0, 0).getTime();
+let INSCRIPCIONES_ABIERTAS = false;
+
+function verificarAperturaInscripciones() {
+    const ahora = new Date().getTime();
+    INSCRIPCIONES_ABIERTAS = ahora >= FECHA_APERTURA_INSCRIPCIONES;
+}
+
+verificarAperturaInscripciones();
 
 // ==========================================
 // SISTEMA DE COLORES PARA AULAS
@@ -44,6 +53,8 @@ const modalExpositor = document.getElementById('modal-expositor');
 const modalCreadora = document.getElementById('modal-creadora');
 const modalEditorial = document.getElementById('modal-editorial');
 const modalActividad = document.getElementById('modal-actividad');
+const modalSponsor = document.getElementById('modal-sponsor');
+
 // ==========================================
 // CARD NAV LOGIC
 // ==========================================
@@ -63,7 +74,6 @@ if (menuToggleBtn && cardNavMenu) {
         }
     });
 
-    // Cerrar el menú automáticamente cuando se hace clic en un enlace interno
     cardLinks.forEach(link => {
         link.addEventListener('click', () => {
             cardNavMenu.classList.add('hidden');
@@ -105,7 +115,9 @@ window.closeCustomAlert = function() {
 const alertBtn = document.getElementById('custom-alert-btn');
 if (alertBtn) alertBtn.addEventListener('click', window.closeCustomAlert);
 
-// 2. Añadir las funciones para abrir y cerrar (puedes ponerlas después de las de expositores)
+// ==========================================
+// MODALES: CREADORAS, EDITORIALES Y ACTIVIDADES
+// ==========================================
 window.abrirModalCreadora = function(creaId) {
     const creadora = congresoData.creadoras.find(c => c.id === creaId);
     if (!creadora) return;
@@ -115,7 +127,6 @@ window.abrirModalCreadora = function(creaId) {
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalCreadora()">×</button>
                 <div style="width: 120px; height: 120px; border-radius: 50%; background-color: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; margin: 0 auto 15px auto; overflow: hidden; border: 3px solid var(--primary);">
-                    <!-- Si la imagen falla, muestra iniciales -->
                     <img src="${creadora.foto}" alt="${creadora.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" style="width: 100%; height: 100%; object-fit: cover;">
                     <span style="display: none;">${creadora.nombre.charAt(0)}</span>
                 </div>
@@ -137,7 +148,6 @@ window.abrirModalEditorial = function(editorialId) {
     const editorial = congresoData.editoriales.find(e => e.id === editorialId);
     if (!editorial) return;
 
-    // Construimos los botones sociales dinámicamente
     let socialLinks = '';
     if (editorial.instagram) {
         socialLinks += `<a href="${editorial.instagram}" target="_blank" class="cta-button" style="margin-right: 10px; background-color: #E1306C;"><svg style="width:16px; height:16px; vertical-align:middle; margin-right:5px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>Instagram</a>`;
@@ -177,7 +187,6 @@ window.abrirModalActividad = function(actId) {
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalActividad()">×</button>
                 <div style="height: 150px; background-color: #000000; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
-                    <!-- Muestra la imagen, con object-fit: contain para no cortar los logos -->
                     <img src="${actividad.imagen}" alt="${actividad.nombre}" onerror="this.style.display='none';" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
                 </div>
                 <h2 style="margin: 0; color: #046b33;">${actividad.nombre}</h2>
@@ -189,7 +198,6 @@ window.abrirModalActividad = function(actId) {
     }
 };
 
-// 3. Función para cerrar
 window.cerrarModalActividad = function() {
     if (modalActividad) modalActividad.classList.remove('active');
 };
@@ -238,7 +246,6 @@ window.cambiarDiaAgenda = function(diaId) {
         </div>
     `;
 };
-
 
 // ==========================================
 // RENDERIZADO DEL CRONOGRAMA DE TALLERES
@@ -665,7 +672,6 @@ window.renderizarSponsors = function() {
     
     congresoData.sponsors.principales.forEach(sponsor => {
         if (sponsor.id === "sp-biblio") {
-            // Lógica EXCLUSIVA para la Biblioteca Rivadavia (Abre Modal)
             const card = document.createElement('div'); 
             card.className = 'sponsor-card';
             card.style.cursor = 'pointer'; 
@@ -677,7 +683,6 @@ window.renderizarSponsors = function() {
             `;
             sponsorsGrid.appendChild(card);
         } else {
-            // Lógica ESTÁNDAR para el resto de los sponsors (Enlace Directo)
             const card = document.createElement('a'); 
             card.className = 'sponsor-card';
             card.href = sponsor.url;
@@ -866,19 +871,14 @@ window.cambiarOrg = function(orgId, element) {
 
     let indexTexto = 0;
     
-    // LIMPIEZA RIGUROSA DE TIMERS PREVIOS
     if (window.typingOrgInterval) clearInterval(window.typingOrgInterval);
     if (window.typingOrgTimeout) clearTimeout(window.typingOrgTimeout);
 
     const delayTitulo = (caracteres.length * 80) + 200;
 
-    // GUARDAMOS EL TIMEOUT EN UNA VARIABLE GLOBAL
     window.typingOrgTimeout = setTimeout(() => {
         window.typingOrgInterval = setInterval(() => {
-            // BUSCAMOS EL ELEMENTO EN TIEMPO REAL
             const textoEl = document.getElementById('texto-animado');
-            
-            // SI EL USUARIO HIZO SCROLL Y EL ELEMENTO YA NO EXISTE, ABORTAMOS DE FORMA SEGURA
             if (!textoEl) {
                 clearInterval(window.typingOrgInterval);
                 return;
@@ -927,8 +927,6 @@ window.iniciarAnimacionesScroll = function() {
                     }
                 } else {
                     if(orgContentBox) orgContentBox.innerHTML = '';
-                    
-                    // DESTRUIR TIMERS AL SALIR DE LA PANTALLA
                     if (window.typingOrgInterval) clearInterval(window.typingOrgInterval);
                     if (window.typingOrgTimeout) clearTimeout(window.typingOrgTimeout);
                 }
@@ -942,7 +940,6 @@ window.iniciarSliderInstituciones = function() {
     const track = document.getElementById('instituciones-track');
     if (!track) return;
 
-    // Renderizar HTML
     let html = '';
     congresoData.instituciones.forEach(inst => {
         html += `
@@ -957,12 +954,10 @@ window.iniciarSliderInstituciones = function() {
     });
     track.innerHTML = html;
 
-    // Lógica de movimiento
     let indiceActual = 0;
     let intervaloSlider;
     
     function moverSlider(direccion) {
-        // Calculamos cuántos elementos se muestran según el ancho de pantalla
         const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
         const maxIndice = congresoData.instituciones.length - itemsVisibles;
 
@@ -973,11 +968,9 @@ window.iniciarSliderInstituciones = function() {
         }
 
         const slideWidth = track.children[0].getBoundingClientRect().width;
-        // 20px es el gap del flex
         track.style.transform = `translateX(-${indiceActual * (slideWidth + 20)}px)`;
     }
 
-    // Botones manuales
     document.getElementById('btn-next-inst').addEventListener('click', () => {
         moverSlider('next');
         reiniciarIntervalo();
@@ -987,7 +980,6 @@ window.iniciarSliderInstituciones = function() {
         reiniciarIntervalo();
     });
 
-    // Auto-play cada 10 segundos
     function iniciarIntervalo() {
         intervaloSlider = setInterval(() => moverSlider('next'), 10000);
     }
@@ -1006,10 +998,8 @@ window.iniciarSliderEditoriales = function() {
     const track = document.getElementById('editoriales-track');
     if (!track) return;
 
-    // Renderizar HTML en el Track
     let html = '';
     congresoData.editoriales.forEach(ed => {
-        // Reutilizamos la clase institucion-slide para heredar los estilos del slider flex
         html += `
             <div class="institucion-slide editorial-card" onclick="abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
                 <img src="${ed.logo}" alt="${ed.nombre}" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
@@ -1019,7 +1009,6 @@ window.iniciarSliderEditoriales = function() {
     });
     track.innerHTML = html;
 
-    // Lógica de movimiento
     let indiceActual = 0;
     let intervaloSlider;
     
@@ -1027,7 +1016,6 @@ window.iniciarSliderEditoriales = function() {
         const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
         const maxIndice = congresoData.editoriales.length - itemsVisibles;
 
-        // Si no hay suficientes elementos para deslizar, no hacemos nada
         if (maxIndice <= 0) return;
 
         if (direccion === 'next') {
@@ -1037,11 +1025,9 @@ window.iniciarSliderEditoriales = function() {
         }
 
         const slideWidth = track.children[0].getBoundingClientRect().width;
-        // 20px es el gap configurado
         track.style.transform = `translateX(-${indiceActual * (slideWidth + 20)}px)`;
     }
 
-    // Eventos de los botones
     document.getElementById('btn-next-edit').addEventListener('click', () => {
         moverSlider('next');
         reiniciarIntervalo();
@@ -1051,7 +1037,6 @@ window.iniciarSliderEditoriales = function() {
         reiniciarIntervalo();
     });
 
-    // Auto-play
     function iniciarIntervalo() {
         intervaloSlider = setInterval(() => moverSlider('next'), 10000);
     }
@@ -1060,10 +1045,49 @@ window.iniciarSliderEditoriales = function() {
         iniciarIntervalo();
     }
 
-    // Solo iniciar auto-play si hay suficientes elementos
     if (congresoData.editoriales.length > (window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1))) {
         iniciarIntervalo();
     }
+};
+
+// ==========================================
+// CONTADOR PARA APERTURA DE INSCRIPCIONES
+// ==========================================
+window.iniciarContadorInscripciones = function() {
+    const contenedorAviso = document.getElementById('aviso-inscripciones');
+    const elContador = document.getElementById('contador-inscripciones');
+    
+    if (!contenedorAviso || !elContador) return;
+
+    if (INSCRIPCIONES_ABIERTAS) {
+        contenedorAviso.innerHTML = '<p style="margin: 0; font-weight: bold; color: #046b33; font-size: 1.3rem;">✅ ¡El sistema de reservas ya está habilitado!</p>';
+        return;
+    }
+
+    const actualizarRelojInscripciones = setInterval(function() {
+        const ahora = new Date().getTime();
+        const distancia = FECHA_APERTURA_INSCRIPCIONES - ahora;
+
+        if (distancia <= 0) {
+            clearInterval(actualizarRelojInscripciones);
+            verificarAperturaInscripciones(); 
+            contenedorAviso.innerHTML = '<p style="margin: 0; font-weight: bold; color: #046b33; font-size: 1.3rem;">✅ ¡El sistema de reservas ya está habilitado!</p>';
+            if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
+            return;
+        }
+
+        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+        let textoFaltante = "Faltan: ";
+        if (dias > 0) textoFaltante += `${dias}d `;
+        textoFaltante += `${horas < 10 ? '0'+horas : horas}h : ${minutos < 10 ? '0'+minutos : minutos}m : ${segundos < 10 ? '0'+segundos : segundos}s`;
+        
+        elContador.innerText = textoFaltante;
+
+    }, 1000);
 };
 
 // ==========================================
@@ -1078,7 +1102,6 @@ document.addEventListener('keydown', function(event) {
     const isCreadoraModalVisible = document.getElementById('modal-creadora') && document.getElementById('modal-creadora').classList.contains('active');
     const isSponsorModalVisible = document.getElementById('modal-sponsor') && document.getElementById('modal-sponsor').classList.contains('active');
     
-    // Nuevas variables para Perfil y Menú Nav
     const modalPerfil = document.getElementById('modal-perfil');
     const isPerfilModalVisible = modalPerfil && modalPerfil.classList.contains('active');
     
@@ -1101,10 +1124,8 @@ document.addEventListener('keydown', function(event) {
         } else if (isSponsorModalVisible) {
             window.cerrarModalSponsor();
         } else if (isPerfilModalVisible) {
-            // Cierra la ventana del perfil
             modalPerfil.classList.remove('active'); 
         } else if (isMenuVisible) {
-            // Cierra el menú desplegable y restaura el ícono de hamburguesa
             cardNavMenu.classList.add('hidden'); 
             const menuToggleBtn = document.getElementById('menu-toggle');
             if (menuToggleBtn) menuToggleBtn.classList.remove('open');
@@ -1122,12 +1143,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
     if(typeof window.renderizarSponsors === 'function') window.renderizarSponsors();
     if(typeof window.renderizarExpositores === 'function') window.renderizarExpositores();
-    
-    // Nueva llamada al slider de editoriales
     if(typeof window.iniciarSliderEditoriales === 'function') window.iniciarSliderEditoriales();
-    
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
     if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
     if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
+    
+    // Iniciar el contador de inscripciones
+    if(typeof window.iniciarContadorInscripciones === 'function') window.iniciarContadorInscripciones();
 });
