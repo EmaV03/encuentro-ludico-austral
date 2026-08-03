@@ -58,7 +58,8 @@ export const congresoData = {
         { id: "ed-12", nombre: "Busca Prehistoria", logo: "Imagenes/institucion14.png", instagram: "https://www.instagram.com/buscaypintaprehistoria/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-13", nombre: "Tekun", logo: "Imagenes/editorial13.png", instagram: "https://www.instagram.com/tekunjuegos/", web: "https://tekunjuegos.com/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-14", nombre: "Colorido Juegos", logo: "Imagenes/editorial12.png", instagram: "https://www.instagram.com/coloridojuegos/", web: "https://coloridojuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
-        { id: "ed-15", nombre: "Tiempo de Rondas", logo: "Imagenes/editorial14.png", instagram: "https://www.instagram.com/tiempoderondas/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
+        { id: "ed-15", nombre: "Tiempo de Rondas", logo: "Imagenes/editorial14.png", instagram: "https://www.instagram.com/tiempoderondas/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-16", nombre: "Chimi Juegos", logo: "Imagenes/editorial15.jpg", instagram: "https://www.instagram.com/chimijuegos", web: "https://chimijuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
     ],
     actividadesExtra: [
         { id: "act-1", nombre: "CICO", imagen: "Imagenes/actextra1.png", descripcion: `
