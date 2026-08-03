@@ -7,6 +7,24 @@ import { congresoData } from './data.js';
 const INSCRIPCIONES_ABIERTAS = false; 
 
 // ==========================================
+// SISTEMA DE COLORES PARA AULAS
+// ==========================================
+window.obtenerColorAula = function(aula) {
+    if (!aula) return '#94a3b8'; // Gris por defecto si no hay aula
+    const txt = aula.toLowerCase();
+    
+    if (txt.includes('niños') || txt.includes('ninos')) return '#D97706'; // Amarillo/Ámbar
+    if (txt.includes('juvenil')) return '#2563EB'; // Azul
+    if (txt.includes('coffee')) return '#DC2626'; // Rojo
+    if (txt.includes('sótano') || txt.includes('sotano')) return '#EA580C'; // Naranja
+    if (txt.includes('museo 1')) return '#16A34A'; // Verde
+    if (txt.includes('museo 2')) return '#DB2777'; // Rosado
+    if (txt.includes('museo 3')) return '#7C3AED'; // Violeta
+    
+    return '#046b33'; // Verde institucional por defecto
+};
+
+// ==========================================
 // CONFIGURACIÓN DE SUPABASE (BACKEND)
 // ==========================================
 const supabaseUrl = 'https://faxyzkcbcbqdifgqbwrn.supabase.co';
@@ -158,9 +176,9 @@ window.abrirModalActividad = function(actId) {
         modalActividad.innerHTML = `
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalActividad()">×</button>
-                <div style="height: 150px; background-color: var(--bg-main); border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
-                    <!-- Muestra la imagen, si falla desaparece -->
-                    <img src="${actividad.imagen}" alt="${actividad.nombre}" onerror="this.style.display='none';" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="height: 150px; background-color: #000000; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
+                    <!-- Muestra la imagen, con object-fit: contain para no cortar los logos -->
+                    <img src="${actividad.imagen}" alt="${actividad.nombre}" onerror="this.style.display='none';" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
                 </div>
                 <h2 style="margin: 0; color: #046b33;">${actividad.nombre}</h2>
                 <hr style="border: 1px dashed #ccc; margin: 15px 0;">
@@ -175,13 +193,6 @@ window.abrirModalActividad = function(actId) {
 window.cerrarModalActividad = function() {
     if (modalActividad) modalActividad.classList.remove('active');
 };
-
-// 4. ACTUALIZAR el EventListener global (keydown) al final de tu archivo:
-// Localiza tus variables de visibilidad y añade esta:
-const isActividadModalVisible = document.getElementById('modal-actividad') && document.getElementById('modal-actividad').classList.contains('active');
-
-// Y en tu bloque if (event.key === 'Escape'), añade la condición:
-// else if (isActividadModalVisible) window.cerrarModalActividad();
 
 // ==========================================
 // RENDERIZAR AGENDA GENERAL (TABS)
@@ -294,8 +305,14 @@ window.renderizarAgenda = async function() {
                     
                     const card = document.createElement('div');
                     card.className = clasesTarjeta;
+                    
+                    const colorAula = window.obtenerColorAula(taller.aula);
+                    
                     card.innerHTML = `
                         <h4>${taller.titulo}</h4>
+                        <p style="color: ${colorAula}; font-weight: bold; margin-top: -5px; font-size: 0.85rem; border: 1px solid ${colorAula}; display: inline-block; padding: 2px 8px; border-radius: 12px; background-color: ${colorAula}1A;">
+                            📍 ${taller.aula ? taller.aula : 'Aula a confirmar'}
+                        </p>
                         <p><strong>Ponente:</strong> ${taller.ponente}</p>
                         <p>Cupos: <span class="${claseCupos}">${cuposReales} / ${taller.cupoMaximo}</span></p>
                     `;
@@ -340,6 +357,8 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
         `;
     }
 
+    const colorAula = window.obtenerColorAula(taller.aula);
+
     modalContenedor.innerHTML = `
         <div class="modal-content">
             <button class="btn-cerrar" onclick="cerrarModal()">×</button>
@@ -347,6 +366,9 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
                 ${diaTexto} - ${horaTexto}
             </span>
             <h2 style="margin-top:5px; color: var(--dark);">${taller.titulo}</h2>
+            <p style="font-size: 1.1rem; color: ${colorAula}; font-weight: bold; margin-top: 0; border: 2px solid ${colorAula}; display: inline-block; padding: 4px 10px; border-radius: 8px; background-color: ${colorAula}1A;">
+                📍 Lugar: ${taller.aula ? taller.aula : 'Aula a confirmar'}
+            </p>
             <p><strong>Impartido por:</strong> ${taller.ponente}</p>
             <p style="background: #F4F4F9; padding: 10px; border-left: 4px solid var(--secondary); font-style: italic;">
                 ${taller.resumen}
@@ -977,9 +999,6 @@ window.iniciarSliderInstituciones = function() {
     iniciarIntervalo();
 };
 
-// No olvides llamarla en tu DOMContentLoaded (al final de tu app.js):
-// if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
-
 // ==========================================
 // RENDERIZAR EDITORIALES (NUEVO SLIDER)
 // ==========================================
@@ -1057,6 +1076,7 @@ document.addEventListener('keydown', function(event) {
     const isEditorialModalVisible = document.getElementById('modal-editorial') && document.getElementById('modal-editorial').classList.contains('active');
     const isActividadModalVisible = document.getElementById('modal-actividad') && document.getElementById('modal-actividad').classList.contains('active');
     const isCreadoraModalVisible = document.getElementById('modal-creadora') && document.getElementById('modal-creadora').classList.contains('active');
+    const isSponsorModalVisible = document.getElementById('modal-sponsor') && document.getElementById('modal-sponsor').classList.contains('active');
     
     // Nuevas variables para Perfil y Menú Nav
     const modalPerfil = document.getElementById('modal-perfil');
@@ -1078,6 +1098,8 @@ document.addEventListener('keydown', function(event) {
             window.cerrarModalActividad();
         } else if (isCreadoraModalVisible) {
             window.cerrarModalCreadora();
+        } else if (isSponsorModalVisible) {
+            window.cerrarModalSponsor();
         } else if (isPerfilModalVisible) {
             // Cierra la ventana del perfil
             modalPerfil.classList.remove('active'); 
