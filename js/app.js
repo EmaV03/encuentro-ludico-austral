@@ -19,7 +19,7 @@ verificarAperturaInscripciones();
 // SISTEMA DE COLORES PARA AULAS
 // ==========================================
 window.obtenerColorAula = function(aula) {
-    if (!aula) return '#94a3b8'; 
+    if (!aula) return '#94a3b8'; // Gris por defecto si no hay aula
     const txt = aula.toLowerCase();
     
     if (txt.includes('amarilla') || txt.includes('ambar')) return '#d9c406'; 
@@ -30,7 +30,7 @@ window.obtenerColorAula = function(aula) {
     if (txt.includes('rosa') || txt.includes('rosado') || txt.includes('rosada')) return '#DB2777'; 
     if (txt.includes('violeta')) return '#7C3AED'; 
     
-    return '#046b33'; 
+    return '#046b33'; // Verde institucional por defecto
 };
 
 // ==========================================
@@ -406,11 +406,22 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
         } else {
             bloqueInscripcion = `
                 <div class="form-inscripcion" style="text-align: center; padding: 20px;">
-                    <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">¡Asegura tu lugar!</h3>
-                    <p style="color: #555; margin-bottom: 15px; font-weight: bold;">Si ya tienes tu cuenta, ingresa a "Mi Perfil" arriba a la derecha para anotarte.</p>
+                    <h3 style="color: #046b33; margin-top: 0; font-size: 1.2rem;">¡Reserva tu lugar!</h3>
                     
-                    <a href="https://forms.gle/4jn2EDUD34kavkHr7" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; background: var(--secondary); margin-bottom: 10px; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed; pointer-events: none;' : ''}">
-                        ${cuposReales <= 0 ? 'Cupos Agotados' : 'Aún no tengo cuenta (Formulario)'}
+                    <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px;">
+                        <p style="color: #555; margin-top: 0; margin-bottom: 10px; font-weight: bold; font-size: 0.95rem;">¿Ya tienes cuenta?</p>
+                        <input type="email" id="taller-login-email" placeholder="Correo Electrónico" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                        <input type="password" id="taller-login-dni" placeholder="Contraseña (DNI)" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                        <button id="btn-login-y-reservar" class="btn-anotarse" style="margin-top: 0; padding: 8px; font-size: 1rem; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed;' : ''}" ${cuposReales <= 0 ? 'disabled' : ''}>
+                            ${cuposReales <= 0 ? 'Cupos Agotados' : 'Ingresar y Reservar'}
+                        </button>
+                    </div>
+                    
+                    <hr style="border: 0.5px dashed #ccc; margin: 15px 0;">
+                    
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">¿Aún no estás registrado en el congreso?</p>
+                    <a href="https://forms.gle/mn71uqKEjV9UcAS39" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; background: var(--secondary); padding: 8px; font-size: 1rem; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed; pointer-events: none;' : ''}">
+                        Ir al Formulario de Registro
                     </a>
                 </div>
             `;
@@ -447,12 +458,57 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     `;
     modalContenedor.classList.add('active');
 
-    if (INSCRIPCIONES_ABIERTAS && usuarioActivo && cuposReales > 0) {
-        const btnDirecto = document.getElementById('btn-inscripcion-directa');
-        if (btnDirecto) {
-            btnDirecto.addEventListener('click', () => {
-                window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
-            });
+    if (INSCRIPCIONES_ABIERTAS && cuposReales > 0) {
+        if (usuarioActivo) {
+            const btnDirecto = document.getElementById('btn-inscripcion-directa');
+            if (btnDirecto) {
+                btnDirecto.addEventListener('click', () => {
+                    window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
+                });
+            }
+        } else {
+            const btnLoginReservar = document.getElementById('btn-login-y-reservar');
+            if (btnLoginReservar) {
+                btnLoginReservar.addEventListener('click', async () => {
+                    const emailInput = document.getElementById('taller-login-email').value.trim().toLowerCase();
+                    const dniInput = document.getElementById('taller-login-dni').value.trim();
+                    if (!emailInput || !dniInput) {
+                        window.showCustomAlert('error', '⚠️ Por favor, ingresa tu correo y contraseña (DNI).');
+                        return;
+                    }
+                    
+                    btnLoginReservar.innerText = 'Validando...';
+                    btnLoginReservar.disabled = true;
+                    
+                    try {
+                        const { data: usuario, error } = await supabase
+                            .from('asistentes')
+                            .select('*')
+                            .eq('email', emailInput)
+                            .eq('dni', dniInput)
+                            .maybeSingle();
+
+                        if (error || !usuario) {
+                            window.showCustomAlert('error', '❌ Credenciales incorrectas. Verifica tu correo y DNI.');
+                            btnLoginReservar.innerText = 'Ingresar y Reservar';
+                            btnLoginReservar.disabled = false;
+                            return;
+                        }
+
+                        // Login exitoso
+                        localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
+                        
+                        // Reservar taller inmediatamente
+                        await window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
+                        
+                    } catch (err) {
+                        console.error("Error de conexión:", err);
+                        window.showCustomAlert('error', '⚠️ Hubo un problema de conexión con el servidor.');
+                        btnLoginReservar.innerText = 'Ingresar y Reservar';
+                        btnLoginReservar.disabled = false;
+                    }
+                });
+            }
         }
     }
 };
@@ -510,6 +566,47 @@ window.procesarInscripcionDirecta = async function(taller, moduloKey, diaKey) {
             btnSubmit.innerText = 'Reservar mi lugar';
             btnSubmit.disabled = false;
         }
+    }
+};
+
+// ==========================================
+// VENTANA DE CONFIRMACIÓN CUSTOM
+// ==========================================
+window.mostrarConfirmacion = function(mensaje) {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('custom-confirm-overlay');
+        const msgEl = document.getElementById('custom-confirm-message');
+        const btnConfirmar = document.getElementById('btn-confirmar-accion');
+        const btnCancelar = document.getElementById('btn-cancelar-accion');
+
+        msgEl.innerHTML = mensaje;
+        overlay.classList.remove('hidden');
+
+        const cleanup = () => {
+            overlay.classList.add('hidden');
+            btnConfirmar.onclick = null;
+            btnCancelar.onclick = null;
+        };
+
+        btnConfirmar.onclick = () => { cleanup(); resolve(true); };
+        btnCancelar.onclick = () => { cleanup(); resolve(false); };
+    });
+};
+
+window.darseDeBaja = async function(inscripcionId, tituloTaller) {
+    const confirmado = await window.mostrarConfirmacion(`¿Estás completamente seguro de que deseas liberar tu cupo para <strong>"${tituloTaller}"</strong>?<br>Esta acción no se puede deshacer.`);
+    if (!confirmado) return;
+
+    try {
+        const { error } = await supabase.from('inscripciones').delete().eq('id', inscripcionId);
+        if (error) throw error;
+        window.showCustomAlert('success', '✅ Te has dado de baja exitosamente.');
+        await window.renderizarAgenda();
+        const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+        window.cargarTalleresUsuario(usuarioActivo);
+    } catch (err) {
+        console.error("Error al dar de baja:", err);
+        window.showCustomAlert('error', '❌ Tuvimos un problema de conexión al intentar liberar el cupo.');
     }
 };
 
@@ -663,23 +760,6 @@ window.cargarTalleresUsuario = async function(usuario) {
     } catch (err) {
         console.error("Error al cargar talleres:", err);
         listaContenedor.innerHTML = '<p style="color: #FF6B6B;">❌ Hubo un error al cargar tus datos.</p>';
-    }
-};
-
-window.darseDeBaja = async function(inscripcionId, tituloTaller) {
-    const confirmado = await window.mostrarConfirmacion(`¿Estás completamente seguro de que deseas liberar tu cupo para <strong>"${tituloTaller}"</strong>?<br>Esta acción no se puede deshacer.`);
-    if (!confirmado) return;
-
-    try {
-        const { error } = await supabase.from('inscripciones').delete().eq('id', inscripcionId);
-        if (error) throw error;
-        window.showCustomAlert('success', '✅ Te has dado de baja exitosamente.');
-        await window.renderizarAgenda();
-        const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
-        window.cargarTalleresUsuario(usuarioActivo);
-    } catch (err) {
-        console.error("Error al dar de baja:", err);
-        window.showCustomAlert('error', '❌ Tuvimos un problema de conexión al intentar liberar el cupo.');
     }
 };
 
