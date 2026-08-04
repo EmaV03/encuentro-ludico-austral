@@ -713,6 +713,26 @@ window.validarUsuario = async function() {
     }
 };
 
+window.cerrarSesion = function() {
+    // 1. Borramos la sesión de la memoria local
+    localStorage.removeItem('usuarioActivo');
+    
+    // 2. Mostramos la alerta de éxito
+    window.showCustomAlert('success', 'Has cerrado sesión correctamente.');
+    
+    // 3. Cerramos el modal de perfil por seguridad
+    const modalPerfil = document.getElementById('modal-perfil');
+    if (modalPerfil) {
+        modalPerfil.classList.remove('active');
+    }
+    
+    // 4. Volvemos a dibujar el perfil (para que vuelva a pedir email/DNI)
+    renderizarContenidoPerfil(); 
+    
+    // 5. CRÍTICO: Recargamos la agenda para que los botones de los talleres bloqueen de nuevo la reserva directa
+    window.renderizarAgenda();
+};
+
 window.cargarTalleresUsuario = async function(usuario) {
     const listaContenedor = document.getElementById('lista-mis-talleres');
     listaContenedor.innerHTML = '<p style="color: var(--dark); font-weight: bold;">Buscando tus inscripciones...</p>';
