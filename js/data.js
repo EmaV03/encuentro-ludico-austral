@@ -128,7 +128,8 @@ export const congresoData = {
         { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" },
         { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Buenos Aires", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" },
         { id: "inst-14", nombre: "Ludics Juegos de Mesa", ubicacion: "CABA", logo: "Imagenes/institucion15.jpg", url: "https://www.facebook.com/ludics.juegosdemesa/" },
-        { id: "inst-15", nombre: "Secretaria de Deportes MH", ubicacion: "Monte Hermoso", logo: "Imagenes/institucion16.png", url: "https://www.instagram.com/montehermoso.deportes/" }
+        { id: "inst-15", nombre: "Secretaria de Deportes MH", ubicacion: "Monte Hermoso", logo: "Imagenes/institucion16.png", url: "https://www.instagram.com/montehermoso.deportes/" },
+        { id: "inst-16", nombre: "Asociación Vientos del Sur", ubicacion: "CABA", logo: "Imagenes/institucion17.jpeg", url: "https://www.facebook.com/asociacionvientosdelsur/" }
     ],
     agendaGeneral: [
         {
