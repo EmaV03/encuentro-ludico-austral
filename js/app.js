@@ -19,7 +19,7 @@ verificarAperturaInscripciones();
 // SISTEMA DE COLORES PARA AULAS
 // ==========================================
 window.obtenerColorAula = function(aula) {
-    if (!aula) return '#94a3b8'; // Gris por defecto si no hay aula
+    if (!aula) return '#94a3b8'; 
     const txt = aula.toLowerCase();
     
     if (txt.includes('amarilla') || txt.includes('ambar')) return '#d9c406'; 
@@ -30,7 +30,7 @@ window.obtenerColorAula = function(aula) {
     if (txt.includes('rosa') || txt.includes('rosado') || txt.includes('rosada')) return '#DB2777'; 
     if (txt.includes('violeta')) return '#7C3AED'; 
     
-    return '#046b33'; // Verde institucional por defecto
+    return '#046b33'; 
 };
 
 // ==========================================
@@ -284,18 +284,16 @@ window.renderizarAgenda = async function() {
     theadHTML += `</tr></thead>`;
     tabla.innerHTML = theadHTML;
 
-    // SE ELIMINÓ LA DECLARACIÓN DUPLICADA DE TBODY QUE ROMPÍA EL SCRIPT
     const tbody = document.createElement('tbody');
     
     // Objeto para mapear los horarios de inicio globales por turno y día
     const horariosInicioGlobal = {
         dia1: { manana: '14:00 hs', tarde: '15:45 hs' },
         dia2: { manana: '14:00 hs', tarde: '15:45 hs' },
-        dia3: { manana: '10:30 hs' } // Lunes solo tiene turno mañana
+        dia3: { manana: '10:30 hs' } 
     };
 
     turnos.forEach(turno => {
-        // Verificar si existe al menos un taller en este turno para algún día
         let hayTalleresEnTurno = false;
         diasKeys.forEach(diaKey => {
             if (congresoData.cronograma[diaKey] && congresoData.cronograma[diaKey].modulos && congresoData.cronograma[diaKey].modulos[turno] && congresoData.cronograma[diaKey].modulos[turno].length > 0) {
@@ -303,7 +301,7 @@ window.renderizarAgenda = async function() {
             }
         });
 
-        if (!hayTalleresEnTurno) return; // Si no hay talleres en todo el turno (ej. Lunes tarde), saltamos
+        if (!hayTalleresEnTurno) return; 
 
         // 1. FILA SEPARADORA DE HORARIOS
         const trHorario = document.createElement('tr');
@@ -312,19 +310,16 @@ window.renderizarAgenda = async function() {
         diasKeys.forEach(diaKey => {
             const tdHorario = document.createElement('td');
             
-            // Estilos in-line estructurados para crear el efecto de "cinta" divisoria
             tdHorario.style.backgroundColor = '#E2E8F0'; 
             tdHorario.style.textAlign = 'center';
             tdHorario.style.padding = '15px 10px';
             tdHorario.style.borderTop = '3px solid #cbd5e1';
             tdHorario.style.borderBottom = '3px solid #cbd5e1';
             
-            // Verificamos si hay un horario de inicio definido para ese día y turno
             if (horariosInicioGlobal[diaKey] && horariosInicioGlobal[diaKey][turno]) {
-                // Envolvemos el texto en un "pill" (píldora) para resaltarlo como en tu diseño
                 tdHorario.innerHTML = `<span style="background-color: var(--white); color: #046b33; font-weight: 900; font-size: 0.95rem; padding: 6px 16px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: inline-block; border: 1px solid #cbd5e1;">🕗 Inicio: ${horariosInicioGlobal[diaKey][turno]}</span>`;
             } else {
-                tdHorario.innerHTML = ``; // Celda vacía si no hay actividad en ese turno/día
+                tdHorario.innerHTML = ``; 
             }
             
             trHorario.appendChild(tdHorario);
@@ -356,8 +351,8 @@ window.renderizarAgenda = async function() {
                     card.className = clasesTarjeta;
                     
                     const colorAula = window.obtenerColorAula(taller.aula);
+                    card.style.borderLeftColor = colorAula;
                     
-                    // Definimos la etiqueta de horario específico para el taller
                     let etiquetaHorarioEspecifico = '';
                     if (horariosInicioGlobal[diaKey] && horariosInicioGlobal[diaKey][turno]) {
                         etiquetaHorarioEspecifico = `<span style="background-color: var(--dark); color: var(--white); font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">⏰ ${horariosInicioGlobal[diaKey][turno]}</span>`;
@@ -394,20 +389,32 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; 
     
     let bloqueInscripcion = '';
+    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
     if (INSCRIPCIONES_ABIERTAS) {
-        bloqueInscripcion = `
-            <div class="form-inscripcion" style="text-align: center; padding: 20px;">
-                <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">¡Asegura tu lugar!</h3>
-                <p style="color: #555; margin-bottom: 15px; font-weight: bold;">El registro se realiza a través de nuestro formulario oficial.</p>
-                
-                <!-- REEMPLAZA "TU_LINK_AQUI" POR EL ENLACE REAL DE TU FORMULARIO -->
-                <a href="https://forms.gle/4jn2EDUD34kavkHr7" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed; pointer-events: none;' : ''}">
-                    ${cuposReales <= 0 ? 'Cupos Agotados' : 'Ir al Formulario de Registro'}
-                </a>
-                
-                <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Una vez registrado, actualizaremos tu perfil manualmente en el sistema para que puedas ver tus talleres aquí.</p>
-            </div>
-        `;
+        if (usuarioActivo) {
+            bloqueInscripcion = `
+                <div class="form-inscripcion" style="text-align: center; padding: 20px;">
+                    <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">¡Hola, ${usuarioActivo.nombre}!</h3>
+                    <p style="color: #555; margin-bottom: 15px; font-weight: bold;">Estás habilitado para reservar tu lugar en este taller.</p>
+                    
+                    <button id="btn-inscripcion-directa" class="btn-anotarse" style="${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed;' : ''}" ${cuposReales <= 0 ? 'disabled' : ''}>
+                        ${cuposReales <= 0 ? 'Cupos Agotados' : 'Confirmar mi lugar'}
+                    </button>
+                </div>
+            `;
+        } else {
+            bloqueInscripcion = `
+                <div class="form-inscripcion" style="text-align: center; padding: 20px;">
+                    <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">¡Asegura tu lugar!</h3>
+                    <p style="color: #555; margin-bottom: 15px; font-weight: bold;">Si ya tienes tu cuenta, ingresa a "Mi Perfil" arriba a la derecha para anotarte.</p>
+                    
+                    <a href="https://forms.gle/4jn2EDUD34kavkHr7" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; background: var(--secondary); margin-bottom: 10px; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed; pointer-events: none;' : ''}">
+                        ${cuposReales <= 0 ? 'Cupos Agotados' : 'Aún no tengo cuenta (Formulario)'}
+                    </a>
+                </div>
+            `;
+        }
     } else {
         bloqueInscripcion = `
             <div class="form-inscripcion" style="text-align: center; padding: 20px;">
@@ -439,10 +446,71 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
         </div>
     `;
     modalContenedor.classList.add('active');
+
+    if (INSCRIPCIONES_ABIERTAS && usuarioActivo && cuposReales > 0) {
+        const btnDirecto = document.getElementById('btn-inscripcion-directa');
+        if (btnDirecto) {
+            btnDirecto.addEventListener('click', () => {
+                window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
+            });
+        }
+    }
 };
 
 window.cerrarModal = function() {
     modalContenedor.classList.remove('active');
+};
+
+// ==========================================
+// SISTEMA DE INSCRIPCIÓN DIRECTA
+// ==========================================
+window.procesarInscripcionDirecta = async function(taller, moduloKey, diaKey) {
+    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+    if (!usuarioActivo) return;
+
+    const btnSubmit = document.getElementById('btn-inscripcion-directa');
+    if (btnSubmit) {
+        btnSubmit.innerText = 'Procesando...';
+        btnSubmit.disabled = true;
+    }
+
+    try {
+        const { error: errorInscripcion } = await supabase
+            .from('inscripciones')
+            .insert([{
+                asistente_id: usuarioActivo.id,
+                taller_id: taller.id,
+                dia_key: diaKey,
+                modulo_key: moduloKey
+            }]);
+
+        if (errorInscripcion) {
+            if (errorInscripcion.code === '23505') {
+                window.showCustomAlert('error', `⚠️ Ya estás inscrito a otro taller en este mismo turno.`);
+            } else {
+                throw errorInscripcion;
+            }
+        } else {
+            window.showCustomAlert('success', `¡Excelente, <strong>${usuarioActivo.nombre}</strong>! Tu lugar ha sido reservado con éxito.`);
+            window.cerrarModal();
+            await window.renderizarAgenda();
+            
+            // Si el modal de perfil está abierto, lo recargamos
+            const modalPerfilActivo = document.getElementById('modal-perfil');
+            if (modalPerfilActivo && modalPerfilActivo.classList.contains('active')) {
+                 window.cargarTalleresUsuario(usuarioActivo);
+            }
+        }
+
+    } catch (err) {
+        console.error("Error en inscripción:", err);
+        window.showCustomAlert('error', `❌ No pudimos completar tu registro. Por favor, intenta nuevamente.`);
+    } finally {
+        if(btnSubmit) {
+            btnSubmit.innerText = 'Reservar mi lugar';
+            btnSubmit.disabled = false;
+        }
+    }
 };
 
 // ==========================================
@@ -503,7 +571,7 @@ function renderizarContenidoPerfil() {
         const btnLogout = document.getElementById('btn-ejecutar-logout');
         if (btnLogout) btnLogout.addEventListener('click', window.cerrarSesion);
         
-        cargarTalleresUsuario(usuarioActivo);
+        window.cargarTalleresUsuario(usuarioActivo);
     }
 }
 
@@ -520,7 +588,6 @@ window.validarUsuario = async function() {
     if(btn) { btn.innerText = 'Buscando...'; btn.disabled = true; }
 
     try {
-        // Consultamos a Supabase validando email y dni
         const { data: usuario, error } = await supabase
             .from('asistentes')
             .select('*')
@@ -600,19 +667,19 @@ window.cargarTalleresUsuario = async function(usuario) {
 };
 
 window.darseDeBaja = async function(inscripcionId, tituloTaller) {
-    const confirmado = await mostrarConfirmacion(`¿Estás completamente seguro de que deseas liberar tu cupo para <strong>"${tituloTaller}"</strong>?<br>Esta acción no se puede deshacer.`);
+    const confirmado = await window.mostrarConfirmacion(`¿Estás completamente seguro de que deseas liberar tu cupo para <strong>"${tituloTaller}"</strong>?<br>Esta acción no se puede deshacer.`);
     if (!confirmado) return;
 
     try {
         const { error } = await supabase.from('inscripciones').delete().eq('id', inscripcionId);
         if (error) throw error;
-        showCustomAlert('success', '✅ Te has dado de baja exitosamente.');
-        await renderizarAgenda();
+        window.showCustomAlert('success', '✅ Te has dado de baja exitosamente.');
+        await window.renderizarAgenda();
         const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
-        cargarTalleresUsuario(usuarioActivo);
+        window.cargarTalleresUsuario(usuarioActivo);
     } catch (err) {
         console.error("Error al dar de baja:", err);
-        showCustomAlert('error', '❌ Tuvimos un problema de conexión al intentar liberar el cupo.');
+        window.showCustomAlert('error', '❌ Tuvimos un problema de conexión al intentar liberar el cupo.');
     }
 };
 
@@ -715,7 +782,7 @@ window.renderizarExpositores = function() {
     window.expositoresDinamicos.forEach(exp => {
         htmlCards += `
             <div class="speaker-card" style="width: 200px; cursor: pointer; flex-shrink: 0; padding: 20px 15px;" onclick="abrirModalExpositor('${exp.id}')">
-                <img src="${exp.foto}" alt="${exp.nombre}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto; display: block;">
+                <img src="${exp.foto}" alt="${exp.nombre.replace(/<[^>]*>?/gm, '')}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto; display: block;">
                 <h3 style="font-size: 1.05rem; color: #046b33;">${exp.nombre}</h3>
                 <p style="font-size: 0.85rem; color: #f6961a; font-weight: bold; margin:0;">${exp.titulo}</p>
             </div>
@@ -734,7 +801,7 @@ window.abrirModalExpositor = function(expId) {
         modalExpositor.innerHTML = `
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalExpositor()">×</button>
-                <img src="${expositor.foto}" alt="${expositor.nombre}" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto;">
+                <img src="${expositor.foto}" alt="Expositor" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto;">
                 <h2 style="margin: 0; color: #046b33;">${expositor.nombre}</h2>
                 <h4 style="color: #f6961a; margin-top: 5px;">${expositor.titulo}</h4>
                 <p style="font-size: 1.05rem; line-height: 1.6;">${expositor.bio}</p>
