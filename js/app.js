@@ -639,11 +639,13 @@ function renderizarContenidoPerfil() {
             <p>Ingresa tus credenciales para ver tu agenda:</p>
             <div class="campo-grupo">
                 <label>Correo Electrónico</label>
-                <input type="email" id="login-email" placeholder="tu@email.com">
+                <!-- Bloqueamos el autocompletado del navegador -->
+                <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="off" name="email-no-autofill">
             </div>
             <div class="campo-grupo">
                 <label>Contraseña (Tu DNI)</label>
-                <input type="password" id="login-dni" placeholder="Ej: 12345678">
+                <!-- Forzamos al navegador a no sugerir contraseñas guardadas -->
+                <input type="password" id="login-dni" placeholder="Ej: 12345678" autocomplete="new-password" name="pwd-no-autofill">
             </div>
             <button class="btn-anotarse btn-perfil" id="btn-ejecutar-login">Ingresar</button>
             <p style="font-size: 0.8rem; color: #666; margin-top: 15px; text-align: center;">* El acceso está habilitado únicamente para los asistentes registrados oficialmente.</p>
@@ -673,11 +675,12 @@ function renderizarContenidoPerfil() {
 }
 
 window.validarUsuario = async function() {
-    const emailInput = document.getElementById('login-email').value.trim().toLowerCase();
+    // Quitamos el toLowerCase() para que Supabase maneje el filtro inteligentemente
+    const emailInput = document.getElementById('login-email').value.trim();
     const dniInput = document.getElementById('login-dni').value.trim();
 
     if (!emailInput || !dniInput) {
-        showCustomAlert('error', '⚠️ Por favor, completa tu correo y contraseña (DNI) para ingresar.');
+        window.showCustomAlert('error', '⚠️ Por favor, completa tu correo y contraseña (DNI) para ingresar.');
         return;
     }
 
@@ -688,32 +691,26 @@ window.validarUsuario = async function() {
         const { data: usuario, error } = await supabase
             .from('asistentes')
             .select('*')
-            .eq('email', emailInput)
-            .eq('dni', dniInput)
+            .ilike('email', emailInput) // Búsqueda flexible (ignora mayúsculas/minúsculas)
+            .ilike('dni', dniInput)     // Búsqueda flexible para DNIs con letras (ej. D177538)
             .maybeSingle();
 
         if (error || !usuario) {
-            showCustomAlert('error', '❌ Credenciales incorrectas o usuario no registrado. Verifica tu correo y DNI.');
+            window.showCustomAlert('error', '❌ Credenciales incorrectas o usuario no registrado. Verifica tu correo y DNI.');
             if(btn) { btn.innerText = 'Ingresar'; btn.disabled = false; }
             return;
         }
 
         localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
-        showCustomAlert('success', `¡Qué bueno verte, <strong>${usuario.nombre}</strong>!`);
+        window.showCustomAlert('success', `¡Qué bueno verte, <strong>${usuario.nombre}</strong>!`);
         renderizarContenidoPerfil();
 
     } catch (err) {
         console.error("Error de conexión:", err);
-        showCustomAlert('error', '⚠️ Hubo un problema de conexión con el servidor.');
+        window.showCustomAlert('error', '⚠️ Hubo un problema de conexión con el servidor.');
     } finally {
         if(btn) { btn.innerText = 'Ingresar'; btn.disabled = false; }
     }
-};
-
-window.cerrarSesion = function() {
-    localStorage.removeItem('usuarioActivo');
-    renderizarContenidoPerfil(); 
-    showCustomAlert('success', 'Has cerrado sesión correctamente.');
 };
 
 window.cargarTalleresUsuario = async function(usuario) {
