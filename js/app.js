@@ -22,13 +22,13 @@ window.obtenerColorAula = function(aula) {
     if (!aula) return '#94a3b8'; // Gris por defecto si no hay aula
     const txt = aula.toLowerCase();
     
-    if (txt.includes('niños') || txt.includes('ninos')) return '#D97706'; // Amarillo/Ámbar
-    if (txt.includes('juvenil')) return '#2563EB'; // Azul
-    if (txt.includes('coffee')) return '#DC2626'; // Rojo
-    if (txt.includes('subsuelo') || txt.includes('Sub suelo')) return '#EA580C'; // Naranja
-    if (txt.includes('museo 1')) return '#16A34A'; // Verde
-    if (txt.includes('museo 2')) return '#DB2777'; // Rosado
-    if (txt.includes('museo 3')) return '#7C3AED'; // Violeta
+    if (txt.includes('ámbar') || txt.includes('ambar')) return '#D97706'; 
+    if (txt.includes('azul')) return '#2563EB'; 
+    if (txt.includes('roja') || txt.includes('rojo')) return '#DC2626'; 
+    if (txt.includes('naranja')) return '#EA580C'; 
+    if (txt.includes('verde')) return '#16A34A'; 
+    if (txt.includes('rosada') || txt.includes('rosado')) return '#DB2777'; 
+    if (txt.includes('violeta')) return '#7C3AED'; 
     
     return '#046b33'; // Verde institucional por defecto
 };
@@ -305,7 +305,7 @@ window.renderizarAgenda = async function() {
 
         if (!hayTalleresEnTurno) return; // Si no hay talleres en todo el turno (ej. Lunes tarde), saltamos
 
-        // 1. FILA SEPARADORA DE HORARIOS (CORREGIDA CON EL NUEVO DISEÑO)
+        // 1. FILA SEPARADORA DE HORARIOS
         const trHorario = document.createElement('tr');
         trHorario.className = 'fila-separadora-horario';
 

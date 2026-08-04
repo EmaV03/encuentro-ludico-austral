@@ -64,6 +64,9 @@ export const congresoData = {
     ],
     actividadesExtra: [
         { id: "act-1", nombre: "CICO", imagen: "Imagenes/actextra1.png", descripcion: `
+                <div style="text-align: center; margin-top: -5px; margin-bottom: 15px;">
+                    <span style="background-color: #f6961a; color: #ffffff; padding: 4px 15px; border-radius: 20px; font-weight: 900; font-size: 1rem; box-shadow: 0 4px 10px rgba(246, 150, 26, 0.3); text-transform: uppercase; letter-spacing: 0.5px;">¡Propuestas Gratuitas!</span>
+                </div>
                 <div style="text-align: left;">
                     <p style="margin-top: 0;"><strong>📅 Viernes 14/8 | ⏰ 15:30 hrs | 🗣️ Charla Oriol Ripoll</strong><br>
                     <strong>Juegos para llevar en el bolsillo - Taller en abierto para familias</strong><br>
@@ -79,7 +82,6 @@ export const congresoData = {
                     ¿Qué pasa cuando rompemos las reglas tradicionales del deporte e introducimos nuevas formas de jugar? En esta charla, Ricardo Acuña —referente mundial en la materia— nos invita a explorar el universo de los juegos y deportes alternativos como potentes herramientas de inclusión, encuentro y desarrollo integral. A través de su trayectoria recorriendo el mundo y fundando organizaciones como CODASPORTS y la WASG, Ricardo compartirá una mirada transformadora sobre lo lúdico: una invitación a descubrir disciplinas no convencionales y a reimaginar el juego como una nueva manera de habitar el mundo.</p>
                     
                     <hr style="border: 1px dashed #ccc; margin: 15px 0;">
-                    
                 </div>
             ` 
         },
@@ -117,7 +119,8 @@ export const congresoData = {
         { id: "inst-11", nombre: "GeniaTeka", ubicacion: "San Martin, Prov. Buenos Aires", logo: "Imagenes/institución9.png", url: "https://www.instagram.com/geniateka/" },
         { id: "inst-12", nombre: "Xitanxáfora Lúdica", ubicacion: "México", logo: "Imagenes/institucion13.png", url: "https://www.instagram.com/kingmaker_mx/" },
         { id: "inst-13", nombre: "Crea Activamente", ubicacion: "Buenos Aires", logo: "Imagenes/institución14.jpeg", url: "https://www.instagram.com/crea.activamente.ar/" },
-        { id: "inst-14", nombre: "Ludics Juegos de Mesa", ubicacion: "CABA", logo: "Imagenes/institucion15.jpg", url: "https://www.facebook.com/ludics.juegosdemesa/" }
+        { id: "inst-14", nombre: "Ludics Juegos de Mesa", ubicacion: "CABA", logo: "Imagenes/institucion15.jpg", url: "https://www.facebook.com/ludics.juegosdemesa/" },
+        { id: "inst-15", nombre: "Secretaria de Deportes MH", ubicacion: "Monte Hermoso", logo: "Imagenes/institucion16.png", url: "https://www.instagram.com/montehermoso.deportes/" }
     ],
     agendaGeneral: [
         {
@@ -157,7 +160,7 @@ export const congresoData = {
             modulos: {
                 manana: [
                     { id: "d1-m-1", titulo: "Ludificación de la enseñanza en Ciencias Sociales", ponente: "Ricardo Lema", aula: "Aula Niños", resumen: "La Secuencia Aprendizaje Lúdico (SALú) aplicada a la enseñanza de contenidos de historia y literatura.", cupoMaximo: 30 },
-                    { id: "d1-m-2", titulo: "La gran revolución", ponente: "Franco Toffoli y Gabriel Ferraris", aula: "Subsuelo", resumen: "Juego de rol masivo para aprender acerca del funcionamiento de la economía y la política de la Revolución Industrial. Juego y reflexión sobre la experiencia.", cupoMaximo: 20 },
+                    { id: "d1-m-2", titulo: "La gran revolución", ponente: "Franco Toffoli y Gabriel Ferraris", aula: "Subsuelo", resumen: "Juego de rol masivo para aprender acerca del funcionamiento de la economía y la política de la Revolución Industrial. Juego y reflexión sobre la experiencia.", cupoMaximo: 30 },
                     { id: "d1-m-3", titulo: "Juegos cooperativos no competitivos desde la neuroeducación", ponente: "Luciana Ballestero", aula: "Coffee break", resumen: "Juegos cooperativos, juegos con propósitos pedagógicos y narrativas lúdicas como parte de la formación integral de las y los estudiantes", cupoMaximo: 20 },
                     { id: "d1-m-4", titulo: "Bienestar emocional: el juego como puente para aprender, sentir y crear", ponente: "Dayana Rubira", aula: "Museo 1", resumen: "Herramientas y recursos para aplicar dinámicas lúdicas de estrategias de registro emocional y expresión creativa, fortalecer vínculos y trabajar la presencia, confianza y participación grupal.", cupoMaximo: 20 },
                     { id: "d1-m-5", titulo: "No es juego, es cerebro aprendiendo", ponente: "Natalia Felicetti", aula: "Museo 3", resumen: "Se recuperarán aportes de la neurobiología para comprender por qué jugar puede activar procesos claves para aprender, crear, equivocarse, tomar decisiones y comprometerse con una tarea.", cupoMaximo: 20 },
