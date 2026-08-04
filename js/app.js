@@ -4,8 +4,8 @@ import { congresoData } from './data.js';
 // ==========================================
 // CONTROL AUTOMÁTICO DE INSCRIPCIONES
 // ==========================================
-// Fecha de apertura: Año, Mes (0-11, o sea 7 = Agosto), Día, Hora, Minutos
-const FECHA_APERTURA_INSCRIPCIONES = new Date(2026, 7, 4, 10, 0, 0).getTime();
+// Fecha de apertura: 4 de Agosto de 2026 a las 14:00 hrs.
+const FECHA_APERTURA_INSCRIPCIONES = new Date(2026, 7, 4, 14, 0, 0).getTime();
 let INSCRIPCIONES_ABIERTAS = false;
 
 function verificarAperturaInscripciones() {
@@ -186,7 +186,7 @@ window.abrirModalActividad = function(actId) {
         modalActividad.innerHTML = `
             <div class="modal-content" style="text-align: center;">
                 <button class="btn-cerrar" onclick="cerrarModalActividad()">×</button>
-                <div style="height: 150px; background-color: #FFFF; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
+                <div style="height: 150px; background-color: #FFFFFF; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
                     <img src="${actividad.imagen}" alt="${actividad.nombre}" onerror="this.style.display='none';" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
                 </div>
                 <h2 style="margin: 0; color: #046b33;">${actividad.nombre}</h2>
@@ -396,21 +396,23 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     let bloqueInscripcion = '';
     if (INSCRIPCIONES_ABIERTAS) {
         bloqueInscripcion = `
-            <form id="form-registro" class="form-inscripcion">
-                <h3>¡Inscríbete a este taller!</h3>
-                <div class="campo-grupo"><label>Nombre y Apellido</label><input type="text" id="ins-nombre" required></div>
-                <div class="campo-grupo"><label>Correo Electrónico</label><input type="email" id="ins-email" required></div>
-                <div class="campo-grupo"><label>Número de Teléfono</label><input type="tel" id="ins-tel" required></div>
-                <button type="submit" class="btn-anotarse" ${cuposReales <= 0 ? 'disabled style="background:#ccc; cursor:not-allowed;"' : ''}>
-                    ${cuposReales <= 0 ? 'Cupos Agotados' : 'Confirmar mi Lugar'}
-                </button>
-            </form>
+            <div class="form-inscripcion" style="text-align: center; padding: 20px;">
+                <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">¡Asegura tu lugar!</h3>
+                <p style="color: #555; margin-bottom: 15px; font-weight: bold;">El registro se realiza a través de nuestro formulario oficial.</p>
+                
+                <!-- REEMPLAZA "TU_LINK_AQUI" POR EL ENLACE REAL DE TU FORMULARIO -->
+                <a href="https://forms.gle/4jn2EDUD34kavkHr7" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed; pointer-events: none;' : ''}">
+                    ${cuposReales <= 0 ? 'Cupos Agotados' : 'Ir al Formulario de Registro'}
+                </a>
+                
+                <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">* Una vez registrado, actualizaremos tu perfil manualmente en el sistema para que puedas ver tus talleres aquí.</p>
+            </div>
         `;
     } else {
         bloqueInscripcion = `
             <div class="form-inscripcion" style="text-align: center; padding: 20px;">
-                <h3 style="color: #f6961a; margin-top: 0; font-size: 1.3rem;">Inscripciones Cerradas</h3>
-                <p style="color: #555; margin-bottom: 0; font-weight: bold;">Próximamente habilitaremos el sistema para que puedas reservar tu lugar en este taller.</p>
+                <h3 style="color: #f6961a; margin-top: 0; font-size: 1.3rem;">Inscripciones en Pausa</h3>
+                <p style="color: #555; margin-bottom: 0; font-weight: bold;">Las reservas se abrirán nuevamente hoy a partir de las 14:00 hs.</p>
             </div>
         `;
     }
@@ -437,108 +439,10 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
         </div>
     `;
     modalContenedor.classList.add('active');
-    
-    if (INSCRIPCIONES_ABIERTAS) {
-        document.getElementById('form-registro').onsubmit = function(e) {
-            e.preventDefault();
-            procesarInscripcion(taller, moduloKey, diaKey);
-        };
-    }
 };
 
 window.cerrarModal = function() {
     modalContenedor.classList.remove('active');
-};
-
-// ==========================================
-// SISTEMA DE INSCRIPCIÓN 
-// ==========================================
-window.procesarInscripcion = async function(taller, moduloKey, diaKey) {
-    const nombre = document.getElementById('ins-nombre').value.trim();
-    const email = document.getElementById('ins-email').value.trim().toLowerCase();
-    const tel = document.getElementById('ins-tel').value.trim();
-
-    const btnSubmit = document.querySelector('#form-registro .btn-anotarse');
-    btnSubmit.innerText = 'Procesando...';
-    btnSubmit.disabled = true;
-
-    try {
-        let usuarioId;
-        let usuarioGuardar;
-        
-        const { data: usuarioExistente, error: errorBusqueda } = await supabase
-            .from('asistentes')
-            .select('*')
-            .eq('email', email)
-            .maybeSingle();
-
-        if (usuarioExistente) {
-            usuarioId = usuarioExistente.id;
-            usuarioGuardar = usuarioExistente;
-        } else {
-            const { data: nuevoUsuario, error: errorInsert } = await supabase
-                .from('asistentes')
-                .insert([{ nombre: nombre, email: email, telefono: tel }])
-                .select('*')
-                .single();
-                
-            if (errorInsert) throw new Error('El correo o teléfono ya está asociado a otro nombre.');
-            usuarioId = nuevoUsuario.id;
-            usuarioGuardar = nuevoUsuario;
-        }
-
-        const { error: errorInscripcion } = await supabase
-            .from('inscripciones')
-            .insert([{
-                asistente_id: usuarioId,
-                taller_id: taller.id,
-                dia_key: diaKey,
-                modulo_key: moduloKey
-            }]);
-
-        if (errorInscripcion) {
-            if (errorInscripcion.code === '23505') {
-                showCustomAlert('error', `⚠️ ¡Atención <strong>${nombre}</strong>! Ya estás inscrito a otro taller en este mismo turno.`);
-            } else {
-                throw errorInscripcion;
-            }
-        } else {
-            localStorage.setItem('usuarioActivo', JSON.stringify(usuarioGuardar));
-            showCustomAlert('success', `¡Excelente, <strong>${nombre}</strong>! Tu lugar ha sido reservado con éxito.`);
-            cerrarModal();
-            await renderizarAgenda();
-        }
-
-    } catch (err) {
-        console.error("Error en inscripción:", err);
-        showCustomAlert('error', `❌ No pudimos completar tu registro. ${err.message}`);
-    } finally {
-        if(btnSubmit) {
-            btnSubmit.innerText = 'Confirmar mi Lugar';
-            btnSubmit.disabled = false;
-        }
-    }
-};
-
-window.mostrarConfirmacion = function(mensaje) {
-    return new Promise((resolve) => {
-        const overlay = document.getElementById('custom-confirm-overlay');
-        const msgEl = document.getElementById('custom-confirm-message');
-        const btnConfirmar = document.getElementById('btn-confirmar-accion');
-        const btnCancelar = document.getElementById('btn-cancelar-accion');
-
-        msgEl.innerHTML = mensaje;
-        overlay.classList.remove('hidden');
-
-        const cleanup = () => {
-            overlay.classList.add('hidden');
-            btnConfirmar.onclick = null;
-            btnCancelar.onclick = null;
-        };
-
-        btnConfirmar.onclick = () => { cleanup(); resolve(true); };
-        btnCancelar.onclick = () => { cleanup(); resolve(false); };
-    });
 };
 
 // ==========================================
