@@ -60,7 +60,8 @@ export const congresoData = {
         { id: "ed-14", nombre: "Colorido Juegos", logo: "Imagenes/editorial12.png", instagram: "https://www.instagram.com/coloridojuegos/", web: "https://coloridojuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-15", nombre: "Tiempo de Rondas", logo: "Imagenes/editorial14.png", instagram: "https://www.instagram.com/tiempoderondas/", web: "", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
         { id: "ed-16", nombre: "Chimi Juegos", logo: "Imagenes/editorial15.jpg", instagram: "https://www.instagram.com/chimijuegos", web: "https://chimijuegos.com.ar/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
-        { id: "ed-17", nombre: "Lila Juegos", logo: "Imagenes/editorial16.png", instagram: "https://www.instagram.com/lilajuegos/", web: "https://lilajuegos.com.ar/nuestra-esencia/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
+        { id: "ed-17", nombre: "Lila Juegos", logo: "Imagenes/editorial16.png", instagram: "https://www.instagram.com/lilajuegos/", web: "https://lilajuegos.com.ar/nuestra-esencia/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." },
+        { id: "ed-18", nombre: "Su2ku", logo: "Imagenes/editorial16.jpg", instagram: "https://www.instagram.com/su2ku_juego/", web: "https://www.su2ku.net/", dondeEncontrar: "Disponibles para probar y comprar en nuestro stand durante todo el evento." }
     ],
     actividadesExtra: [
         { id: "act-1", nombre: "CICO", imagen: "Imagenes/actextra1.png", descripcion: `

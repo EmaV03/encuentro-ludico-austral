@@ -471,16 +471,17 @@ function renderizarContenidoPerfil() {
 
     if (!usuarioActivo) {
         perfilContenido.innerHTML = `
-            <p>Ingresa tus datos para ver tus inscripciones:</p>
+            <p>Ingresa tus credenciales para ver tu agenda:</p>
             <div class="campo-grupo">
                 <label>Correo Electrónico</label>
-                <input type="email" id="login-email">
+                <input type="email" id="login-email" placeholder="tu@email.com">
             </div>
             <div class="campo-grupo">
-                <label>Teléfono</label>
-                <input type="tel" id="login-tel">
+                <label>Contraseña (Tu DNI)</label>
+                <input type="password" id="login-dni" placeholder="Ej: 12345678">
             </div>
             <button class="btn-anotarse btn-perfil" id="btn-ejecutar-login">Ingresar</button>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 15px; text-align: center;">* El acceso está habilitado únicamente para los asistentes registrados oficialmente.</p>
         `;
         
         const btnLogin = document.getElementById('btn-ejecutar-login');
@@ -490,12 +491,9 @@ function renderizarContenidoPerfil() {
         perfilContenido.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                 <h3 style="margin: 0;">Hola, ${usuarioActivo.nombre}</h3>
-                <button onclick="window.mostrarFormularioEdicion()" style="background: none; border: none; color: var(--secondary); font-weight: bold; cursor: pointer; text-decoration: underline; font-size: 0.9rem;">
-                    ✏️ Editar datos
-                </button>
             </div>
             <p style="font-size: 0.85rem; color: #666; margin-top: 0; margin-bottom: 20px;">
-                📧 ${usuarioActivo.email} <br> 📱 ${usuarioActivo.telefono}
+                📧 ${usuarioActivo.email} | 🆔 DNI: ${usuarioActivo.dni}
             </p>
             <hr style="border: 0.5px solid #E2E8F0; margin-bottom: 15px;">
             <div id="lista-mis-talleres">Cargando tus talleres...</div>
@@ -511,10 +509,10 @@ function renderizarContenidoPerfil() {
 
 window.validarUsuario = async function() {
     const emailInput = document.getElementById('login-email').value.trim().toLowerCase();
-    const telInput = document.getElementById('login-tel').value.trim();
+    const dniInput = document.getElementById('login-dni').value.trim();
 
-    if (!emailInput || !telInput) {
-        showCustomAlert('error', '⚠️ Por favor, completa tu correo y teléfono para ingresar.');
+    if (!emailInput || !dniInput) {
+        showCustomAlert('error', '⚠️ Por favor, completa tu correo y contraseña (DNI) para ingresar.');
         return;
     }
 
@@ -522,21 +520,22 @@ window.validarUsuario = async function() {
     if(btn) { btn.innerText = 'Buscando...'; btn.disabled = true; }
 
     try {
+        // Consultamos a Supabase validando email y dni
         const { data: usuario, error } = await supabase
             .from('asistentes')
             .select('*')
             .eq('email', emailInput)
-            .eq('telefono', telInput)
+            .eq('dni', dniInput)
             .maybeSingle();
 
         if (error || !usuario) {
-            showCustomAlert('error', '❌ No encontramos un registro con esos datos.');
+            showCustomAlert('error', '❌ Credenciales incorrectas o usuario no registrado. Verifica tu correo y DNI.');
             if(btn) { btn.innerText = 'Ingresar'; btn.disabled = false; }
             return;
         }
 
         localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
-        showCustomAlert('success', `¡Qué bueno verte de nuevo, <strong>${usuario.nombre}</strong>!`);
+        showCustomAlert('success', `¡Qué bueno verte, <strong>${usuario.nombre}</strong>!`);
         renderizarContenidoPerfil();
 
     } catch (err) {
