@@ -22,12 +22,12 @@ window.obtenerColorAula = function(aula) {
     if (!aula) return '#94a3b8'; // Gris por defecto si no hay aula
     const txt = aula.toLowerCase();
     
-    if (txt.includes('ámbar') || txt.includes('ambar')) return '#D97706'; 
+    if (txt.includes('amarilla') || txt.includes('ambar')) return '#d9c406'; 
     if (txt.includes('azul')) return '#2563EB'; 
     if (txt.includes('roja') || txt.includes('rojo')) return '#DC2626'; 
     if (txt.includes('naranja')) return '#EA580C'; 
     if (txt.includes('verde')) return '#16A34A'; 
-    if (txt.includes('rosada') || txt.includes('rosado')) return '#DB2777'; 
+    if (txt.includes('rosa') || txt.includes('rosado') || txt.includes('rosada')) return '#DB2777'; 
     if (txt.includes('violeta')) return '#7C3AED'; 
     
     return '#046b33'; // Verde institucional por defecto
