@@ -29,9 +29,9 @@ export const congresoData = {
     expositores: [
         { id: "exp-or", nombre: "Oriol Ripoll <img src='https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Catalonia.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Cataluña'>", avatar: "OR", titulo: "Magisterio especializado en juegos y didáctica", bio: "Cofundador del estudio 'Jocs al segon'. Profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología.", web: "", ponencia: "Sábado 10:30 - 12:00: Del juego al aprendizaje, cómo adaptar juegos al aula sin perder su magia." },
         { id: "exp-fo", nombre: "Fernando Ortiz Cueva <img src='https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='México'>", avatar: "FO", titulo: "Doctor en Educación", bio: "Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO. Maestro en administración educativa, especializado en estrategias para el aprendizaje. Licenciado en Diseño.", web: "", ponencia: "Domingo 09:30 - 10:30: Cuando jugar transforma el aprendizaje: el ABJ como puente hacia la transferencia del conocimiento." },
-        { id: "exp-se", nombre: "Solange Estevez <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "SE", titulo: "Licenciada en Psicología Clínica", bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Alejandra Pytel)." },
+        { id: "exp-se", nombre: "Solange Estevez <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "SE", titulo: "Licenciada en Psicología Clínica", bio: "Especializada en Terapia de Aceptación y Compromiso. Investigadora en conducta lúdica y Coordinadora de espacios lúdicos.", web: "", ponencia: "Domingo 10:30 - 11:30: El juego como territorio de posibilidades (Junto a Alejandra Pytel)." },
         { id: "exp-rl", nombre: "Ricardo Lema Álvarez <img src='https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Uruguay'>", avatar: "RL", titulo: "Doctor en Ocio y Desarrollo Humano", bio: "Licenciado en Comunicación Social y Docente en la Licenciatura de Recreación Educativa. Coautor del libro 'Pedagogía de la Lúdica - Pedagogía de la Recreación'.", web: "", ponencia: "Lunes 9:30 - 10:30: De la Recreación a la Ludificación: fundamentos para un aprendizaje mediado por la lúdica." },
-        { id: "exp-ap", nombre: "Alejandra Pytel <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "AP", titulo: "Licenciada en Psicología", bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", web: "", ponencia: "Domingo 10:30 - 11:30: Salud mental y juegos de mesa (Junto a Solange Estevez)." }
+        { id: "exp-ap", nombre: "Alejandra Pytel <img src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg' style='width: 1.2em; height: auto; vertical-align: text-bottom; border-radius: 2px; box-shadow: 0 0 2px rgba(0,0,0,0.3); margin-left: 5px;' alt='Argentina'>", avatar: "AP", titulo: "Licenciada en Psicología", bio: "Especialista en Adolescencia (UNC), Tallerista Grupal, Profesora de Educación preescolar e Investigadora en conducta lúdica.", web: "", ponencia: "Domingo 10:30 - 11:30: El juego como territorio de posibilidades (Junto a Solange Estevez)." }
     ],
     sponsors: {
         principales: [ 
@@ -87,30 +87,47 @@ export const congresoData = {
             ` 
         },
         { id: "act-2", nombre: "Bahía Prototipos", imagen: "Imagenes/actextra2.png", descripcion: `
-            <p style="margin-top: 0;">¡Sumate a una jornada imperdible de análisis, diseño y testing de juegos!</p>
+            <!-- 1. SECCIÓN GRATUITA -->
+            <div style="background-color: #F8F9FA; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary); margin-bottom: 20px;">
+                <h4 style="color: var(--secondary); margin-top: 0; margin-bottom: 10px; font-size: 1.15rem;">🆓 Actividad Complementaria (Gratuita)</h4>
+                <p style="margin: 0; font-size: 0.95rem; color: var(--dark);">
+                    Si estás desarrollando un juego y buscas feedback real para llevarlo al siguiente nivel, ¡esta es tu oportunidad! Este <strong>lunes 17 de agosto, entre las 14 y las 17 hs</strong>, abrimos las puertas a jugadores para que prueben tu proyecto en vivo. Y si querés continuar puliendo mecánicas o ajustando detalles, acordate de que Estación Homoludens te espera todos los miércoles y domingos para seguir jugando y testeando.
+                </p>
+            </div>
+
+            <hr style="border: 0.5px dashed #ccc; margin: 20px 0;">
+
+            <!-- 2. SECCIÓN ARANCELADA -->
+            <div style="text-align: left;">
+                <h4 style="color: var(--primary); margin-top: 0; font-size: 1.2rem;">🎟️ Jornada de Análisis, Diseño y Testing</h4>
+                <p style="margin-top: 0;">¡Sumate a una jornada imperdible de análisis, diseño y testing de juegos!</p>
+                
                 <p><strong>📅 Fecha:</strong> Domingo 16 de agosto de 2026<br>
                 <strong>⏰ Horario:</strong> 19:30 hs<br>
                 <strong>📍 Lugar:</strong> Quincho Estación Homoludens (Av. Cerri 715, Bahía Blanca)</p>
-                <p><strong>💵 Aranceles:</strong><br>
-                • General: $30.000 por persona<br>
-                • Descuento especial (Asistentes al Congreso y participantes de Bahía Prototipos 2025): $15.000 por persona</p>
+                
+                <div style="background-color: #FFF9F0; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                    <p style="margin: 0;"><strong>💵 Aranceles:</strong><br>
+                    • General: $30.000 por persona<br>
+                    • Descuento especial (Asistentes al Congreso y participantes de Bahía Prototipos 2025): $15.000 por persona</p>
+                </div>
+                
                 <p><strong>💡 ¿Qué incluye el encuentro?</strong></p>
-                <ul style="text-align: left; padding-left: 20px; margin-top: 5px;">
+                <ul style="text-align: left; padding-left: 20px; margin-top: 5px; font-size: 0.95rem;">
                     <li style="margin-bottom: 8px;"><strong>Charla y taller práctico:</strong> "¿Qué es un buen juego? Evaluar prototipos con mirada crítica" a cargo de Oriol Ripoll - Barcelona, España (Cofundador de 'Jocs al segon', profesor universitario de Game Design y director del Máster en Juego, Gamificación y Tecnología).</li>
                     <li style="margin-bottom: 8px;"><strong>Charla:</strong> "Imaginar, Construir y Probar: el sello mexicano para crear prototipos" a cargo de Fernando Ortiz - Guadalajara, México (Coordinador de la unidad de gamificación de la Escuela de Negocios ITESO, Maestro en administración educativa, especializado en estrategias para el aprendizaje, Licenciado en Diseño).</li>
                     <li style="margin-bottom: 8px;">Criterios prácticos para evaluar prototipos y cómo adaptarlos a juegos aplicados al aprendizaje.</li>
                     <li style="margin-bottom: 8px;">Espacio de presentación, prueba de prototipos y devolución en vivo de Oriol Ripoll y Fernando Ortiz. Además estarán presentes del programa Bahia Prototipos los profesores Fabian Martinez Torre y el diseñador Julio Vecchione (ambos de Bs As).</li>
                 </ul>
-                <p><strong>✨ Actividades complementarias:</strong><br>
-                • Si estás desarrollando un juego y buscas feedback real para llevarlo al siguiente nivel, ¡esta es tu oportunidad! Este lunes 17 de agosto, entre las 14 y las 17 hs, abrimos las puertas a jugadores para que prueben tu proyecto en vivo. Y si querés continuar puliendo mecánicas o ajustando detalles, acordate de que Estación Homoludens te espera todos los miércoles y domingos para seguir jugando y testeando.</p>
                 
-                <hr style="border: 0.5px dashed #ccc; margin: 20px 0 15px 0;">
-                
-                <!-- BOTÓN AL FORMULARIO (Reemplaza el href con tu link real) -->
-                <a href="https://forms.gle/4jn2EDUD34kavkHr7" target="_blank" class="btn-anotarse" style="display: block; text-align: center; text-decoration: none; background-color: var(--secondary); color: var(--dark);">
-                    📝 Ir al Formulario de Inscripción
-                </a>
-            ` 
+                <!-- BOTÓN AL FORMULARIO -->
+                <div style="text-align: center; margin-top: 25px;">
+                    <a href="https://forms.gle/4jn2EDUD34kavkHr7" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; background-color: var(--secondary); color: var(--dark);">
+                        📝 Ir al Formulario de Inscripción
+                    </a>
+                </div>
+            </div>
+        ` 
         },
         { id: "act-3", nombre: "Experiencias Post-Congreso", imagen: "Imagenes/actextra3.gif", descripcion: `
             <div style="text-align: center; margin-top: -5px; margin-bottom: 15px;">
@@ -120,14 +137,48 @@ export const congresoData = {
                 <p style="text-align: center; font-weight: bold; color: var(--dark); background: #F8F9FA; padding: 10px; border-radius: 8px; border: 2px dashed var(--secondary);">Busca tus vales de descuento en la bolsa de inscripción</p>
                 
                 <ul style="list-style: none; padding: 0; margin-top: 15px; font-size: 1.05rem;">
-                    <li style="margin-bottom: 12px;">🔐 <strong>¡Reserva salas de Escape Room!</strong><br>📍 <span style="font-size: 0.95rem; color: #555;">Bahía Blanca Plaza Shopping / Estación Homo ludens</span></li>
+                    <li style="margin-bottom: 18px;">
+                        🔐 <strong>¡Reserva salas de Escape Room!</strong><br>
+                        📍 <span style="font-size: 0.95rem; color: #555;"><strong>Bahía Blanca Plaza Shopping</strong> (Sarmiento 2053)</span><br>
+                        📍 <span style="font-size: 0.95rem; color: #555;"><strong>Estación Homo ludens</strong> (Av. Cerri 715) - <em>¡Cuenta con ludoteca y cafetería!</em></span><br>
+                        <a href="https://www.instagram.com/casahomoludens/" target="_blank" style="display: inline-flex; align-items: center; margin-top: 6px; font-size: 0.85rem; color: #E1306C; text-decoration: none; font-weight: bold;">
+                            <svg style="width:16px; height:16px; margin-right:5px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> 
+                            @casahomoludens
+                        </a>
+                    </li>
                     <li style="margin-bottom: 12px;">🎲 <strong>¡Jugá juegos de mesa!</strong> (Sin costo)</li>
-                    <li style="margin-bottom: 12px;">🪿 <strong>Armá tu equipo y jugá al Juego de la Oca Ludens</strong></li>
+                    <li style="margin-bottom: 18px;">
+                        🪿 <strong>Armá tu equipo y jugá al Juego de la Oca Ludens</strong><br>
+                        📍 <span style="font-size: 0.95rem; color: #555;">Belgrano 297</span><br>
+                        <a href="https://www.instagram.com/ocaludens/" target="_blank" style="display: inline-flex; align-items: center; margin-top: 6px; font-size: 0.85rem; color: #E1306C; text-decoration: none; font-weight: bold;">
+                            <svg style="width:16px; height:16px; margin-right:5px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> 
+                            @ocaludens
+                        </a>
+                    </li>
                     <li style="margin-bottom: 12px;">🤹‍♂️ <strong>Afilá tu puntería en la kermesse</strong></li>
                     <li style="margin-bottom: 12px;">👩‍🎨 <strong>Splash! Pinta lo que quieras</strong></li>
                 </ul>
+
+                <hr style="border: 0.5px dashed #ccc; margin: 20px 0;">
+
+                <h4 style="color: var(--primary); margin-top: 0; font-size: 1.15rem; text-align: center;">📅 ¡Actividades exclusivas durante el Congreso!</h4>
                 
-                <p style="text-align: center; font-style: italic; color: #666;">Y más sorpresas...</p>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                    <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 10px 15px; border-radius: 6px;">
+                        <strong>Sábado 15</strong><br>
+                        <span style="font-size: 0.95rem; color: #333;">Merienda en Estación | Choripan y juegos</span>
+                    </div>
+                    <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 10px 15px; border-radius: 6px;">
+                        <strong>Domingo 16</strong><br>
+                        <span style="font-size: 0.95rem; color: #333;">Pizza y prototipos</span>
+                    </div>
+                    <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 10px 15px; border-radius: 6px;">
+                        <strong>Lunes 17</strong><br>
+                        <span style="font-size: 0.95rem; color: #333;">Merienda y premios</span>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; font-style: italic; color: #666; margin-top: 20px;">Y más sorpresas...</p>
                 
                 <div style="text-align: center; margin-top: 20px;">
                     <a href="https://wa.me/5492915045772" target="_blank" class="btn-anotarse" style="display: inline-block; text-decoration: none; background-color: #25D366; color: white; width: 100%; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
