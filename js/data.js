@@ -111,6 +111,31 @@ export const congresoData = {
                     📝 Ir al Formulario de Inscripción
                 </a>
             ` 
+        },
+        { id: "act-3", nombre: "Experiencias Post-Congreso", imagen: "Imagenes/actextra3.gif", descripcion: `
+            <div style="text-align: center; margin-top: -5px; margin-bottom: 15px;">
+                <span style="background-color: #f6961a; color: #ffffff; padding: 4px 15px; border-radius: 20px; font-weight: 900; font-size: 1rem; box-shadow: 0 4px 10px rgba(246, 150, 26, 0.3); text-transform: uppercase; letter-spacing: 0.5px;">¡Viví experiencias luego del congreso! 🥳</span>
+            </div>
+            <div style="text-align: left;">
+                <p style="text-align: center; font-weight: bold; color: var(--dark); background: #F8F9FA; padding: 10px; border-radius: 8px; border: 2px dashed var(--secondary);">Busca tus vales de descuento en la bolsa de inscripción</p>
+                
+                <ul style="list-style: none; padding: 0; margin-top: 15px; font-size: 1.05rem;">
+                    <li style="margin-bottom: 12px;">🔐 <strong>¡Reserva salas de Escape Room!</strong><br>📍 <span style="font-size: 0.95rem; color: #555;">Bahía Blanca Plaza Shopping / Estación Homo ludens</span></li>
+                    <li style="margin-bottom: 12px;">🎲 <strong>¡Jugá juegos de mesa!</strong> (Sin costo)</li>
+                    <li style="margin-bottom: 12px;">🪿 <strong>Armá tu equipo y jugá al Juego de la Oca Ludens</strong></li>
+                    <li style="margin-bottom: 12px;">🤹‍♂️ <strong>Afilá tu puntería en la kermesse</strong></li>
+                    <li style="margin-bottom: 12px;">👩‍🎨 <strong>Splash! Pinta lo que quieras</strong></li>
+                </ul>
+                
+                <p style="text-align: center; font-style: italic; color: #666;">Y más sorpresas...</p>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="https://wa.me/5492915045772" target="_blank" class="btn-anotarse" style="display: inline-block; text-decoration: none; background-color: #25D366; color: white; width: 100%; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
+                        💬 Reservas al 2915045772
+                    </a>
+                </div>
+            </div>
+        ` 
         }
     ],
     instituciones: [
@@ -216,7 +241,7 @@ export const congresoData = {
                     { id: "d3-m-3", titulo: "Scrabble para el aula", ponente: "Luis Osvaldo Carestia", aula: "Aula Naranja", resumen: "Scrabble como herramienta de enseñanza integral más allá del lenguaje.", cupoMaximo: 20 },
                     { id: "d3-m-4", titulo: "Enseñar ciencia a través del juego: propuestas experimentales para diferentes contextos y niveles educativos", ponente: "Juliana Bambozzi", aula: "Aula Verde", resumen: "Experiencias gamificadas para la enseñanza de ciencias, reflexionando acerca de su potencial para promover la alfabetización científica en diferentes niveles y contextos educativos.", cupoMaximo: 20 },
                     { id: "d3-m-5", titulo: "El diseño del aula. Experiencias de un trayecto de formación docente en ABJ", ponente: "Instituto Don Bosco Rosario", aula: "Aula Azul", resumen: "Docentes en formación presentan los juegos que diseñaron y adaptaron durante un trayecto de Aprendizaje Basado en Juego para implementar en sus aulas. Las propuestas abarcan distintos niveles y edades . Cada grupo cuenta su objetivo pedagógico y su proceso de diseño, y los participantes del taller juegan y testean los prototipos en vivo.", cupoMaximo: 30 },
-                    { id: "d3-m-6", titulo: "Invitar a jugar, una experiencia práctica con personas mayores", ponente: "Alejandra Pytel & Solange Estevez", aula: "Aula Amarilla", resumen: "Eje Temático: Familia.", cupoMaximo: 30 },
+                    { id: "d3-m-6", titulo: "Invitar a jugar, una experiencia práctica con personas mayores", ponente: "Solange Estevez & Alejandra Pytel", aula: "Aula Amarilla", resumen: "Eje Temático: Familia.", cupoMaximo: 30 },
                     { id: "d3-m-7", titulo: "La magia al servicio del aula, juegos hipotéticos deductivos", ponente: "Lautaro Lopes", aula: "Aula Rosa", resumen: "Recursos didácticos, algunos basados en juegos de magia, que permiten explorar el método científico para la deducción del \"detrás de la magia\".", cupoMaximo: 20 }
                 ],
                 tarde: [] 
