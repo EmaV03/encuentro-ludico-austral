@@ -38,7 +38,7 @@ export const congresoData = {
             { id: "sp-1", nombre: "Puerto Bahía Blanca", logo: "Imagenes/Sponsor1.jpg", url: "https://puertobahiablanca.com/" },
             { id: "sp-2", nombre: "Cultura de la Cooperativa", logo: "Imagenes/Sponsor2.jpg", url: "https://cultura.cooperativaobrera.coop/" },
             { id: "sp-3", nombre: "Cooperativa Obrera", logo: "Imagenes/sponsor7.png", url: "https://www.cooperativaobrera.coop/" },
-            { id: "sp-4", nombre: "Howard Johnson Resort & Spa", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjbahiablanca.com.ar/" },
+            { id: "sp-4", nombre: "Howard Johnson Bahía Blanca", logo: "Imagenes/Sponsor5.jpg", url: "https://www.hjbahiablanca.com.ar/" },
             { id: "sp-5", nombre: "Municipio de Bahía Blanca", logo: "Imagenes/Sponsor6.jpeg", url: "https://www.bahia.gob.ar/" },
             { id: "sp-biblio", nombre: "Biblioteca Popular Bernardino Rivadavia", logo: "Imagenes/institucion8.jpg", url: "https://www.abrbp.org.ar/", descripcion: "La Asociación Bernardino Rivadavia - Biblioteca Popular es uno de los faros culturales más antiguos e importantes del sur argentino. Ubicada en Avenida Colón 31, en pleno centro histórico de Bahía Blanca, su trayectoria está íntimamente ligada al desarrollo e identidad de la ciudad." }
         ]
