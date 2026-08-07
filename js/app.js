@@ -781,6 +781,81 @@ window.cargarTalleresUsuario = async function(usuario) {
 };
 
 // ==========================================
+// RENDERIZAR TALLERES EXCLUSIVOS DE EDITORIALES
+// ==========================================
+window.iniciarSliderTalleresEditoriales = function() {
+    const track = document.getElementById('talleres-editoriales-track');
+    if (!track) return;
+
+    // Filtramos exactamente las editoriales que nos interesan
+    const nombresDestacados = ['Su2ku', 'El Dragon Azul', 'Pulga Escapista', 'Devir'];
+    const editorialesDestacadas = congresoData.editoriales.filter(ed => nombresDestacados.includes(ed.nombre));
+
+    let html = '';
+    editorialesDestacadas.forEach(ed => {
+        html += `
+            <div class="institucion-slide editorial-card" onclick="abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
+                <img src="${ed.logo}" alt="${ed.nombre}" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
+                <h4 style="color: #046b33; margin: 0; font-size: 1.1rem;">${ed.nombre}</h4>
+            </div>
+        `;
+    });
+    track.innerHTML = html;
+
+    let indiceActual = 0;
+    let intervaloSlider;
+    
+    function moverSlider(direccion) {
+        const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
+        const maxIndice = editorialesDestacadas.length - itemsVisibles;
+
+        if (maxIndice <= 0) return; // Si son menos de 4, no hay necesidad de mover el slider
+
+        if (direccion === 'next') {
+            indiceActual = indiceActual >= maxIndice ? 0 : indiceActual + 1;
+        } else {
+            indiceActual = indiceActual <= 0 ? maxIndice : indiceActual - 1;
+        }
+
+        if (track.children.length > 0) {
+            const slideWidth = track.children[0].getBoundingClientRect().width;
+            track.style.transform = `translateX(-${indiceActual * (slideWidth + 20)}px)`;
+        }
+    }
+
+    const btnNext = document.getElementById('btn-next-talleres-ed');
+    const btnPrev = document.getElementById('btn-prev-talleres-ed');
+
+    if (btnNext) {
+        btnNext.addEventListener('click', () => {
+            moverSlider('next');
+            reiniciarIntervalo();
+        });
+    }
+    
+    if (btnPrev) {
+        btnPrev.addEventListener('click', () => {
+            moverSlider('prev');
+            reiniciarIntervalo();
+        });
+    }
+
+    function iniciarIntervalo() {
+        intervaloSlider = setInterval(() => moverSlider('next'), 8000); // Rota cada 8 segundos
+    }
+    
+    function reiniciarIntervalo() {
+        clearInterval(intervaloSlider);
+        iniciarIntervalo();
+    }
+
+    // Solo inicia el carrusel automático si hay suficientes tarjetas para hacer scroll
+    if (editorialesDestacadas.length > (window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1))) {
+        iniciarIntervalo();
+    }
+};
+
+// ==========================================
 // RENDERIZAR SPONSORS (CON EXCEPCIÓN PARA BIBLIOTECA)
 // ==========================================
 window.renderizarSponsors = function() {
@@ -1264,6 +1339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.iniciarSliderEditoriales === 'function') window.iniciarSliderEditoriales();
     if(typeof window.iniciarHeroSlider === 'function') window.iniciarHeroSlider();
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
+    if(typeof window.iniciarSliderTalleresEditoriales === 'function') window.iniciarSliderTalleresEditoriales();
     if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
     if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
     
