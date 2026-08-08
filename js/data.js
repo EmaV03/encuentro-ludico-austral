@@ -167,15 +167,24 @@ export const congresoData = {
                 <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
                     <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 10px 15px; border-radius: 6px;">
                         <strong>Sábado 15</strong><br>
-                        <span style="font-size: 0.95rem; color: #333;">Merienda en Estación | Choripan y juegos</span>
+                        <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 0.95rem; color: #333;">
+                            <li>Merienda en estación</li>
+                            <li>Choripán y juegos de mesa</li>
+                            <li>Juegos grupales con premios</li>
+                        </ul>
                     </div>
                     <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 10px 15px; border-radius: 6px;">
                         <strong>Domingo 16</strong><br>
-                        <span style="font-size: 0.95rem; color: #333;">Pizza y prototipos</span>
+                        <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 0.95rem; color: #333;">
+                            <li>Desde 19:30: Pizza y juegos de mesa</li>
+                            <li>21:30: Probamos prototipos</li>
+                            <li>23:00 hs: Show sorpresa</li>
+                            <li>Sorteos de juegos de mesa</li>
+                        </ul>
                     </div>
                     <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 10px 15px; border-radius: 6px;">
                         <strong>Lunes 17</strong><br>
-                        <span style="font-size: 0.95rem; color: #333;">Merienda y premios</span>
+                        <span style="font-size: 0.95rem; color: #333;">Merienda y ruleta de despedida</span>
                     </div>
                 </div>
                 
@@ -254,7 +263,7 @@ export const congresoData = {
                 ],
                 tarde: [
                     { id: "d1-t-1", titulo: "Colorido Juegos su aplicación a contextos educativos", ponente: "Micaela Koncurat", aula: "Aula Amarilla", resumen: "Los participantes experimentarán los juegos de la editorial Colorido y se reflexionará sobre sus posibles aplicaciones según objetivos de aprendizaje y edades.", cupoMaximo: 20 },
-                    { id: "d1-t-2", titulo: "Juegos matemáticos y de ciencias sociales en primaria", ponente: "Fernando Ezcurra", aula: "Aula Azul", resumen: "Muestra de juegos realizados por niños y niñas  de escuelas primarias de la Ciudad de Buenos Aires. Ver cómo un mismo juego sirve para trabajar transversalmente algunos contenidos de la escolaridad.", cupoMaximo: 20 },
+                    { id: "d1-t-2", titulo: "Juegos matemáticos y de ciencias sociales en primaria", ponente: "Fernando Ezcurra & Alejandro Mariano Campora", aula: "Aula Azul", resumen: "Muestra de juegos realizados por niños y niñas  de escuelas primarias de la Ciudad de Buenos Aires. Ver cómo un mismo juego sirve para trabajar transversalmente algunos contenidos de la escolaridad.", cupoMaximo: 20 },
                     { id: "d1-t-3", titulo: "QuoriDUA: Caminos para Aprender Jugando", ponente: "Liliana Mendez", aula: "Aula Rosa", resumen: "Identificar barreras para enseñar y aprender, diseño universal de aprendizaje y juego. Quoridor inclusivo, reversionando las prácticas.", cupoMaximo: 20 },
                     { id: "d1-t-4", titulo: "La Chatarra Inteligente y el Alma de la Máquina, dispositivos de juego para hacer honor al arte de crear mundos", ponente: "Patricia Bibiana Ramirez y María Rosa Fernandez", aula: "Aula Naranja", resumen: "Aprender con las manos no es solo una metáfora; invitamos, partimos, de la premisa de que las manos tienen su propia memoria y sabiduría. Al manipular lo cotidiano para resolver desafíos algorítmicos, el conocimiento no solo se entiende, sino que se aprehende: se incorpora al cuerpo y a la experiencia vital. (TRAER MATERIALES DE RECICLAJE)", cupoMaximo: 20 },
                     { id: "d1-t-5", titulo: "Aulas épicas: el poder de la narrativa y el juego", ponente: "Paula Moyano", aula: "Aula Roja", resumen: "Experiencia narrativa inspirada en la mitología. Los participantes vivenciarán una aventura en la que deberán asumir el rol de héroes y enfrentarse a diversos desafíos, poniendo en juego conocimientos, estrategias y trabajo colaborativo. Pensado para alumnos de secundaria.", cupoMaximo: 20 },
