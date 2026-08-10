@@ -1100,7 +1100,7 @@ window.cambiarOrg = function(orgId, element) {
                     }, 50); // Un respiro de 50ms para que actúe el CSS
                 }
             }
-        }, 15); // Velocidad de escritura
+        }, 5); // Velocidad de escritura
     }, delayTitulo);
 };
 
