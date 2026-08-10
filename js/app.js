@@ -386,7 +386,7 @@ window.renderizarAgenda = async function() {
 
 window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
-    const horaTexto = moduloKey === 'manana' ? '14:00 hrs' : '15:45 hrs'; 
+    const horaTexto = moduloKey === 'manana' ? '1er Módulo (14:00 hrs)' : '2do Módulo (15:45 hrs)'; 
     
     let bloqueInscripcion = '';
     const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
@@ -762,7 +762,7 @@ window.cargarTalleresUsuario = async function(usuario) {
                     <div>
                         <h4 style="margin: 0; color: var(--dark); font-size: 1rem;">${titulo}</h4>
                         <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #555;">
-                            📅 ${fecha} <br> 🕒 Turno: ${ins.modulo_key.toUpperCase()}
+                            📅 ${fecha} <br> 🕒 ${ins.modulo_key === 'manana' ? '1er Módulo' : '2do Módulo'}
                         </p>
                     </div>
                     <button class="btn-baja" onclick="window.darseDeBaja('${ins.id}', '${titulo}')">
@@ -1030,25 +1030,30 @@ window.cambiarOrg = function(orgId, element) {
     logos.forEach(logo => logo.classList.remove('active'));
     element.classList.add('active');
 
+    // Separamos el "texto" puro del "boton" HTML
     const orgData = {
         'homo-ludens': {
             titulo: 'Homo Ludens',
             color: '#046b33', 
-            texto: 'Casa Homo Ludens es un espacio pionero en Argentina dedicado al universo del juego y las experiencias inmersivas. Con diez años de trayectoria en la ciudad Bahía Blanca, nació como una casa abierta a la comunidad para disfrutar de juegos de mesa y no tardó en expandirse, transformándose en el referente local de las salas de escape y el diseño de experiencias lúdicas. A lo largo de esta década, Homo Ludens ha sabido reinventarse y abrirse paso en distintas áreas, consolidándose como un ícono de la cultura del juego y el entretenimiento en todo el país. Además la empresa se ha expandido con distintas sucursales, franquicias y asesorías tanto en Argentina como Brasil.'
+            texto: 'Casa Homo Ludens es un espacio pionero en Argentina dedicado al universo del juego y las experiencias inmersivas. Con diez años de trayectoria en la ciudad Bahía Blanca, nació como una casa abierta a la comunidad para disfrutar de juegos de mesa y no tardó en expandirse, transformándose en el referente local de las salas de escape y el diseño de experiencias lúdicas. A lo largo de esta década, Homo Ludens ha sabido reinventarse y abrirse paso en distintas áreas, consolidándose como un ícono de la cultura del juego y el entretenimiento en todo el país. Además la empresa se ha expandido con distintas sucursales, franquicias y asesorías tanto en Argentina como Brasil.',
+            boton: '<a href="https://www.instagram.com/casahomoludens/" target="_blank" class="cta-button" style="background-color: #E1306C; color: white; display: inline-flex; align-items: center; text-decoration: none; font-size: 0.95rem; padding: 10px 20px;"><svg style="width:18px; height:18px; margin-right:8px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> Visitar Instagram</a>'
         },
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
             color: '#f6961a', 
-            texto: '<p>Homo ludens Educación es un programa pedagógico surgido en Homo ludens, en Bahía Blanca, que promueve el Aprendizaje Basado en Juegos (ABJ) para transformar la experiencia educativa en todos los niveles educativos. A través del juego de mesa y diversas dinámicas de ingenio, la iniciativa busca integrar los contenidos educativos con la diversión, ofreciendo talleres educativos que muestran como mediante el juego de mesa se pueden reforzar áreas clave como la matemática, la comprensión lectora, la lógica y el pensamiento crítico. Además, mediante su proyecto "De la mesa al aula", llevan tableros, juegos de mesa y estrategias de trabajo en equipo directamente a escuelas y jardines, convirtiendo el aula en un espacio colaborativo donde aprender se vuelve una experiencia motivadora y significativa. Tambien desde el año pasado se implementa el Programa "Biblios ludicas" en bibliotecas publicas de todo el pais. Ambos programas se realizan gracias al acompañamiento de Cultura de la Cooperativa Obrera. Además Homo ludens educación cuenta con un club docente con el objetivo de dar a conocer los juegos y sus aplicaciones aulicas'
+            texto: 'Homo ludens Educación es un programa pedagógico surgido en Homo ludens, en Bahía Blanca, que promueve el Aprendizaje Basado en Juegos (ABJ) para transformar la experiencia educativa en todos los niveles educativos. A través del juego de mesa y diversas dinámicas de ingenio, la iniciativa busca integrar los contenidos educativos con la diversión, ofreciendo talleres educativos que muestran como mediante el juego de mesa se pueden reforzar áreas clave como la matemática, la comprensión lectora, la lógica y el pensamiento crítico. Además, mediante su proyecto "De la mesa al aula", llevan tableros, juegos de mesa y estrategias de trabajo en equipo directamente a escuelas y jardines, convirtiendo el aula en un espacio colaborativo donde aprender se vuelve una experiencia motivadora y significativa. Tambien desde el año pasado se implementa el Programa "Biblios ludicas" en bibliotecas publicas de todo el pais. Ambos programas se realizan gracias al acompañamiento de Cultura de la Cooperativa Obrera. Además Homo ludens educación cuenta con un club docente con el objetivo de dar a conocer los juegos y sus aplicaciones aulicas.',
+            boton: '<a href="https://www.instagram.com/homoludens.educacion/" target="_blank" class="cta-button" style="background-color: #E1306C; color: white; display: inline-flex; align-items: center; text-decoration: none; font-size: 0.95rem; padding: 10px 20px;"><svg style="width:18px; height:18px; margin-right:8px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> Visitar Instagram</a>'
         }
     };
 
     const contentBox = document.getElementById('org-content-box');
     const data = orgData[orgId];
     
+    // Añadimos un contenedor "fantasma" que estará transparente y bajado unos píxeles
     contentBox.innerHTML = `
         <h3 id="titulo-animado" style="color: ${data.color}; font-size: 1.8rem; margin-top: 0; display: inline-block;"></h3>
         <p id="texto-animado" style="font-size: 1.1rem; line-height: 1.8; color: var(--dark); margin-top: 15px; min-height: 80px;"></p>
+        <div id="btn-redes-contenedor" style="opacity: 0; transform: translateY(15px); transition: all 0.6s ease-out; margin-top: 20px;"></div>
     `;
 
     const tituloEl = document.getElementById('titulo-animado');
@@ -1077,14 +1082,25 @@ window.cambiarOrg = function(orgId, element) {
                 return;
             }
 
+            // Aquí solo anima el texto puro
             if (indexTexto < data.texto.length) {
                 textoEl.innerHTML = data.texto.substring(0, indexTexto + 1) + '<span class="typing-cursor"></span>';
                 indexTexto++;
             } else {
                 textoEl.innerHTML = data.texto; 
                 clearInterval(window.typingOrgInterval);
+                
+                // Cuando el texto termina, inyectamos el botón y lo hacemos aparecer suavemente
+                const btnContenedor = document.getElementById('btn-redes-contenedor');
+                if(btnContenedor && data.boton) {
+                    btnContenedor.innerHTML = data.boton;
+                    setTimeout(() => {
+                        btnContenedor.style.opacity = '1';
+                        btnContenedor.style.transform = 'translateY(0)';
+                    }, 50); // Un respiro de 50ms para que actúe el CSS
+                }
             }
-        }, 15); 
+        }, 15); // Velocidad de escritura
     }, delayTitulo);
 };
 
