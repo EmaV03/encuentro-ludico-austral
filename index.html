@@ -239,6 +239,81 @@
             <div class="gradual-blur-bottom"></div>
         </section>
 
+<!-- SECCIÓN: Ubicación de Aulas y Mapas -->
+        <section id="ubicacion-aulas" class="about-section seccion-relativa" style="background-color: var(--bg-main);">
+            <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Ubicación de Aulas</h2>
+            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px; font-weight: bold; color: var(--dark);">
+                Guía rápida para encontrar tu taller en nuestras dos sedes de Bahía Blanca.
+            </p>
+    
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;" class="blur-animated blur-hidden" style="transition-delay: 0.2s;">
+                
+                <!-- SEDE 1: Biblioteca Rivadavia -->
+                <div style="background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 2px solid #E2E8F0;">
+                    <!-- Mapa centrado en Biblioteca Rivadavia -->
+                    <iframe src="https://maps.google.com/maps?q=Biblioteca+Rivadavia,+Avenida+Colón+31,+Bahía+Blanca&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div style="padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                            <h3 style="margin-top: 0; color: #046b33; margin-bottom: 10px;">📍 Sede Principal: Biblioteca Rivadavia</h3>
+                        </div>
+                        <p style="font-size: 0.95rem; color: #555; margin-bottom: 15px;">Av. Colón 31. Aquí se realizará el ingreso principal, las acreditaciones y las ponencias magistrales.</p>
+                        
+                        <!-- Botón interactivo a Google Maps -->
+                        <a href="https://maps.google.com/?q=Biblioteca+Rivadavia,+Avenida+Colón+31,+Bahía+Blanca" target="_blank" class="btn-anotarse" style="display: block; text-align: center; text-decoration: none; background-color: var(--secondary); color: var(--dark); padding: 8px; font-size: 0.95rem; margin-bottom: 20px;">
+                            🗺️ Abrir en Google Maps
+                        </a>
+
+                        <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--dark);">Sábado y Domingo:</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                            <span style="background-color: #d9c4061A; color: #d9c406; border: 1px solid #d9c406; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🟡 Aula Amarilla</span>
+                            <span style="background-color: #2563EB1A; color: #2563EB; border: 1px solid #2563EB; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🔵 Aula Azul</span>
+                            <span style="background-color: #DC26261A; color: #DC2626; border: 1px solid #DC2626; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🔴 Aula Roja</span>
+                            <span style="background-color: #EA580C1A; color: #EA580C; border: 1px solid #EA580C; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🟠 Aula Naranja</span>
+                            <span style="background-color: #7C3AED1A; color: #7C3AED; border: 1px solid #7C3AED; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🟣 Aula Violeta</span>
+                        </div>
+                        
+                        <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--dark);">Lunes:</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span style="background-color: #046b331A; color: #046b33; border: 1px solid #046b33; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🏫 Todas las aulas</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- SEDE 2: Hotel Land -->
+                <div style="background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 2px solid #E2E8F0;">
+                    <!-- Mapa con la ruta trazada desde Biblioteca Rivadavia hasta Hotel Land -->
+                    <iframe src="https://maps.google.com/maps?saddr=Avenida+Colon+31,+Bahia+Blanca&daddr=Land+Plaza+Hotel,+Saavedra+41,+Bahia+Blanca&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div style="padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                            <h3 style="margin-top: 0; color: var(--primary); margin-bottom: 10px;">📍 Sede Anexa: Hotel Land</h3>
+                        </div>
+                        <p style="font-size: 0.95rem; color: #555; margin-bottom: 10px;">Saavedra 41. Se encuentra a unos 400 metros de distancia (5 minutos caminando) desde la sede principal.</p>
+                        
+                        <!-- Aclaración de disponibilidad -->
+                        <p style="font-size: 0.85rem; color: #DB2777; font-weight: bold; margin-bottom: 15px; background: #FFF0F5; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #DB2777;">
+                            ⚠️ Atención: Las aulas de esta sede solo se utilizarán los días Sábado 15 y Domingo 16.
+                        </p>
+
+                        <!-- Botón interactivo a Google Maps -->
+                        <a href="https://maps.google.com/maps?saddr=Avenida+Colon+31,+Bahia+Blanca&daddr=Land+Plaza+Hotel,+Saavedra+41,+Bahia+Blanca" target="_blank" class="btn-anotarse" style="display: block; text-align: center; text-decoration: none; background-color: var(--secondary); color: var(--dark); padding: 8px; font-size: 0.95rem; margin-bottom: 20px;">
+                            🗺️ Ver Ruta en Google Maps
+                        </a>
+
+                        <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--dark);">Sábado y Domingo:</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span style="background-color: #16A34A1A; color: #16A34A; border: 1px solid #16A34A; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem;">🟢 Aula Verde</span>
+                            <!-- Aula Rosa con círculo dibujado en CSS en lugar de emoji -->
+                            <span style="background-color: #DB27771A; color: #DB2777; border: 1px solid #DB2777; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; display: inline-flex; align-items: center;">
+                                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #DB2777; margin-right: 6px;"></span> Aula Rosa
+                            </span>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="gradual-blur-bottom"></div>
+        </section>
+
         <!-- SECCIÓN: Zona Stands y Editoriales -->
         <section id="zona-stands" class="about-section seccion-relativa">
             <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Zona de Stands y Editoriales</h2>

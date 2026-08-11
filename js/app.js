@@ -353,17 +353,29 @@ window.renderizarAgenda = async function() {
                     const colorAula = window.obtenerColorAula(taller.aula);
                     card.style.borderLeftColor = colorAula;
                     
+                    // LÓGICA DINÁMICA DE SEDES: Solo Verde y Rosa en Sábado/Domingo van al Hotel Land
+                    let sedeNombre = 'Biblioteca Rivadavia';
+                    if (taller.aula && (diaKey === 'dia1' || diaKey === 'dia2')) {
+                        const aulaLower = taller.aula.toLowerCase();
+                        if (aulaLower.includes('verde') || aulaLower.includes('rosa')) {
+                            sedeNombre = 'Hotel Land';
+                        }
+                    }
+                    
+                    let etiquetaSede = `<span style="background-color: #F8F9FA; color: #4a5568; border: 1px solid #cbd5e1; font-weight: bold; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; margin-left: 5px; display: inline-block; margin-top: 4px;">🏢 ${sedeNombre}</span>`;
+
                     let etiquetaHorarioEspecifico = '';
                     if (horariosInicioGlobal[diaKey] && horariosInicioGlobal[diaKey][turno]) {
-                        etiquetaHorarioEspecifico = `<span style="background-color: var(--dark); color: var(--white); font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">⏰ ${horariosInicioGlobal[diaKey][turno]}</span>`;
+                        etiquetaHorarioEspecifico = `<span style="background-color: var(--dark); color: var(--white); font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px; display: inline-block; margin-top: 4px;">⏰ ${horariosInicioGlobal[diaKey][turno]}</span>`;
                     }
                     
                     card.innerHTML = `
                         <h4>${taller.titulo}</h4>
-                        <div style="margin-bottom: 5px;">
-                            <p style="color: ${colorAula}; font-weight: bold; margin: 0; font-size: 0.85rem; border: 1px solid ${colorAula}; display: inline-block; padding: 2px 8px; border-radius: 12px; background-color: ${colorAula}1A;">
+                        <div style="margin-bottom: 5px; display: flex; flex-wrap: wrap; align-items: center;">
+                            <p style="color: ${colorAula}; font-weight: bold; margin: 0; font-size: 0.85rem; border: 1px solid ${colorAula}; display: inline-block; padding: 2px 8px; border-radius: 12px; background-color: ${colorAula}1A; margin-top: 4px;">
                                 📍 ${taller.aula ? taller.aula : 'Aula a confirmar'}
                             </p>
+                            ${etiquetaSede}
                             ${etiquetaHorarioEspecifico}
                         </div>
                         <p style="margin-top: 5px;"><strong>Ponente:</strong> ${taller.ponente}</p>
@@ -437,6 +449,15 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
 
     const colorAula = window.obtenerColorAula(taller.aula);
 
+    // LÓGICA DINÁMICA DE SEDES PARA EL MODAL
+    let sedeNombre = 'Biblioteca Rivadavia';
+    if (taller.aula && (diaKey === 'dia1' || diaKey === 'dia2')) {
+        const aulaLower = taller.aula.toLowerCase();
+        if (aulaLower.includes('verde') || aulaLower.includes('rosa')) {
+            sedeNombre = 'Hotel Land';
+        }
+    }
+
     modalContenedor.innerHTML = `
         <div class="modal-content">
             <button class="btn-cerrar" onclick="cerrarModal()">×</button>
@@ -447,11 +468,10 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
             <p style="font-size: 1.1rem; color: ${colorAula}; font-weight: bold; margin-top: 0; border: 2px solid ${colorAula}; display: inline-block; padding: 4px 10px; border-radius: 8px; background-color: ${colorAula}1A;">
                 📍 Lugar: ${taller.aula ? taller.aula : 'Aula a confirmar'}
             </p>
-            <p><strong>Impartido por:</strong> ${taller.ponente}</p>
-            <p style="background: #F4F4F9; padding: 10px; border-left: 4px solid var(--secondary); font-style: italic;">
-                ${taller.resumen}
+            <p style="font-size: 0.95rem; color: #4a5568; font-weight: bold; margin-top: -10px; margin-bottom: 15px;">
+                🏢 Sede: ${sedeNombre}
             </p>
-            <p><strong>Cupos disponibles:</strong> <span id="modal-cupos">${cuposReales}</span> / ${taller.cupoMaximo}</p>
+            <p><strong>Impartido por:</strong> ${taller.ponente}</p>
             
             ${bloqueInscripcion}
         </div>
