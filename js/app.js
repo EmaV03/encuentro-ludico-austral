@@ -398,7 +398,19 @@ window.renderizarAgenda = async function() {
 
 window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
-    const horaTexto = moduloKey === 'manana' ? '1er Módulo (14:00 hrs)' : '2do Módulo (15:45 hrs)'; 
+    
+    // Mapeo dinámico de horarios por día y módulo
+    const horariosInicioGlobal = {
+        dia1: { manana: '14:00 hs', tarde: '15:45 hs' },
+        dia2: { manana: '14:00 hs', tarde: '15:45 hs' },
+        dia3: { manana: '10:30 hs' } 
+    };
+
+    const horaInicio = (horariosInicioGlobal[diaKey] && horariosInicioGlobal[diaKey][moduloKey]) 
+        ? horariosInicioGlobal[diaKey][moduloKey] 
+        : (moduloKey === 'manana' ? '14:00 hs' : '15:45 hs');
+
+    const horaTexto = moduloKey === 'manana' ? `1er Módulo (${horaInicio})` : `2do Módulo (${horaInicio})`; 
     
     let bloqueInscripcion = '';
     const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
@@ -449,7 +461,6 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
 
     const colorAula = window.obtenerColorAula(taller.aula);
 
-    // LÓGICA DINÁMICA DE SEDES PARA EL MODAL
     let sedeNombre = 'Biblioteca Rivadavia';
     if (taller.aula && (diaKey === 'dia1' || diaKey === 'dia2')) {
         const aulaLower = taller.aula.toLowerCase();
