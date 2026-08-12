@@ -465,13 +465,22 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
                 ${diaTexto} - ${horaTexto}
             </span>
             <h2 style="margin-top:5px; color: var(--dark);">${taller.titulo}</h2>
+            
             <p style="font-size: 1.1rem; color: ${colorAula}; font-weight: bold; margin-top: 0; border: 2px solid ${colorAula}; display: inline-block; padding: 4px 10px; border-radius: 8px; background-color: ${colorAula}1A;">
                 📍 Lugar: ${taller.aula ? taller.aula : 'Aula a confirmar'}
             </p>
+            
             <p style="font-size: 0.95rem; color: #4a5568; font-weight: bold; margin-top: -10px; margin-bottom: 15px;">
                 🏢 Sede: ${sedeNombre}
             </p>
-            <p><strong>Impartido por:</strong> ${taller.ponente}</p>
+            
+            <p style="margin-top: 0;"><strong>Impartido por:</strong> ${taller.ponente}</p>
+            
+            <hr style="border: 1px dashed #ccc; margin: 15px 0;">
+            
+            <p style="font-size: 1.05rem; line-height: 1.6; text-align: left; color: #333; margin-bottom: 20px;">
+                ${taller.resumen ? taller.resumen : 'Resumen no disponible.'}
+            </p>
             
             ${bloqueInscripcion}
         </div>
@@ -606,11 +615,6 @@ window.cerrarModalDevir = function() {
     const modalDevir = document.getElementById('modal-devir-dinamico');
     if (modalDevir) modalDevir.classList.remove('active');
 };
-
-// Recuerda agregar la tecla "Escape" para este modal en tu EventListener global (línea ~720):
-// const isDevirModalVisible = document.getElementById('modal-devir') && document.getElementById('modal-devir').classList.contains('active');
-// Y dentro de tu if (event.key === 'Escape') {...}:
-// else if (isDevirModalVisible) { window.cerrarModalDevir(); }
 
 // ==========================================
 // SISTEMA DE INSCRIPCIÓN DIRECTA
@@ -770,7 +774,6 @@ function renderizarContenidoPerfil() {
 }
 
 window.validarUsuario = async function() {
-    // Quitamos el toLowerCase() para que Supabase maneje el filtro inteligentemente
     const emailInput = document.getElementById('login-email').value.trim();
     const dniInput = document.getElementById('login-dni').value.trim();
 
@@ -786,8 +789,8 @@ window.validarUsuario = async function() {
         const { data: usuario, error } = await supabase
             .from('asistentes')
             .select('*')
-            .ilike('email', emailInput) // Búsqueda flexible (ignora mayúsculas/minúsculas)
-            .ilike('dni', dniInput)     // Búsqueda flexible para DNIs con letras (ej. D177538)
+            .ilike('email', emailInput) 
+            .ilike('dni', dniInput)     
             .maybeSingle();
 
         if (error || !usuario) {
@@ -809,22 +812,15 @@ window.validarUsuario = async function() {
 };
 
 window.cerrarSesion = function() {
-    // 1. Borramos la sesión de la memoria local
     localStorage.removeItem('usuarioActivo');
-    
-    // 2. Mostramos la alerta de éxito
     window.showCustomAlert('success', 'Has cerrado sesión correctamente.');
     
-    // 3. Cerramos el modal de perfil por seguridad
     const modalPerfil = document.getElementById('modal-perfil');
     if (modalPerfil) {
         modalPerfil.classList.remove('active');
     }
     
-    // 4. Volvemos a dibujar el perfil (para que vuelva a pedir email/DNI)
     renderizarContenidoPerfil(); 
-    
-    // 5. CRÍTICO: Recargamos la agenda para que los botones de los talleres bloqueen de nuevo la reserva directa
     window.renderizarAgenda();
 };
 
@@ -882,7 +878,6 @@ window.iniciarSliderTalleresEditoriales = function() {
     const track = document.getElementById('talleres-editoriales-track');
     if (!track) return;
 
-    // Filtramos exactamente las editoriales que nos interesan
     const nombresDestacados = ['Su2ku', 'El Dragon Azul', 'Pulga Escapista', 'Devir'];
     const editorialesDestacadas = congresoData.editoriales.filter(ed => nombresDestacados.includes(ed.nombre));
 
@@ -904,7 +899,7 @@ window.iniciarSliderTalleresEditoriales = function() {
         const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
         const maxIndice = editorialesDestacadas.length - itemsVisibles;
 
-        if (maxIndice <= 0) return; // Si son menos de 4, no hay necesidad de mover el slider
+        if (maxIndice <= 0) return; 
 
         if (direccion === 'next') {
             indiceActual = indiceActual >= maxIndice ? 0 : indiceActual + 1;
@@ -936,7 +931,7 @@ window.iniciarSliderTalleresEditoriales = function() {
     }
 
     function iniciarIntervalo() {
-        intervaloSlider = setInterval(() => moverSlider('next'), 8000); // Rota cada 8 segundos
+        intervaloSlider = setInterval(() => moverSlider('next'), 8000); 
     }
     
     function reiniciarIntervalo() {
@@ -944,7 +939,6 @@ window.iniciarSliderTalleresEditoriales = function() {
         iniciarIntervalo();
     }
 
-    // Solo inicia el carrusel automático si hay suficientes tarjetas para hacer scroll
     if (editorialesDestacadas.length > (window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1))) {
         iniciarIntervalo();
     }
@@ -1423,10 +1417,9 @@ document.addEventListener('keydown', function(event) {
         } else if (isEditorialModalVisible) {
             window.cerrarModalEditorial();
         } else if (isActividadModalVisible) {
-            } else if (isDevirModalVisible) {
-    window.cerrarModalDevir();
-} else if (isActividadModalVisible) {
             window.cerrarModalActividad();
+        } else if (isDevirModalVisible) {
+            window.cerrarModalDevir();
         } else if (isCreadoraModalVisible) {
             window.cerrarModalCreadora();
         } else if (isSponsorModalVisible) {
