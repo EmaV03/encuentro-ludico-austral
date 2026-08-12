@@ -926,3 +926,27 @@ body {
 @media screen and (max-width: 600px) {
     .institucion-slide { flex: 0 0 100%; } /* 1 a la par en móviles */
 }
+
+/* =========================================
+   SECCIÓN ESPECIAL DEVIR
+   ========================================= */
+.interactive-book {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interactive-book:hover, 
+.interactive-book:active {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.devir-notice {
+    background-color: #FFF9F0;
+    border-left: 4px solid #f6961a;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    color: var(--dark);
+    font-size: 0.95rem;
+}

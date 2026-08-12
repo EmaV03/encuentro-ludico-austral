@@ -327,6 +327,37 @@
             <div class="gradual-blur-bottom"></div>
         </section>
 
+<!-- SECCIÓN: Especial Devir -->
+<section id="especial-devir" class="about-section seccion-relativa" style="background-color: var(--bg-main);">
+    <h2 style="color: #f6961a;" class="blur-animated blur-hidden">Espacio Devir: Recursos y Lanzamientos</h2>
+    <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 30px; font-weight: bold; color: var(--dark);">
+        Descubre "Aprender Jugando" para tu aula o explora los recursos gratuitos de Devir Home Academy.
+    </p>
+    
+    <div class="blur-animated blur-hidden" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; transition-delay: 0.2s;">
+        
+        <!-- Portada Primaria -->
+        <div style="text-align: center; max-width: 200px; width: 100%;">
+            <img src="Imagenes/devir1.jpeg" alt="Aprender Jugando - Primaria" class="interactive-book" onclick="abrirModalDevir('primaria')" style="width: 100%; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--primary); cursor: pointer;">
+            <h3 style="color: #046b33; margin-top: 15px; font-size: 1.1rem;">Edición Primaria</h3>
+        </div>
+        
+        <!-- Portada Secundaria -->
+        <div style="text-align: center; max-width: 200px; width: 100%;">
+            <img src="Imagenes/devir2.jpeg" alt="Aprender Jugando - Secundaria" class="interactive-book" onclick="abrirModalDevir('secundaria')" style="width: 100%; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--primary); cursor: pointer;">
+            <h3 style="color: #046b33; margin-top: 15px; font-size: 1.1rem;">Edición Secundaria</h3>
+        </div>
+
+        <!-- Devir Home Academy -->
+        <div style="text-align: center; max-width: 200px; width: 100%;">
+            <img src="Imagenes/editorial17.jpg" alt="Devir Home Academy" class="interactive-book" onclick="abrirModalDevir('academy')" style="width: 100%; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 3px solid var(--secondary); cursor: pointer; background: white; padding: 10px; object-fit: contain;">
+            <h3 style="color: #046b33; margin-top: 15px; font-size: 1.1rem;">Devir Home Academy</h3>
+        </div>
+
+    </div>
+    <div class="gradual-blur-bottom"></div>
+</section>
+
         <!-- SECCIÓN: Instituciones Presentes -->
         <section id="instituciones" class="about-section seccion-relativa" style="background-color: var(--white);">
             <h2 style="color: #046b33;" class="blur-animated blur-hidden">Instituciones Presentes</h2>
@@ -429,6 +460,7 @@
     <div id="modal-expositor" class="modal-overlay"></div>
     <div id="modal-editorial" class="modal-overlay"></div>
     <div id="modal-creadora" class="modal-overlay"></div>
+    <div id="modal-devir-dinamico" class="modal-overlay"></div>
     <div id="modal-sponsor" class="modal-overlay"></div>
     <div id="modal-actividad" class="modal-overlay"></div>
     <div id="modal-perfil" class="modal-overlay">

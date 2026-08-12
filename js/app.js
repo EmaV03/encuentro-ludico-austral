@@ -358,7 +358,7 @@ window.renderizarAgenda = async function() {
                     if (taller.aula && (diaKey === 'dia1' || diaKey === 'dia2')) {
                         const aulaLower = taller.aula.toLowerCase();
                         if (aulaLower.includes('verde') || aulaLower.includes('rosa')) {
-                            sedeNombre = 'Hotel Land';
+                            sedeNombre = 'Hotel Land Plaza';
                         }
                     }
                     
@@ -454,7 +454,7 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     if (taller.aula && (diaKey === 'dia1' || diaKey === 'dia2')) {
         const aulaLower = taller.aula.toLowerCase();
         if (aulaLower.includes('verde') || aulaLower.includes('rosa')) {
-            sedeNombre = 'Hotel Land';
+            sedeNombre = 'Hotel Land Plaza';
         }
     }
 
@@ -536,6 +536,81 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
 window.cerrarModal = function() {
     modalContenedor.classList.remove('active');
 };
+
+// ==========================================
+// MODALES ESPECIALES DEVIR (PRIMARIA, SECUNDARIA Y ACADEMY)
+// ==========================================
+window.abrirModalDevir = function(tipo) {
+    const modalDevir = document.getElementById('modal-devir-dinamico');
+    if (!modalDevir) return;
+
+    let titulo, subtitulo, descripcion, link, botonTexto, avisoExtra, imagenModal, claseEstilo;
+
+    if (tipo === 'primaria') {
+        titulo = "Aprender Jugando - Edición Primaria";
+        subtitulo = "El libro definitivo para el ABJ";
+        descripcion = "Guía esencial orientada a dinámicas de ABJ para niños. Incluye casos prácticos para adaptar juegos de mesa a las currículas de nivel primario, fomentando habilidades blandas y matemáticas básicas.";
+        link = "https://devir.com.ar/aprender-jugando-primaria";
+        botonTexto = "🌐 Visitar web de Devir";
+        avisoExtra = `<div style="background-color: #FFF9F0; border-left: 4px solid #f6961a; padding: 15px; border-radius: 8px; text-align: left; width: 100%; font-weight: bold; color: var(--dark); font-size: 0.95rem;">🛍️ ¡Atención! El ejemplar físico estará a la venta en el stand de Devir. ¡Asegura tu copia!</div>`;
+        imagenModal = "Imagenes/devir1.jpeg";
+        claseEstilo = "max-width: 160px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin: 0 auto 15px auto;";
+    
+    } else if (tipo === 'secundaria') {
+        titulo = "Aprender Jugando - Edición Secundaria";
+        subtitulo = "El libro definitivo para el ABJ";
+        descripcion = "Estrategias avanzadas de ABJ para adolescentes. Descubre cómo integrar juegos de mesa modernos para potenciar el pensamiento crítico, la resolución de problemas y la gestión de recursos en el aula de secundaria.";
+        link = "https://devir.com.ar/aprender-jugando-secundaria";
+        botonTexto = "🌐 Visitar web de Devir";
+        avisoExtra = `<div style="background-color: #FFF9F0; border-left: 4px solid #f6961a; padding: 15px; border-radius: 8px; text-align: left; width: 100%; font-weight: bold; color: var(--dark); font-size: 0.95rem;">🛍️ ¡Atención! El ejemplar físico estará a la venta en el stand de Devir. ¡Asegura tu copia!</div>`;
+        imagenModal = "Imagenes/devir2.jpeg";
+        claseEstilo = "max-width: 160px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin: 0 auto 15px auto;";
+    
+    } else if (tipo === 'academy') {
+        titulo = "Devir Home Academy";
+        subtitulo = "Recursos Educativos Digitales";
+        descripcion = "Plataforma oficial de Devir España repleta de recursos educativos gratuitos. Descubre guías didácticas, fichas para el aula y herramientas diseñadas por expertos para exprimir al máximo el potencial pedagógico de los juegos de mesa modernos.";
+        link = "https://devir.es/recursos/home-academy"; // URL oficial
+        botonTexto = "📚 Explorar Devir Academy";
+        avisoExtra = ``; // Sin aviso de venta física
+        imagenModal = "Imagenes/editorial17.jpg";
+        claseEstilo = "max-width: 120px; border-radius: 4px; margin: 0 auto 10px auto;";
+    }
+
+    modalDevir.innerHTML = `
+        <div class="modal-content" style="text-align: center;">
+            <button class="btn-cerrar" onclick="cerrarModalDevir()">×</button>
+            <img src="${imagenModal}" alt="${titulo}" style="height: auto; display: block; ${claseEstilo}">
+            <h2 style="margin: 0; color: #046b33;">${titulo}</h2>
+            <h4 style="color: var(--primary); margin-top: 5px;">${subtitulo}</h4>
+            <hr style="border: 1px dashed #ccc; margin: 15px 0;">
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <p style="font-size: 1.05rem; line-height: 1.6; text-align: left; margin: 0;">
+                    ${descripcion}
+                </p>
+                ${avisoExtra}
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <a href="${link}" target="_blank" class="cta-button" style="background-color: var(--secondary); width: 100%; display: block; text-decoration: none;">
+                    ${botonTexto}
+                </a>
+            </div>
+        </div>
+    `;
+    modalDevir.classList.add('active');
+};
+
+window.cerrarModalDevir = function() {
+    const modalDevir = document.getElementById('modal-devir-dinamico');
+    if (modalDevir) modalDevir.classList.remove('active');
+};
+
+// Recuerda agregar la tecla "Escape" para este modal en tu EventListener global (línea ~720):
+// const isDevirModalVisible = document.getElementById('modal-devir') && document.getElementById('modal-devir').classList.contains('active');
+// Y dentro de tu if (event.key === 'Escape') {...}:
+// else if (isDevirModalVisible) { window.cerrarModalDevir(); }
 
 // ==========================================
 // SISTEMA DE INSCRIPCIÓN DIRECTA
@@ -1330,6 +1405,7 @@ document.addEventListener('keydown', function(event) {
     const isActividadModalVisible = document.getElementById('modal-actividad') && document.getElementById('modal-actividad').classList.contains('active');
     const isCreadoraModalVisible = document.getElementById('modal-creadora') && document.getElementById('modal-creadora').classList.contains('active');
     const isSponsorModalVisible = document.getElementById('modal-sponsor') && document.getElementById('modal-sponsor').classList.contains('active');
+    const isDevirModalVisible = document.getElementById('modal-devir-dinamico') && document.getElementById('modal-devir-dinamico').classList.contains('active');
     
     const modalPerfil = document.getElementById('modal-perfil');
     const isPerfilModalVisible = modalPerfil && modalPerfil.classList.contains('active');
@@ -1347,6 +1423,9 @@ document.addEventListener('keydown', function(event) {
         } else if (isEditorialModalVisible) {
             window.cerrarModalEditorial();
         } else if (isActividadModalVisible) {
+            } else if (isDevirModalVisible) {
+    window.cerrarModalDevir();
+} else if (isActividadModalVisible) {
             window.cerrarModalActividad();
         } else if (isCreadoraModalVisible) {
             window.cerrarModalCreadora();
