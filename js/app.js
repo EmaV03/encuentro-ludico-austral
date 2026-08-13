@@ -772,7 +772,23 @@ function renderizarContenidoPerfil() {
             <p style="font-size: 0.85rem; color: #666; margin-top: 0; margin-bottom: 20px;">
                 📧 ${usuarioActivo.email} | 🆔 DNI: ${usuarioActivo.dni}
             </p>
+            
+            <!-- NUEVA SECCIÓN: MATERIAL EXCLUSIVO (FOTOS) -->
+            <div style="background: #F0FDF4; border-left: 4px solid #16A34A; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: var(--shadow);">
+                <h4 style="color: #16A34A; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                    📸 Material Exclusivo
+                </h4>
+                <p style="font-size: 0.9rem; color: var(--dark); margin-top: 0; margin-bottom: 15px;">
+                    Accede a todas las fotos oficiales y recuerdos capturados durante el congreso.
+                </p>
+                <!-- Reemplaza el href por el link real de Google Drive o Google Photos -->
+                <a href="https://photos.app.goo.gl/wsdnq561QCLb9NHz7" target="_blank" class="cta-button" style="background-color: #16A34A; width: 100%; display: block; text-align: center; text-decoration: none; margin-top: 0; padding: 10px;">
+                    Ver Galería de Fotos
+                </a>
+            </div>
+
             <hr style="border: 0.5px solid #E2E8F0; margin-bottom: 15px;">
+            <h4 style="margin-top: 0; color: var(--dark);">Tus Talleres Reservados:</h4>
             <div id="lista-mis-talleres">Cargando tus talleres...</div>
             <button id="btn-ejecutar-logout" class="btn-anotarse" style="margin-top:20px; background-color: var(--dark);">Cerrar sesión</button>
         `;
