@@ -764,6 +764,25 @@ window.renderizarContenidoPerfil = function() {
         if (btnLogin) btnLogin.addEventListener('click', window.validarUsuario);
         
     } else {
+        // Evaluamos si ya es la hora de apertura del Bingo
+        const ahora = new Date().getTime();
+        const bingoAbierto = ahora >= FECHA_APERTURA_BINGO;
+        let btnRetosHTML = '';
+
+        if (bingoAbierto) {
+            // Botón habilitado
+            btnRetosHTML = `
+            <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.abrirMisRetos()">
+                🎮 Entrar a Mis Retos
+            </button>`;
+        } else {
+            // Botón bloqueado visual y funcionalmente
+            btnRetosHTML = `
+            <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.05rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; background: #E2E8F0 !important; color: #94a3b8 !important; border: 2px solid #cbd5e1 !important; cursor: not-allowed; box-shadow: none !important;" disabled>
+                ⏳ Retos disponibles a las 12:30 hs
+            </button>`;
+        }
+
         perfilContenido.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                 <h3 style="margin: 0;">Hola, ${usuarioActivo.nombre}</h3>
@@ -784,9 +803,7 @@ window.renderizarContenidoPerfil = function() {
                 </a>
             </div>
 
-            <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.abrirMisRetos()">
-                🎮 Entrar a Mis Retos
-            </button>
+            ${btnRetosHTML}
 
             <hr style="border: 0.5px solid #E2E8F0; margin-bottom: 15px;">
             <h4 style="margin-top: 0; color: var(--dark);">Tus Talleres Reservados:</h4>
@@ -1673,41 +1690,60 @@ window.actualizarSeccionReto = async function() {
                 const ahora = new Date().getTime();
                 // FECHA_APERTURA_BINGO (12:30 hs) ya está definida arriba en tu archivo
                 if (ahora < FECHA_APERTURA_BINGO) {
-                    
-                    // 1. Mostrar título, reglas y contador en el HOME
-                    tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
-                    
-                    instruccionesBox.innerHTML = `
-                        <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
-                            <h4 style="color: #f6961a; margin-top: 0; margin-bottom: 10px; text-align: center;">¿Cómo se juega? 🎯</h4>
-                            <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #333;"><strong>1. Dinámica:</strong> Al llegar a cero, se generará tu cartón. Toca las casillas y cumple las misiones (subir foto o ingresar código).</p>
-                            <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>2. 🏁 Ganador:</strong> El juego finaliza cuando el primer participante logre sellar sus <strong>20 casillas</strong>.</p>
-                        </div>
-                        <div style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin: 15px 0; letter-spacing: 2px;" id="contador-home-tiempo">
-                            Calculando tiempo...
-                        </div>
-                    `;
+    
+    // 1. Mostrar título, reglas y contador en el HOME
+    tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
+    
+    // 🔴 NUEVO: Bloquear el botón visual y funcionalmente
+    const btnEntrarReto = document.getElementById('btn-entrar-reto');
+    if (btnEntrarReto) {
+        btnEntrarReto.disabled = true;
+        btnEntrarReto.innerText = 'Esperando inicio...';
+        btnEntrarReto.style.background = '#E2E8F0';
+        btnEntrarReto.style.color = '#94a3b8';
+        btnEntrarReto.style.border = '2px solid #cbd5e1';
+        btnEntrarReto.style.cursor = 'not-allowed';
+        btnEntrarReto.style.boxShadow = 'none';
+    }
+    
+    instruccionesBox.innerHTML = `
+        <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+            <h4 style="color: #f6961a; margin-top: 0; margin-bottom: 10px; text-align: center;">¿Cómo se juega? 🎯</h4>
+            <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #333;"><strong>1. Dinámica:</strong> Al llegar a cero, se generará tu cartón. Toca las casillas y cumple las misiones (subir foto o ingresar código).</p>
+            <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>2. 🏁 Ganador:</strong> El juego finaliza cuando el primer participante logre sellar sus <strong>20 casillas</strong>.</p>
+        </div>
+        <div style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin: 15px 0; letter-spacing: 2px;" id="contador-home-tiempo">
+            Calculando tiempo...
+        </div>
+    `;
 
-                    // Iniciamos el contador en vivo
-                    window.intervaloHomeBingo = setInterval(() => {
-                        const now = new Date().getTime();
-                        const distance = FECHA_APERTURA_BINGO - now;
-                        
-                        const elContador = document.getElementById('contador-home-tiempo');
-                        if (!elContador) return;
+    // Iniciamos el contador en vivo
+    window.intervaloHomeBingo = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = FECHA_APERTURA_BINGO - now;
+        
+        const elContador = document.getElementById('contador-home-tiempo');
+        if (!elContador) return;
 
-                        if (distance <= 0) {
-                            clearInterval(window.intervaloHomeBingo);
-                            instruccionesBox.innerHTML = ''; // Limpiamos para dejar la vista limpia
-                            window.actualizarSeccionReto(); // Recargamos para permitir jugar
-                        } else {
-                            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            const s = Math.floor((distance % (1000 * 60)) / 1000);
-                            elContador.innerText = `⏳ Faltan: ${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
-                        }
-                    }, 1000);
-
+        if (distance <= 0) {
+            clearInterval(window.intervaloHomeBingo);
+            instruccionesBox.innerHTML = ''; 
+            
+            // 🟢 NUEVO: Restaurar el botón cuando el tiempo llegue a cero
+            if (btnEntrarReto) {
+                btnEntrarReto.disabled = false;
+                btnEntrarReto.innerText = 'Entrar al Juego';
+                btnEntrarReto.style = ''; // Limpia los estilos en línea para devolverle el CSS original
+            }
+            
+            window.actualizarSeccionReto(); 
+        } else {
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            elContador.innerText = `⏳ Faltan: ${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        }
+    }, 1000);
                 } else {
                     // YA ES HORA DE JUGAR
                     tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
