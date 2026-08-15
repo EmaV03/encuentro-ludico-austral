@@ -2,15 +2,27 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { congresoData } from './data.js';
 
 // ==========================================
-// CONTROL AUTOMÁTICO DE INSCRIPCIONES
+// CONTROL AUTOMÁTICO DE INSCRIPCIONES Y JUEGOS
 // ==========================================
-// Fecha de apertura: 4 de Agosto de 2026 a las 14:00 hrs.
+// Fecha de apertura de inscripciones a talleres: 4 de Agosto de 2026 a las 14:00 hrs.
 const FECHA_APERTURA_INSCRIPCIONES = new Date(2026, 7, 4, 14, 0, 0).getTime();
 let INSCRIPCIONES_ABIERTAS = false;
+
+// Fecha de inicio automático del Bingo: 15 de Agosto de 2026 a las 12:30 hrs.
+const FECHA_APERTURA_BINGO = new Date(2026, 7, 15, 12, 30, 0).getTime();
+
+const ADMIN_EMAIL = 'ev22903@gmail.com';
+const esAdmin = (usuario) => usuario && usuario.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
 function verificarAperturaInscripciones() {
     const ahora = new Date().getTime();
     INSCRIPCIONES_ABIERTAS = ahora >= FECHA_APERTURA_INSCRIPCIONES;
+}
+
+function esHorarioBingoHabilitado(usuario) {
+    if (esAdmin(usuario)) return true;
+    const ahora = new Date().getTime();
+    return ahora >= FECHA_APERTURA_BINGO;
 }
 
 verificarAperturaInscripciones();
@@ -19,7 +31,7 @@ verificarAperturaInscripciones();
 // SISTEMA DE COLORES PARA AULAS
 // ==========================================
 window.obtenerColorAula = function(aula) {
-    if (!aula) return '#94a3b8'; // Gris por defecto si no hay aula
+    if (!aula) return '#94a3b8';
     const txt = aula.toLowerCase();
     
     if (txt.includes('amarilla') || txt.includes('ambar')) return '#d9c406'; 
@@ -30,7 +42,7 @@ window.obtenerColorAula = function(aula) {
     if (txt.includes('rosa') || txt.includes('rosado') || txt.includes('rosada')) return '#DB2777'; 
     if (txt.includes('violeta')) return '#7C3AED'; 
     
-    return '#046b33'; // Verde institucional por defecto
+    return '#046b33';
 };
 
 // ==========================================
@@ -87,7 +99,7 @@ if (!localStorage.getItem('inscripcionesCongreso')) {
 }
 
 // ==========================================
-// CORRECCIÓN DE SCOPE GLOBAL PARA ALERTAS
+// ALERTAS PERSONALIZADAS
 // ==========================================
 window.showCustomAlert = function(tipo, mensaje) {
     const overlay = document.getElementById('custom-alert-overlay');
@@ -286,7 +298,6 @@ window.renderizarAgenda = async function() {
 
     const tbody = document.createElement('tbody');
     
-    // Objeto para mapear los horarios de inicio globales por turno y día
     const horariosInicioGlobal = {
         dia1: { manana: '14:00 hs', tarde: '15:45 hs' },
         dia2: { manana: '14:00 hs', tarde: '15:45 hs' },
@@ -303,13 +314,11 @@ window.renderizarAgenda = async function() {
 
         if (!hayTalleresEnTurno) return; 
 
-        // 1. FILA SEPARADORA DE HORARIOS
         const trHorario = document.createElement('tr');
         trHorario.className = 'fila-separadora-horario';
 
         diasKeys.forEach(diaKey => {
             const tdHorario = document.createElement('td');
-            
             tdHorario.style.backgroundColor = '#E2E8F0'; 
             tdHorario.style.textAlign = 'center';
             tdHorario.style.padding = '15px 10px';
@@ -321,12 +330,10 @@ window.renderizarAgenda = async function() {
             } else {
                 tdHorario.innerHTML = ``; 
             }
-            
             trHorario.appendChild(tdHorario);
         });
         tbody.appendChild(trHorario);
 
-        // 2. FILA DE TALLERES
         const trTalleres = document.createElement('tr');
         diasKeys.forEach(diaKey => {
             const td = document.createElement('td');
@@ -353,7 +360,6 @@ window.renderizarAgenda = async function() {
                     const colorAula = window.obtenerColorAula(taller.aula);
                     card.style.borderLeftColor = colorAula;
                     
-                    // LÓGICA DINÁMICA DE SEDES: Solo Verde y Rosa en Sábado/Domingo van al Hotel Land
                     let sedeNombre = 'Biblioteca Rivadavia';
                     if (taller.aula && (diaKey === 'dia1' || diaKey === 'dia2')) {
                         const aulaLower = taller.aula.toLowerCase();
@@ -399,7 +405,6 @@ window.renderizarAgenda = async function() {
 window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
     const diaTexto = congresoData.cronograma[diaKey].fecha;
     
-    // Mapeo dinámico de horarios por día y módulo
     const horariosInicioGlobal = {
         dia1: { manana: '14:00 hs', tarde: '15:45 hs' },
         dia2: { manana: '14:00 hs', tarde: '15:45 hs' },
@@ -535,10 +540,7 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
                             return;
                         }
 
-                        // Login exitoso
                         localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
-                        
-                        // Reservar taller inmediatamente
                         await window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
                         
                     } catch (err) {
@@ -558,7 +560,7 @@ window.cerrarModal = function() {
 };
 
 // ==========================================
-// MODALES ESPECIALES DEVIR (PRIMARIA, SECUNDARIA Y ACADEMY)
+// MODALES ESPECIALES DEVIR
 // ==========================================
 window.abrirModalDevir = function(tipo) {
     const modalDevir = document.getElementById('modal-devir-dinamico');
@@ -590,9 +592,9 @@ window.abrirModalDevir = function(tipo) {
         titulo = "Devir Home Academy";
         subtitulo = "Recursos Educativos Digitales";
         descripcion = "Plataforma oficial de Devir España repleta de recursos educativos gratuitos. Descubre guías didácticas, fichas para el aula y herramientas diseñadas por expertos para exprimir al máximo el potencial pedagógico de los juegos de mesa modernos.";
-        link = "https://devir.es/recursos/home-academy"; // URL oficial
+        link = "https://devir.es/recursos/home-academy";
         botonTexto = "📚 Explorar Devir Academy";
-        avisoExtra = ``; // Sin aviso de venta física
+        avisoExtra = ``;
         imagenModal = "Imagenes/editorial17.jpg";
         claseEstilo = "max-width: 120px; border-radius: 4px; margin: 0 auto 10px auto;";
     }
@@ -661,7 +663,6 @@ window.procesarInscripcionDirecta = async function(taller, moduloKey, diaKey) {
             window.cerrarModal();
             await window.renderizarAgenda();
             
-            // Si el modal de perfil está abierto, lo recargamos
             const modalPerfilActivo = document.getElementById('modal-perfil');
             if (modalPerfilActivo && modalPerfilActivo.classList.contains('active')) {
                  window.cargarTalleresUsuario(usuarioActivo);
@@ -731,7 +732,7 @@ const perfilContenido = document.getElementById('perfil-contenido');
 if (btnAbrirPerfil) {
     btnAbrirPerfil.onclick = () => {
         modalPerfil.classList.add('active');
-        renderizarContenidoPerfil(); 
+        window.renderizarContenidoPerfil(); 
     };
 }
 
@@ -741,7 +742,7 @@ if (btnCerrarPerfil) {
     };
 }
 
-function renderizarContenidoPerfil() {
+window.renderizarContenidoPerfil = function() {
     const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
 
     if (!usuarioActivo) {
@@ -749,12 +750,10 @@ function renderizarContenidoPerfil() {
             <p>Ingresa tus credenciales para ver tu agenda:</p>
             <div class="campo-grupo">
                 <label>Correo Electrónico</label>
-                <!-- Bloqueamos el autocompletado del navegador -->
                 <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="off" name="email-no-autofill">
             </div>
             <div class="campo-grupo">
                 <label>Contraseña (Tu DNI)</label>
-                <!-- Forzamos al navegador a no sugerir contraseñas guardadas -->
                 <input type="password" id="login-dni" placeholder="Ej: 12345678" autocomplete="new-password" name="pwd-no-autofill">
             </div>
             <button class="btn-anotarse btn-perfil" id="btn-ejecutar-login">Ingresar</button>
@@ -773,7 +772,6 @@ function renderizarContenidoPerfil() {
                 📧 ${usuarioActivo.email} | 🆔 DNI: ${usuarioActivo.dni}
             </p>
             
-            <!-- NUEVA SECCIÓN: MATERIAL EXCLUSIVO (FOTOS) -->
             <div style="background: #F0FDF4; border-left: 4px solid #16A34A; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: var(--shadow);">
                 <h4 style="color: #16A34A; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
                     📸 Material Exclusivo
@@ -781,11 +779,14 @@ function renderizarContenidoPerfil() {
                 <p style="font-size: 0.9rem; color: var(--dark); margin-top: 0; margin-bottom: 15px;">
                     Accede a todas las fotos oficiales y recuerdos capturados durante el congreso.
                 </p>
-                <!-- Reemplaza el href por el link real de Google Drive o Google Photos -->
                 <a href="https://photos.app.goo.gl/wsdnq561QCLb9NHz7" target="_blank" class="cta-button" style="background-color: #16A34A; width: 100%; display: block; text-align: center; text-decoration: none; margin-top: 0; padding: 10px;">
                     Ver Galería de Fotos
                 </a>
             </div>
+
+            <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.abrirMisRetos()">
+                🎮 Entrar a Mis Retos
+            </button>
 
             <hr style="border: 0.5px solid #E2E8F0; margin-bottom: 15px;">
             <h4 style="margin-top: 0; color: var(--dark);">Tus Talleres Reservados:</h4>
@@ -798,7 +799,7 @@ function renderizarContenidoPerfil() {
         
         window.cargarTalleresUsuario(usuarioActivo);
     }
-}
+};
 
 window.validarUsuario = async function() {
     const emailInput = document.getElementById('login-email').value.trim();
@@ -847,7 +848,7 @@ window.cerrarSesion = function() {
         modalPerfil.classList.remove('active');
     }
     
-    renderizarContenidoPerfil(); 
+    window.renderizarContenidoPerfil(); 
     window.renderizarAgenda();
 };
 
@@ -895,6 +896,144 @@ window.cargarTalleresUsuario = async function(usuario) {
     } catch (err) {
         console.error("Error al cargar talleres:", err);
         listaContenedor.innerHTML = '<p style="color: #FF6B6B;">❌ Hubo un error al cargar tus datos.</p>';
+    }
+};
+
+// ==========================================
+// MODAL PARA MISIONES DE BINGO
+// ==========================================
+window.abrirModalMisionBingo = function(cartonId, tipoRespuesta, descripcion) {
+    const modalContenedor = document.getElementById('modal-contenedor');
+    if (!modalContenedor) return;
+
+    let inputHTML = '';
+    if (tipoRespuesta === 'codigo') {
+        inputHTML = `
+            <p style="text-align: left; font-weight: bold; margin-bottom: 5px; color: var(--dark);">Escribe tu respuesta:</p>
+            <input type="text" id="bingo-respuesta-codigo" placeholder="Escribe aquí tu respuesta..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-bottom: 15px;">
+        `;
+    } else {
+        inputHTML = `
+            <p style="text-align: left; font-weight: bold; margin-bottom: 5px; color: var(--dark);">Sube tu foto de evidencia:</p>
+            <input type="file" id="bingo-respuesta-imagen" accept="image/*" style="width: 100%; margin-bottom: 15px; padding: 5px; border: 1px dashed var(--primary); border-radius: 4px;">
+        `;
+    }
+
+    modalContenedor.innerHTML = `
+        <div class="modal-content" style="text-align: center;">
+            <button class="btn-cerrar" onclick="cerrarModal()">×</button>
+            <h2 style="color: var(--primary); margin-top: 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                🎯 Misión de A B J .... Bingo!
+            </h2>
+            <hr style="border: 1px dashed #ccc; margin: 15px 0;">
+            
+            <div style="background-color: #F8F9FA; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary); margin-bottom: 20px;">
+                <p style="font-size: 1.05rem; color: var(--dark); text-align: left; margin: 0; line-height: 1.5;">
+                    <strong>Objetivo:</strong> ${descripcion}
+                </p>
+            </div>
+            
+            ${inputHTML}
+            
+            <button id="btn-enviar-mision" class="cta-button" style="width: 100%; background: var(--secondary); font-size: 1.1rem;" onclick="window.procesarMisionBingo('${cartonId}', '${tipoRespuesta}')">
+                Verificar y Sellar Casilla
+            </button>
+        </div>
+    `;
+    modalContenedor.classList.add('active');
+};
+
+window.procesarMisionBingo = async function(cartonId, tipoRespuesta) {
+    const btn = document.getElementById('btn-enviar-mision');
+    if (btn) {
+        btn.innerText = 'Procesando...';
+        btn.disabled = true;
+    }
+
+    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
+    try {
+        const { data: cartonData, error: errCarton } = await supabase
+            .from('bingo_cartones')
+            .select('mision_id, bingo_misiones (codigo_correcto)')
+            .eq('id', cartonId)
+            .single();
+
+        if (errCarton) throw errCarton;
+
+        let respuestaFinal = '';
+
+        if (tipoRespuesta === 'codigo') {
+            const inputCodigo = document.getElementById('bingo-respuesta-codigo').value.trim();
+            if (!inputCodigo) throw new Error('Por favor, ingresa tu respuesta antes de continuar.');
+            respuestaFinal = inputCodigo;
+
+        } else {
+            const inputImg = document.getElementById('bingo-respuesta-imagen');
+            if (!inputImg.files || inputImg.files.length === 0) {
+                throw new Error('Por favor, selecciona una imagen para subir.');
+            }
+
+            const archivo = inputImg.files[0];
+            const extension = archivo.name.split('.').pop();
+            const nombreArchivo = `${usuarioActivo.id}_mision_${cartonData.mision_id}_${Date.now()}.${extension}`;
+
+            const { error: errUpload } = await supabase.storage
+                .from('respuestas_juegos')
+                .upload(nombreArchivo, archivo, { cacheControl: '3600', upsert: false });
+
+            if (errUpload) throw new Error('No se pudo subir la imagen. Revisa tu conexión de red.');
+
+            const { data: publicUrlData } = supabase.storage
+                .from('respuestas_juegos')
+                .getPublicUrl(nombreArchivo);
+
+            respuestaFinal = publicUrlData.publicUrl;
+        }
+
+        const { error: errUpdate } = await supabase
+            .from('bingo_cartones')
+            .update({ 
+                completada: true, 
+                respuesta_enviada: respuestaFinal, 
+                fecha_completada: new Date().toISOString() 
+            })
+            .eq('id', cartonId);
+
+        if (errUpdate) throw errUpdate;
+
+        // Detección automática de victoria (20 misiones completadas)
+        const { data: misionesCompletadas, error: errConteo } = await supabase
+            .from('bingo_cartones')
+            .select('id')
+            .eq('asistente_id', usuarioActivo.id)
+            .eq('completada', true);
+
+        if (!errConteo && misionesCompletadas.length >= 20) {
+            await supabase
+                .from('juegos_estado')
+                .update({ 
+                    juego_bloqueado: true,
+                    ganador_dia_anterior: usuarioActivo.nombre
+                })
+                .eq('dia_activo', 1);
+
+            window.showCustomAlert('success', '🎉 ¡BINGO! Has completado todas las misiones y eres el ganador indiscutido.');
+        } else {
+            window.showCustomAlert('success', '¡Excelente! Misión completada y casilla sellada.');
+        }
+
+        window.cerrarModal();
+        window.abrirMisRetos();
+
+    } catch (error) {
+        console.error(error);
+        window.showCustomAlert('error', error.message || 'Ocurrió un error inesperado al procesar tu respuesta.');
+    } finally {
+        if (btn) {
+            btn.innerText = 'Verificar y Sellar';
+            btn.disabled = false;
+        }
     }
 };
 
@@ -972,7 +1111,7 @@ window.iniciarSliderTalleresEditoriales = function() {
 };
 
 // ==========================================
-// RENDERIZAR SPONSORS (CON EXCEPCIÓN PARA BIBLIOTECA)
+// RENDERIZAR SPONSORS
 // ==========================================
 window.renderizarSponsors = function() {
     const sponsorsGrid = document.querySelector('.sponsors-grid');
@@ -1052,7 +1191,7 @@ window.iniciarHeroSlider = function() {
 };
 
 // ==========================================
-// RENDERIZAR EXPOSITORES (GRILLA DE 5 ESTRELLAS Y MODAL)
+// RENDERIZAR EXPOSITORES
 // ==========================================
 window.renderizarExpositores = function() {
     const container = document.getElementById('speakers-container');
@@ -1146,7 +1285,6 @@ window.cambiarOrg = function(orgId, element) {
     logos.forEach(logo => logo.classList.remove('active'));
     element.classList.add('active');
 
-    // Separamos el "texto" puro del "boton" HTML
     const orgData = {
         'homo-ludens': {
             titulo: 'Homo Ludens',
@@ -1165,7 +1303,6 @@ window.cambiarOrg = function(orgId, element) {
     const contentBox = document.getElementById('org-content-box');
     const data = orgData[orgId];
     
-    // Añadimos un contenedor "fantasma" que estará transparente y bajado unos píxeles
     contentBox.innerHTML = `
         <h3 id="titulo-animado" style="color: ${data.color}; font-size: 1.8rem; margin-top: 0; display: inline-block;"></h3>
         <p id="texto-animado" style="font-size: 1.1rem; line-height: 1.8; color: var(--dark); margin-top: 15px; min-height: 80px;"></p>
@@ -1198,7 +1335,6 @@ window.cambiarOrg = function(orgId, element) {
                 return;
             }
 
-            // Aquí solo anima el texto puro
             if (indexTexto < data.texto.length) {
                 textoEl.innerHTML = data.texto.substring(0, indexTexto + 1) + '<span class="typing-cursor"></span>';
                 indexTexto++;
@@ -1206,17 +1342,16 @@ window.cambiarOrg = function(orgId, element) {
                 textoEl.innerHTML = data.texto; 
                 clearInterval(window.typingOrgInterval);
                 
-                // Cuando el texto termina, inyectamos el botón y lo hacemos aparecer suavemente
                 const btnContenedor = document.getElementById('btn-redes-contenedor');
                 if(btnContenedor && data.boton) {
                     btnContenedor.innerHTML = data.boton;
                     setTimeout(() => {
                         btnContenedor.style.opacity = '1';
                         btnContenedor.style.transform = 'translateY(0)';
-                    }, 50); // Un respiro de 50ms para que actúe el CSS
+                    }, 50);
                 }
             }
-        }, 5); // Velocidad de escritura
+        }, 5);
     }, delayTitulo);
 };
 
@@ -1286,6 +1421,8 @@ window.iniciarSliderInstituciones = function() {
         const itemsVisibles = window.innerWidth > 900 ? 4 : (window.innerWidth > 600 ? 2 : 1);
         const maxIndice = congresoData.instituciones.length - itemsVisibles;
 
+        if (maxIndice <= 0) return;
+
         if (direccion === 'next') {
             indiceActual = indiceActual >= maxIndice ? 0 : indiceActual + 1;
         } else {
@@ -1317,7 +1454,7 @@ window.iniciarSliderInstituciones = function() {
 };
 
 // ==========================================
-// RENDERIZAR EDITORIALES (NUEVO SLIDER)
+// RENDERIZAR EDITORIALES
 // ==========================================
 window.iniciarSliderEditoriales = function() {
     const track = document.getElementById('editoriales-track');
@@ -1477,7 +1614,283 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.iniciarSliderTalleresEditoriales === 'function') window.iniciarSliderTalleresEditoriales();
     if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
     if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
-    
-    // Iniciar el contador de inscripciones
     if(typeof window.iniciarContadorInscripciones === 'function') window.iniciarContadorInscripciones();
+
+    // ==========================================
+    // LÓGICA DE LA SECCIÓN "RETO DEL DÍA"
+    // ==========================================
+    const btnEntrarReto = document.getElementById('btn-entrar-reto');
+    if (btnEntrarReto) {
+        btnEntrarReto.addEventListener('click', () => {
+            const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+            const modalPerfil = document.getElementById('modal-perfil');
+            
+            if (!usuarioActivo) {
+                window.showCustomAlert('error', '⚠️ Debes iniciar sesión en tu perfil para poder jugar.');
+                if (modalPerfil) {
+                    modalPerfil.classList.add('active');
+                    if(typeof window.renderizarContenidoPerfil === 'function') window.renderizarContenidoPerfil();
+                }
+            } else {
+                if (modalPerfil) modalPerfil.classList.add('active');
+                if(typeof window.abrirMisRetos === 'function') window.abrirMisRetos();
+            }
+        });
+    }
+
+    window.actualizarSeccionReto();
 });
+
+// Función para sincronizar datos reales del juego en el home
+window.actualizarSeccionReto = async function() {
+    try {
+        const { data: estadoData, error } = await supabase
+            .from('juegos_estado')
+            .select('*')
+            .order('id', { ascending: false })
+            .limit(1)
+            .single();
+        
+        if (!error && estadoData) {
+            const tituloEl = document.getElementById('titulo-juego-hoy');
+            const contJugadores = document.getElementById('contador-jugadores');
+            const ganadorAyer = document.getElementById('ganador-ayer');
+            const nombreGanador = document.getElementById('nombre-ganador-ayer');
+            
+            if (tituloEl) {
+                // Limpiamos intervalos previos para evitar superposiciones
+                if (window.intervaloHomeBingo) clearInterval(window.intervaloHomeBingo);
+
+                if (estadoData.dia_activo === 1) {
+                    const ahora = new Date().getTime();
+                    // FECHA_APERTURA_BINGO ya está definida al inicio del archivo
+                    if (ahora < FECHA_APERTURA_BINGO) {
+                        // Iniciamos el contador en el Home
+                        window.intervaloHomeBingo = setInterval(() => {
+                            const now = new Date().getTime();
+                            const distance = FECHA_APERTURA_BINGO - now;
+                            
+                            if (distance <= 0) {
+                                clearInterval(window.intervaloHomeBingo);
+                                tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
+                            } else {
+                                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                const s = Math.floor((distance % (1000 * 60)) / 1000);
+                                tituloEl.innerHTML = `El Bingo inicia en: <span style="color:var(--primary);">${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}</span> ⏳`;
+                            }
+                        }, 1000);
+                    } else {
+                        tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
+                    }
+                }
+                else if (estadoData.dia_activo === 2) tituloEl.innerText = 'Día 2: Operación ABJ 🕵️‍♂️';
+                else if (estadoData.dia_activo === 3) tituloEl.innerText = 'Día 3: Kahoot! 📱';
+                else tituloEl.innerText = 'Juegos en Pausa ⏳';
+            }
+            
+            // Conteo dinámico y real de participantes únicos con cartón asignado
+            const { data: cartonesUnicos } = await supabase
+                .from('bingo_cartones')
+                .select('asistente_id');
+
+            let totalJugadores = 0;
+            if (cartonesUnicos) {
+                const participantesSet = new Set(cartonesUnicos.map(c => c.asistente_id));
+                totalJugadores = participantesSet.size;
+            }
+
+            if (contJugadores) contJugadores.innerText = totalJugadores;
+            
+            if (ganadorAyer && nombreGanador && estadoData.ganador_dia_anterior) {
+                nombreGanador.innerText = estadoData.ganador_dia_anterior;
+                ganadorAyer.style.display = 'block';
+            }
+        }
+    } catch (err) {
+        console.error("Error al actualizar la sección de retos:", err);
+    }
+};
+
+// ==========================================
+// MOTOR DE JUEGOS Y RETOS DEL CONGRESO
+// ==========================================
+window.abrirMisRetos = async function() {
+    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+    if (!usuarioActivo) {
+        window.showCustomAlert('error', 'Debes iniciar sesión en tu perfil para acceder a los retos.');
+        return;
+    }
+
+    const perfilContenido = document.getElementById('perfil-contenido');
+    perfilContenido.innerHTML = `<h3 style="text-align:center; color: var(--dark);">Cargando tu reto del día... 🎲</h3>`;
+
+    try {
+        const { data: estadoData, error: errEstado } = await supabase
+            .from('juegos_estado')
+            .select('*')
+            .order('id', { ascending: false })
+            .limit(1)
+            .single();
+
+        if (errEstado || !estadoData || estadoData.dia_activo === 0) {
+            perfilContenido.innerHTML = `<div style="text-align:center; padding: 20px;">
+                <h3 style="color: var(--primary);">Juegos inactivos</h3>
+                <p>Aún no ha comenzado el reto de hoy. ¡Mantente atento!</p>
+                <button class="cta-button" onclick="renderizarContenidoPerfil()">Volver al Perfil</button>
+            </div>`;
+            return;
+        }
+
+        // Bloqueo / Activación automática por Horario (Día 1: 12:30 hs)
+        if (estadoData.dia_activo === 1) {
+            
+            // Verificamos si es la hora. IMPORTANTE: esAdmin salta esta regla para que puedas probar la web.
+            if (!esHorarioBingoHabilitado(usuarioActivo)) {
+                
+                // Iniciar el reloj de cuenta regresiva
+                const actualizarRelojBingo = setInterval(() => {
+                    const ahora = new Date().getTime();
+                    const distancia = FECHA_APERTURA_BINGO - ahora;
+                    const elContadorBingo = document.getElementById('contador-bingo-tiempo');
+                    
+                    if (!elContadorBingo) {
+                        clearInterval(actualizarRelojBingo);
+                        return;
+                    }
+
+                    if (distancia <= 0) {
+                        clearInterval(actualizarRelojBingo);
+                        window.abrirMisRetos(); // Recarga la vista automáticamente y permite generar el cartón
+                        return;
+                    }
+
+                    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+                    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+                    
+                    elContadorBingo.innerText = `${horas < 10 ? '0'+horas : horas}:${minutos < 10 ? '0'+minutos : minutos}:${segundos < 10 ? '0'+segundos : segundos}`;
+                }, 1000);
+
+                // Pantalla de bloqueo e instrucciones
+                perfilContenido.innerHTML = `
+                    <div style="text-align:center; padding: 15px 10px;">
+                        <h3 style="color: #f6961a; margin-top: 0; font-size: 1.4rem;">⏳ ¡Preparando el Juego!</h3>
+                        
+                        <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left;">
+                            <h4 style="color: var(--primary); margin-top: 0; margin-bottom: 10px; text-align: center;">🎲 Juego: A B J .... Bingo!</h4>
+                            <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: #333;"><strong>¿Cómo se juega?</strong> Toca una casilla vacía en tu cartón y cumple la misión (escribir un código o subir una foto). Si es correcta, la casilla se sellará.</p>
+                            <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>🏁 ¿Cuándo finaliza?</strong> El juego termina inmediatamente cuando el primer participante logre sellar las <strong>20 casillas</strong> de su cartón.</p>
+                        </div>
+
+                        <p style="font-size: 1rem; color: var(--dark); line-height: 1.4; margin: 10px 0;">
+                            Tu cartón único se generará a las <strong>12:30 hs</strong>:
+                        </p>
+                        
+                        <div style="font-size: 2.5rem; font-weight: 900; color: #046b33; margin: 10px 0; letter-spacing: 2px;" id="contador-bingo-tiempo">
+                            --:--:--
+                        </div>
+
+                        <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background: var(--dark); width: 100%;">
+                            Volver a mi Perfil
+                        </button>
+                    </div>
+                `;
+                // El return actúa como un muro: IMPIDE que la función cargarBingo() se ejecute antes de tiempo.
+                return; 
+            }
+            
+            // Solo si el contador llegó a 0 (o eres Admin), se permite avanzar y crear el cartón en la BD.
+            await cargarBingo(usuarioActivo, estadoData);
+            window.actualizarSeccionReto(); 
+            
+        } else if (estadoData.dia_activo === 2) {
+            perfilContenido.innerHTML = `<p style="text-align:center;">Cargando Operación ABJ...</p>`;
+        } else if (estadoData.dia_activo === 3) {
+            perfilContenido.innerHTML = `<p style="text-align:center;">Cargando Kahoot...</p>`;
+        }
+
+    } catch (error) {
+        console.error("Error cargando juegos:", error);
+        window.showCustomAlert('error', 'Error de conexión al cargar los juegos.');
+    }
+};
+
+async function cargarBingo(usuario, estadoJuego) {
+    const perfilContenido = document.getElementById('perfil-contenido');
+    
+    let { data: miCarton } = await supabase
+        .from('bingo_cartones')
+        .select(`id, completada, mision_id, bingo_misiones (descripcion, tipo_respuesta)`)
+        .eq('asistente_id', usuario.id);
+
+    if (!miCarton || miCarton.length === 0) {
+        perfilContenido.innerHTML = `<p style="text-align:center;">Generando tu cartón único...</p>`;
+        
+        const { data: todasLasMisiones } = await supabase.from('bingo_misiones').select('*');
+        
+        if (!todasLasMisiones || todasLasMisiones.length < 20) {
+            perfilContenido.innerHTML = `<p style="text-align:center; color:#FF6B6B;">Error: Faltan cargar las misiones en la base de datos.</p>`;
+            return;
+        }
+
+        let mezcladas = todasLasMisiones.sort(() => 0.5 - Math.random());
+        let misionesSeleccionadas = mezcladas.slice(0, 20);
+
+        const insertData = misionesSeleccionadas.map(m => ({
+            asistente_id: usuario.id,
+            mision_id: m.id,
+            completada: false
+        }));
+
+        await supabase.from('bingo_cartones').insert(insertData);
+        
+        const { data: nuevoCarton } = await supabase
+            .from('bingo_cartones')
+            .select(`id, completada, mision_id, bingo_misiones (descripcion, tipo_respuesta)`)
+            .eq('asistente_id', usuario.id);
+            
+        miCarton = nuevoCarton;
+    }
+
+    let gridHTML = '<div class="bingo-grid">';
+    let completadas = 0;
+
+    miCarton.forEach((celda) => {
+        if (celda.completada) completadas++;
+        
+        const esAdminUser = usuario.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        const claseCompletada = celda.completada ? 'completada' : '';
+        const selloHTML = celda.completada ? '<div class="bingo-sello"></div>' : '';
+        
+        const onClick = (!celda.completada && (!estadoJuego.juego_bloqueado || esAdminUser)) 
+            ? `onclick="abrirModalMisionBingo('${celda.id}', '${celda.bingo_misiones.tipo_respuesta}', '${celda.bingo_misiones.descripcion}')"` 
+            : '';
+
+        gridHTML += `
+            <div class="bingo-cell ${claseCompletada}" ${onClick} title="${celda.bingo_misiones.descripcion}">
+                <span class="texto-mision-celda" style="z-index: 2; position: relative; font-size: 0.75rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; padding: 2px;">
+                    ${celda.bingo_misiones.descripcion}
+                </span>
+                ${selloHTML}
+            </div>
+        `;
+    });
+    gridHTML += '</div>';
+
+    let estadoHTML = '';
+    if (estadoJuego.juego_bloqueado && usuario.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+        estadoHTML = `<div style="background:#FFF0F5; color:#DB2777; padding:10px; border-radius:8px; font-weight:bold; margin-bottom:15px; text-align:center;">🔒 ¡El Bingo ha terminado! El ganador fue anunciado.</div>`;
+    }
+
+    perfilContenido.innerHTML = `
+        <h2 style="text-align:center; color: var(--dark); margin-bottom: 5px;">A B J .... Bingo!</h2>
+        <p style="text-align:center; color: var(--secondary); font-weight:bold; margin-top:0;">Progreso: ${completadas}/20</p>
+        ${estadoHTML}
+        ${gridHTML}
+        <p style="font-size: 0.85rem; text-align:center; color: #666;">Toca una casilla sin sellar para ver la misión y enviar tu respuesta.</p>
+        <div style="text-align:center; margin-top:20px;">
+            <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background:var(--dark);">Volver a mi perfil</button>
+        </div>
+    `;
+}

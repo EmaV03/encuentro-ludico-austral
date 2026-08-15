@@ -203,6 +203,25 @@
             <div class="gradual-blur-bottom"></div>
         </section>
 
+<!-- SECCIÓN: RETOS DEL CONGRESO (JUEGOS) -->
+<section id="retos-congreso" class="about-section seccion-relativa" style="background-color: var(--white); text-align: center;">
+    <h2 style="color: var(--primary);" class="blur-animated blur-hidden">Reto del Día</h2>
+    
+    <div style="background: var(--bg-main); max-width: 800px; margin: 0 auto; padding: 30px; border-radius: 16px; box-shadow: var(--shadow); border: 2px solid var(--secondary);">
+        <!-- Aquí inyectaremos con JS si es Día 1 (Bingo), Día 2 (Operación ABJ) o Día 3 (Kahoot!) -->
+        <h3 id="titulo-juego-hoy" style="color: var(--dark); font-size: 1.8rem; margin-top: 0;">Cargando reto...</h3>
+        
+        <p id="ganador-ayer" style="color: #f6961a; font-weight: bold; display: none;">🏆 Ganador de ayer: <span id="nombre-ganador-ayer"></span></p>
+        
+        <div style="margin: 20px 0; font-size: 1.2rem;">
+            🔥 <strong id="contador-jugadores" style="color: var(--secondary); font-size: 1.5rem;">0</strong> personas están jugando ahora mismo.
+        </div>
+        
+        <button id="btn-entrar-reto" class="cta-button btn-perfil" style="font-size: 1.2rem; padding: 12px 30px;">Entrar al Juego</button>
+    </div>
+    <div class="gradual-blur-bottom"></div>
+</section>
+
         <!-- SECCIÓN: Talleres -->
         <section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
             <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
