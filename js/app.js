@@ -1657,39 +1657,77 @@ window.actualizarSeccionReto = async function() {
             const ganadorAyer = document.getElementById('ganador-ayer');
             const nombreGanador = document.getElementById('nombre-ganador-ayer');
             
-            if (tituloEl) {
-                // Limpiamos intervalos previos para evitar superposiciones
-                if (window.intervaloHomeBingo) clearInterval(window.intervaloHomeBingo);
+            // Contenedor dinámico para inyectar instrucciones en la Home
+            let instruccionesBox = document.getElementById('instrucciones-reto-home');
+            if (!instruccionesBox && tituloEl) {
+                instruccionesBox = document.createElement('div');
+                instruccionesBox.id = 'instrucciones-reto-home';
+                // Lo insertamos justo debajo del título
+                tituloEl.parentNode.insertBefore(instruccionesBox, tituloEl.nextSibling);
+            }
 
-                if (estadoData.dia_activo === 1) {
-                    const ahora = new Date().getTime();
-                    // FECHA_APERTURA_BINGO ya está definida al inicio del archivo
-                    if (ahora < FECHA_APERTURA_BINGO) {
-                        // Iniciamos el contador en el Home
-                        window.intervaloHomeBingo = setInterval(() => {
-                            const now = new Date().getTime();
-                            const distance = FECHA_APERTURA_BINGO - now;
-                            
-                            if (distance <= 0) {
-                                clearInterval(window.intervaloHomeBingo);
-                                tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
-                            } else {
-                                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                const s = Math.floor((distance % (1000 * 60)) / 1000);
-                                tituloEl.innerHTML = `El Bingo inicia en: <span style="color:var(--primary);">${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}</span> ⏳`;
-                            }
-                        }, 1000);
-                    } else {
-                        tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
-                    }
+            // Limpiamos intervalos previos
+            if (window.intervaloHomeBingo) clearInterval(window.intervaloHomeBingo);
+
+            if (estadoData.dia_activo === 1) {
+                const ahora = new Date().getTime();
+                // FECHA_APERTURA_BINGO (12:30 hs) ya está definida arriba en tu archivo
+                if (ahora < FECHA_APERTURA_BINGO) {
+                    
+                    // 1. Mostrar título, reglas y contador en el HOME
+                    tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
+                    
+                    instruccionesBox.innerHTML = `
+                        <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                            <h4 style="color: #f6961a; margin-top: 0; margin-bottom: 10px; text-align: center;">¿Cómo se juega? 🎯</h4>
+                            <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #333;"><strong>1. Dinámica:</strong> Al llegar a cero, se generará tu cartón. Toca las casillas y cumple las misiones (subir foto o ingresar código).</p>
+                            <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>2. 🏁 Ganador:</strong> El juego finaliza cuando el primer participante logre sellar sus <strong>20 casillas</strong>.</p>
+                        </div>
+                        <div style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin: 15px 0; letter-spacing: 2px;" id="contador-home-tiempo">
+                            Calculando tiempo...
+                        </div>
+                    `;
+
+                    // Iniciamos el contador en vivo
+                    window.intervaloHomeBingo = setInterval(() => {
+                        const now = new Date().getTime();
+                        const distance = FECHA_APERTURA_BINGO - now;
+                        
+                        const elContador = document.getElementById('contador-home-tiempo');
+                        if (!elContador) return;
+
+                        if (distance <= 0) {
+                            clearInterval(window.intervaloHomeBingo);
+                            instruccionesBox.innerHTML = ''; // Limpiamos para dejar la vista limpia
+                            window.actualizarSeccionReto(); // Recargamos para permitir jugar
+                        } else {
+                            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            const s = Math.floor((distance % (1000 * 60)) / 1000);
+                            elContador.innerText = `⏳ Faltan: ${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                        }
+                    }, 1000);
+
+                } else {
+                    // YA ES HORA DE JUGAR
+                    tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
+                    if (instruccionesBox) instruccionesBox.innerHTML = '';
                 }
-                else if (estadoData.dia_activo === 2) tituloEl.innerText = 'Día 2: Operación ABJ 🕵️‍♂️';
-                else if (estadoData.dia_activo === 3) tituloEl.innerText = 'Día 3: Kahoot! 📱';
-                else tituloEl.innerText = 'Juegos en Pausa ⏳';
+            }
+            else if (estadoData.dia_activo === 2) {
+                tituloEl.innerText = 'Día 2: Operación ABJ 🕵️‍♂️';
+                if (instruccionesBox) instruccionesBox.innerHTML = '';
+            }
+            else if (estadoData.dia_activo === 3) {
+                tituloEl.innerText = 'Día 3: Kahoot! 📱';
+                if (instruccionesBox) instruccionesBox.innerHTML = '';
+            }
+            else {
+                tituloEl.innerText = 'Juegos en Pausa ⏳';
+                if (instruccionesBox) instruccionesBox.innerHTML = '';
             }
             
-            // Conteo dinámico y real de participantes únicos con cartón asignado
+            // Conteo dinámico y real de participantes únicos
             const { data: cartonesUnicos } = await supabase
                 .from('bingo_cartones')
                 .select('asistente_id');
