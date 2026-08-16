@@ -4,11 +4,9 @@ import { congresoData } from './data.js';
 // ==========================================
 // CONTROL AUTOMÁTICO DE INSCRIPCIONES Y JUEGOS
 // ==========================================
-// Fecha de apertura de inscripciones a talleres: 4 de Agosto de 2026 a las 14:00 hrs.
 const FECHA_APERTURA_INSCRIPCIONES = new Date(2026, 7, 4, 14, 0, 0).getTime();
 let INSCRIPCIONES_ABIERTAS = false;
 
-// Fecha de inicio automático del Bingo: 15 de Agosto de 2026 a las 12:30 hrs.
 const FECHA_APERTURA_BINGO = new Date(2026, 7, 15, 12, 30, 0).getTime();
 
 const ADMIN_EMAIL = 'ev22903@gmail.com';
@@ -764,19 +762,16 @@ window.renderizarContenidoPerfil = function() {
         if (btnLogin) btnLogin.addEventListener('click', window.validarUsuario);
         
     } else {
-        // Evaluamos si ya es la hora de apertura del Bingo
         const ahora = new Date().getTime();
         const bingoAbierto = ahora >= FECHA_APERTURA_BINGO;
         let btnRetosHTML = '';
 
         if (bingoAbierto) {
-            // Botón habilitado
             btnRetosHTML = `
             <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.abrirMisRetos()">
                 🎮 Entrar a Mis Retos
             </button>`;
         } else {
-            // Botón bloqueado visual y funcionalmente
             btnRetosHTML = `
             <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.05rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; background: #E2E8F0 !important; color: #94a3b8 !important; border: 2px solid #cbd5e1 !important; cursor: not-allowed; box-shadow: none !important;" disabled>
                 ⏳ Retos disponibles a las 12:30 hs
@@ -1019,7 +1014,6 @@ window.procesarMisionBingo = async function(cartonId, tipoRespuesta) {
 
         if (errUpdate) throw errUpdate;
 
-        // Detección automática de victoria (20 misiones completadas)
         const { data: misionesCompletadas, error: errConteo } = await supabase
             .from('bingo_cartones')
             .select('id')
@@ -1674,78 +1668,68 @@ window.actualizarSeccionReto = async function() {
             const ganadorAyer = document.getElementById('ganador-ayer');
             const nombreGanador = document.getElementById('nombre-ganador-ayer');
             
-            // Contenedor dinámico para inyectar instrucciones en la Home
             let instruccionesBox = document.getElementById('instrucciones-reto-home');
             if (!instruccionesBox && tituloEl) {
                 instruccionesBox = document.createElement('div');
                 instruccionesBox.id = 'instrucciones-reto-home';
-                // Lo insertamos justo debajo del título
                 tituloEl.parentNode.insertBefore(instruccionesBox, tituloEl.nextSibling);
             }
 
-            // Limpiamos intervalos previos
             if (window.intervaloHomeBingo) clearInterval(window.intervaloHomeBingo);
 
             if (estadoData.dia_activo === 1) {
                 const ahora = new Date().getTime();
-                // FECHA_APERTURA_BINGO (12:30 hs) ya está definida arriba en tu archivo
                 if (ahora < FECHA_APERTURA_BINGO) {
-    
-    // 1. Mostrar título, reglas y contador en el HOME
-    tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
-    
-    // 🔴 NUEVO: Bloquear el botón visual y funcionalmente
-    const btnEntrarReto = document.getElementById('btn-entrar-reto');
-    if (btnEntrarReto) {
-        btnEntrarReto.disabled = true;
-        btnEntrarReto.innerText = 'Esperando inicio...';
-        btnEntrarReto.style.background = '#E2E8F0';
-        btnEntrarReto.style.color = '#94a3b8';
-        btnEntrarReto.style.border = '2px solid #cbd5e1';
-        btnEntrarReto.style.cursor = 'not-allowed';
-        btnEntrarReto.style.boxShadow = 'none';
-    }
-    
-    instruccionesBox.innerHTML = `
-        <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
-            <h4 style="color: #f6961a; margin-top: 0; margin-bottom: 10px; text-align: center;">¿Cómo se juega? 🎯</h4>
-            <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #333;"><strong>1. Dinámica:</strong> Al llegar a cero, se generará tu cartón. Toca las casillas y cumple las misiones (subir foto o ingresar código).</p>
-            <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>2. 🏁 Ganador:</strong> El juego finaliza cuando el primer participante logre sellar sus <strong>20 casillas</strong>.</p>
-        </div>
-        <div style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin: 15px 0; letter-spacing: 2px;" id="contador-home-tiempo">
-            Calculando tiempo...
-        </div>
-    `;
+                    tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
+                    
+                    const btnEntrarReto = document.getElementById('btn-entrar-reto');
+                    if (btnEntrarReto) {
+                        btnEntrarReto.disabled = true;
+                        btnEntrarReto.innerText = 'Esperando inicio...';
+                        btnEntrarReto.style.background = '#E2E8F0';
+                        btnEntrarReto.style.color = '#94a3b8';
+                        btnEntrarReto.style.border = '2px solid #cbd5e1';
+                        btnEntrarReto.style.cursor = 'not-allowed';
+                        btnEntrarReto.style.boxShadow = 'none';
+                    }
+                    
+                    instruccionesBox.innerHTML = `
+                        <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                            <h4 style="color: #f6961a; margin-top: 0; margin-bottom: 10px; text-align: center;">¿Cómo se juega? 🎯</h4>
+                            <p style="margin: 0 0 8px 0; font-size: 0.95rem; color: #333;"><strong>1. Dinámica:</strong> Al llegar a cero, se generará tu cartón. Toca las casillas y cumple las misiones (subir foto o ingresar código).</p>
+                            <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>2. 🏁 Ganador:</strong> El juego finaliza cuando el primer participante logre sellar sus <strong>20 casillas</strong>.</p>
+                        </div>
+                        <div style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin: 15px 0; letter-spacing: 2px;" id="contador-home-tiempo">
+                            Calculando tiempo...
+                        </div>
+                    `;
 
-    // Iniciamos el contador en vivo
-    window.intervaloHomeBingo = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = FECHA_APERTURA_BINGO - now;
-        
-        const elContador = document.getElementById('contador-home-tiempo');
-        if (!elContador) return;
+                    window.intervaloHomeBingo = setInterval(() => {
+                        const now = new Date().getTime();
+                        const distance = FECHA_APERTURA_BINGO - now;
+                        
+                        const elContador = document.getElementById('contador-home-tiempo');
+                        if (!elContador) return;
 
-        if (distance <= 0) {
-            clearInterval(window.intervaloHomeBingo);
-            instruccionesBox.innerHTML = ''; 
-            
-            // 🟢 NUEVO: Restaurar el botón cuando el tiempo llegue a cero
-            if (btnEntrarReto) {
-                btnEntrarReto.disabled = false;
-                btnEntrarReto.innerText = 'Entrar al Juego';
-                btnEntrarReto.style = ''; // Limpia los estilos en línea para devolverle el CSS original
-            }
-            
-            window.actualizarSeccionReto(); 
-        } else {
-            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
-            elContador.innerText = `⏳ Faltan: ${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
-        }
-    }, 1000);
+                        if (distance <= 0) {
+                            clearInterval(window.intervaloHomeBingo);
+                            instruccionesBox.innerHTML = ''; 
+                            
+                            if (btnEntrarReto) {
+                                btnEntrarReto.disabled = false;
+                                btnEntrarReto.innerText = 'Entrar al Juego';
+                                btnEntrarReto.style = '';
+                            }
+                            
+                            window.actualizarSeccionReto(); 
+                        } else {
+                            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            const s = Math.floor((distance % (1000 * 60)) / 1000);
+                            elContador.innerText = `⏳ Faltan: ${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                        }
+                    }, 1000);
                 } else {
-                    // YA ES HORA DE JUGAR
                     tituloEl.innerText = 'Día 1: A B J .... Bingo! 🎲';
                     if (instruccionesBox) instruccionesBox.innerHTML = '';
                 }
@@ -1763,7 +1747,6 @@ window.actualizarSeccionReto = async function() {
                 if (instruccionesBox) instruccionesBox.innerHTML = '';
             }
             
-            // Conteo dinámico y real de participantes únicos
             const { data: cartonesUnicos } = await supabase
                 .from('bingo_cartones')
                 .select('asistente_id');
@@ -1797,7 +1780,7 @@ window.abrirMisRetos = async function() {
     }
 
     const perfilContenido = document.getElementById('perfil-contenido');
-    perfilContenido.innerHTML = `<h3 style="text-align:center; color: var(--dark);">Cargando tu reto del día... 🎲</h3>`;
+    perfilContenido.innerHTML = `<h3 style="text-align:center; color: var(--dark);">Cargando tus retos... 🎲</h3>`;
 
     try {
         const { data: estadoData, error: errEstado } = await supabase
@@ -1816,13 +1799,11 @@ window.abrirMisRetos = async function() {
             return;
         }
 
-        // Bloqueo / Activación automática por Horario (Día 1: 12:30 hs)
-        if (estadoData.dia_activo === 1) {
-            
-            // Verificamos si es la hora. IMPORTANTE: esAdmin salta esta regla para que puedas probar la web.
-            if (!esHorarioBingoHabilitado(usuarioActivo)) {
-                
-                // Iniciar el reloj de cuenta regresiva
+        perfilContenido.innerHTML = '';
+
+        // CARGA DEL BINGO (Día 1 en adelante)
+        if (estadoData.dia_activo >= 1) {
+            if (estadoData.dia_activo === 1 && !esHorarioBingoHabilitado(usuarioActivo)) {
                 const actualizarRelojBingo = setInterval(() => {
                     const ahora = new Date().getTime();
                     const distancia = FECHA_APERTURA_BINGO - ahora;
@@ -1835,7 +1816,7 @@ window.abrirMisRetos = async function() {
 
                     if (distancia <= 0) {
                         clearInterval(actualizarRelojBingo);
-                        window.abrirMisRetos(); // Recarga la vista automáticamente y permite generar el cartón
+                        window.abrirMisRetos(); 
                         return;
                     }
 
@@ -1846,43 +1827,40 @@ window.abrirMisRetos = async function() {
                     elContadorBingo.innerText = `${horas < 10 ? '0'+horas : horas}:${minutos < 10 ? '0'+minutos : minutos}:${segundos < 10 ? '0'+segundos : segundos}`;
                 }, 1000);
 
-                // Pantalla de bloqueo e instrucciones
                 perfilContenido.innerHTML = `
                     <div style="text-align:center; padding: 15px 10px;">
                         <h3 style="color: #f6961a; margin-top: 0; font-size: 1.4rem;">⏳ ¡Preparando el Juego!</h3>
-                        
                         <div style="background: #FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left;">
                             <h4 style="color: var(--primary); margin-top: 0; margin-bottom: 10px; text-align: center;">🎲 Juego: A B J .... Bingo!</h4>
                             <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: #333;"><strong>¿Cómo se juega?</strong> Toca una casilla vacía en tu cartón y cumple la misión (escribir un código o subir una foto). Si es correcta, la casilla se sellará.</p>
                             <p style="margin: 0; font-size: 0.95rem; color: #333;"><strong>🏁 ¿Cuándo finaliza?</strong> El juego termina inmediatamente cuando el primer participante logre sellar las <strong>20 casillas</strong> de su cartón.</p>
                         </div>
-
-                        <p style="font-size: 1rem; color: var(--dark); line-height: 1.4; margin: 10px 0;">
-                            Tu cartón único se generará a las <strong>12:30 hs</strong>:
-                        </p>
-                        
-                        <div style="font-size: 2.5rem; font-weight: 900; color: #046b33; margin: 10px 0; letter-spacing: 2px;" id="contador-bingo-tiempo">
-                            --:--:--
-                        </div>
-
-                        <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background: var(--dark); width: 100%;">
-                            Volver a mi Perfil
-                        </button>
+                        <p style="font-size: 1rem; color: var(--dark); line-height: 1.4; margin: 10px 0;">Tu cartón único se generará a las <strong>12:30 hs</strong>:</p>
+                        <div style="font-size: 2.5rem; font-weight: 900; color: #046b33; margin: 10px 0; letter-spacing: 2px;" id="contador-bingo-tiempo">--:--:--</div>
+                        <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background: var(--dark); width: 100%;">Volver a mi Perfil</button>
                     </div>
                 `;
-                // El return actúa como un muro: IMPIDE que la función cargarBingo() se ejecute antes de tiempo.
                 return; 
+            } else {
+                await cargarBingo(usuarioActivo, estadoData);
             }
-            
-            // Solo si el contador llegó a 0 (o eres Admin), se permite avanzar y crear el cartón en la BD.
-            await cargarBingo(usuarioActivo, estadoData);
-            window.actualizarSeccionReto(); 
-            
-        } else if (estadoData.dia_activo === 2) {
-            perfilContenido.innerHTML = `<p style="text-align:center;">Cargando Operación ABJ...</p>`;
-        } else if (estadoData.dia_activo === 3) {
-            perfilContenido.innerHTML = `<p style="text-align:center;">Cargando Kahoot...</p>`;
         }
+
+        // CARGA DE OPERACIÓN ABJ (Día 2 en adelante)
+        if (estadoData.dia_activo >= 2) {
+            await window.cargarOperacionABJ(usuarioActivo);
+        }
+
+        if (estadoData.dia_activo === 3) {
+            perfilContenido.insertAdjacentHTML('beforeend', `<hr style="border: 1px dashed #E2E8F0; margin: 25px 0;"><h2 style="text-align:center; color: #f6961a;">📱 Kahoot! (Próximamente)</h2>`);
+        }
+
+        // Botón de salida global
+        perfilContenido.insertAdjacentHTML('beforeend', `
+            <div style="text-align:center; margin-top:30px;">
+                <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background:var(--dark); width:100%;">Volver a mi perfil</button>
+            </div>
+        `);
 
     } catch (error) {
         console.error("Error cargando juegos:", error);
@@ -1899,12 +1877,12 @@ async function cargarBingo(usuario, estadoJuego) {
         .eq('asistente_id', usuario.id);
 
     if (!miCarton || miCarton.length === 0) {
-        perfilContenido.innerHTML = `<p style="text-align:center;">Generando tu cartón único...</p>`;
+        perfilContenido.insertAdjacentHTML('beforeend', `<p style="text-align:center;">Generando tu cartón único...</p>`);
         
         const { data: todasLasMisiones } = await supabase.from('bingo_misiones').select('*');
         
         if (!todasLasMisiones || todasLasMisiones.length < 20) {
-            perfilContenido.innerHTML = `<p style="text-align:center; color:#FF6B6B;">Error: Faltan cargar las misiones en la base de datos.</p>`;
+            perfilContenido.insertAdjacentHTML('beforeend', `<p style="text-align:center; color:#FF6B6B;">Error: Faltan cargar las misiones en la base de datos.</p>`);
             return;
         }
 
@@ -1957,14 +1935,84 @@ async function cargarBingo(usuario, estadoJuego) {
         estadoHTML = `<div style="background:#FFF0F5; color:#DB2777; padding:10px; border-radius:8px; font-weight:bold; margin-bottom:15px; text-align:center;">🔒 ¡El Bingo ha terminado! El ganador fue anunciado.</div>`;
     }
 
-    perfilContenido.innerHTML = `
+    perfilContenido.insertAdjacentHTML('beforeend', `
         <h2 style="text-align:center; color: var(--dark); margin-bottom: 5px;">A B J .... Bingo!</h2>
         <p style="text-align:center; color: var(--secondary); font-weight:bold; margin-top:0;">Progreso: ${completadas}/20</p>
         ${estadoHTML}
         ${gridHTML}
         <p style="font-size: 0.85rem; text-align:center; color: #666;">Toca una casilla sin sellar para ver la misión y enviar tu respuesta.</p>
-        <div style="text-align:center; margin-top:20px;">
-            <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background:var(--dark);">Volver a mi perfil</button>
-        </div>
-    `;
+    `);
 }
+
+// ==========================================
+// OPERACIÓN ABJ (NUEVO JUEGO)
+// ==========================================
+window.cargarOperacionABJ = async function(usuario) {
+    const perfilContenido = document.getElementById('perfil-contenido');
+    
+    const { data: operacionCompletada } = await supabase
+        .from('operacion_abj')
+        .select('*')
+        .eq('asistente_id', usuario.id)
+        .maybeSingle();
+
+    let htmlABJ = `
+        <hr style="border: 1px dashed #E2E8F0; margin: 25px 0;">
+        <h2 style="text-align:center; color: #f6961a; margin-bottom: 5px;">🕵️‍♂️ Operación ABJ</h2>
+    `;
+
+    if (operacionCompletada) {
+        htmlABJ += `
+            <div style="background:#E6FFFA; color:#046b33; padding:15px; border-radius:8px; border: 2px solid #046b33; text-align:center; margin-bottom: 15px;">
+                <h3 style="margin-top:0;">¡Misión Completada!</h3>
+                <p style="margin-bottom:0;">Has formado la palabra correctamente. Mantente alerta al último día para descubrir si fuiste el primero.</p>
+            </div>
+        `;
+    } else {
+        htmlABJ += `
+            <div style="background:#FFF9F0; border: 2px dashed #f6961a; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <p style="margin: 0 0 10px 0; font-size: 0.95rem; color: var(--dark); text-align:center;">Busca las letras esparcidas por la zona de stands, únelas y escribe la palabra secreta.</p>
+                <input type="text" id="input-operacion-abj" placeholder="Tu respuesta aquí..." style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 1.1rem; text-align: center; text-transform: uppercase; margin-bottom: 10px; font-weight: bold;">
+                <button id="btn-enviar-abj" class="cta-button" style="width: 100%; background: var(--primary);" onclick="window.procesarOperacionABJ('${usuario.id}')">Validar Código</button>
+            </div>
+        `;
+    }
+
+    perfilContenido.insertAdjacentHTML('beforeend', htmlABJ);
+};
+
+window.procesarOperacionABJ = async function(usuarioId) {
+    const inputEl = document.getElementById('input-operacion-abj');
+    const btnEl = document.getElementById('btn-enviar-abj');
+    const palabra = inputEl.value.toLowerCase().replace(/\s+/g, '');
+
+    if (!palabra) {
+        window.showCustomAlert('error', '⚠️ Debes ingresar una palabra.');
+        return;
+    }
+
+    if (palabra !== 'timeline') {
+        window.showCustomAlert('error', '❌ Palabra incorrecta. Sigue explorando los stands.');
+        return;
+    }
+
+    btnEl.innerText = 'Verificando...';
+    btnEl.disabled = true;
+
+    try {
+        const { error } = await supabase
+            .from('operacion_abj')
+            .insert([{ asistente_id: usuarioId, codigo: inputEl.value.trim() }]);
+
+        if (error) throw error;
+
+        window.showCustomAlert('success', '✅ ¡Operación exitosa! Código validado y guardado de forma segura.');
+        window.abrirMisRetos(); 
+
+    } catch (error) {
+        console.error(error);
+        window.showCustomAlert('error', 'Hubo un error de conexión. Intenta enviar el código de nuevo.');
+        btnEl.innerText = 'Validar Código';
+        btnEl.disabled = false;
+    }
+};
