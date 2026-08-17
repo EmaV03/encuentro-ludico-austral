@@ -36,9 +36,9 @@ window.obtenerColorAula = function(aula) {
     if (txt.includes('azul')) return '#2563EB'; 
     if (txt.includes('roja') || txt.includes('rojo')) return '#DC2626'; 
     if (txt.includes('naranja')) return '#EA580C'; 
-    if (txt.includes('verde')) return '#16A34A'; 
+    if (txt.includes('verde - auditorio')) return '#16A34A'; 
     if (txt.includes('rosa') || txt.includes('rosado') || txt.includes('rosada')) return '#DB2777'; 
-    if (txt.includes('violeta')) return '#7C3AED'; 
+    if (txt.includes('violeta - zona de stands')) return '#7C3AED'; 
     
     return '#046b33';
 };
