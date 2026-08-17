@@ -950,3 +950,69 @@ body {
     color: var(--dark);
     font-size: 0.95rem;
 }
+
+/* =========================================
+   SECCIÓN MIS RETOS - BINGO Y JUEGOS
+   ========================================= */
+.bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 Columnas configuradas */
+    gap: 8px;
+    max-width: 650px; /* Ampliamos un poco para acomodar las 5 columnas */
+    margin: 20px auto;
+}
+
+.bingo-cell {
+    background: var(--white);
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, background-color 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.bingo-cell:hover {
+    transform: scale(1.05);
+}
+
+.bingo-cell.completada {
+    background-color: #E6FFFA;
+    border-color: #046b33;
+    color: #046b33;
+}
+
+/* Sello de completado (Logo) */
+.bingo-sello {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('../Imagenes/TuLogo.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(255,255,255,0.85);
+    z-index: 10;
+}
+
+/* Ajuste vital para móviles (Textos pequeños en 5 columnas) */
+@media screen and (max-width: 500px) {
+    .bingo-grid { gap: 4px; }
+    .bingo-cell { padding: 2px; }
+    .texto-mision-celda { font-size: 0.55rem !important; line-height: 1.1 !important; }
+}
+
+/* =========================================
+   CORRECCIÓN Z-INDEX PARA MISIONES BINGO
+   ========================================= */
+#modal-contenedor {
+    z-index: 1050 !important;
+}
