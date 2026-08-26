@@ -6,6 +6,7 @@
     <title>1er Congreso Nacional ABJ</title>
     <link rel="icon" href="Imagenes/TuLogo.png" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -32,42 +33,48 @@
     </nav>
 
     <!-- MENÚ DESPLEGABLE TIPO CARD NAV -->
-    <div id="card-nav-menu" class="card-nav-menu hidden">
-        <div class="card-nav-grid">
-            
-            <!-- Tarjeta 1: El Evento -->
-            <div class="nav-card" style="background-color: #2D3142; color: #FFFFFF;">
-                <h3>El Evento</h3>
-                <ul>
-                    <li><a href="#inicio" class="card-link">Inicio</a></li>
-                    <li><a href="#primer-congreso" class="card-link">1er Congreso</a></li>
-                    <li><a href="#quienes-somos" class="card-link">Nosotros</a></li>
-                    <li><a href="#instituciones" class="card-link">Instituciones Presentes</a></li>
-                </ul>
-            </div>
+<div id="card-nav-menu" class="card-nav-menu hidden">
+    <div class="card-nav-grid">
+        
+        <!-- Tarjeta 1: El Evento -->
+        <div class="nav-card" style="background-color: #2D3142; color: #FFFFFF;">
+            <h3>El Evento</h3>
+            <ul>
+                <li><a href="#inicio" class="card-link">Inicio</a></li>
+                <li><a href="#primer-congreso" class="card-link">1er Congreso</a></li>
+                <li><a href="#quienes-somos" class="card-link">Nosotros</a></li>
+                <li><a href="#instituciones" class="card-link">Instituciones Presentes</a></li>
+                <!-- NUEVO ENLACE: Ubicación -->
+                <li><a href="#ubicacion-aulas" class="card-link" style="color: #4ECDC4;">📍 Ubicación de Aulas</a></li>
+            </ul>
+        </div>
 
-            <!-- Tarjeta 2: Cronograma -->
-            <div class="nav-card" style="background-color: #046b33; color: #FFFFFF;">
-                <h3>Cronograma</h3>
-                <ul>
-                    <li><a href="#agenda" class="card-link">Agenda General</a></li>
-                    <li><a href="#ponentes" class="card-link">Ponentes</a></li>
-                    <li><a href="#talleres" class="card-link">Talleres Prácticos</a></li>
-                    <li><a href="#actividades-extra" class="card-link">Actividades Extra</a></li>
-                </ul>
-            </div>
+        <!-- Tarjeta 2: Cronograma -->
+        <div class="nav-card" style="background-color: #046b33; color: #FFFFFF;">
+            <h3>Cronograma</h3>
+            <ul>
+                <li><a href="#agenda" class="card-link">Agenda General</a></li>
+                <li><a href="#ponentes" class="card-link">Ponentes</a></li>
+                <li><a href="#talleres" class="card-link">Talleres Prácticos</a></li>
+                <li><a href="#actividades-extra" class="card-link">Actividades Extra</a></li>
+                <!-- NUEVO ENLACE: Juego / Retos -->
+                <li><a href="#retos-congreso" class="card-link" style="color: #f6961a;">🎮 Reto del Día</a></li>
+            </ul>
+        </div>
 
-            <!-- Tarjeta 3: Exposición y Contacto -->
-            <div class="nav-card" style="background-color: #f6961a; color: #2D3142;">
-                <h3 style="color: #2D3142;">Exposición y Más</h3>
-                <ul>
-                    <li><a href="#zona-stands" class="card-link" style="color: #2D3142;">Zona Stands</a></li>
-                    <li><a href="#sponsors" class="card-link" style="color: #2D3142;">Sponsors</a></li>
-                    <hr style="border-color: rgba(45, 49, 66, 0.2); margin: 10px 0;">
-                    <li><a href="#contacto" class="card-link" style="color: #2D3142; font-weight: 800;">📞 Contacto</a></li>
-                </ul>
-            </div>
+        <!-- Tarjeta 3: Exposición y Contacto -->
+        <div class="nav-card" style="background-color: #f6961a; color: #2D3142;">
+            <h3 style="color: #2D3142;">Exposición y Más</h3>
+            <ul>
+                <li><a href="#zona-stands" class="card-link" style="color: #2D3142;">Zona Stands</a></li>
+                <li><a href="#sponsors" class="card-link" style="color: #2D3142;">Sponsors</a></li>
+                <hr style="border-color: rgba(45, 49, 66, 0.2); margin: 10px 0;">
+                <li><a href="#contacto" class="card-link" style="color: #2D3142; font-weight: 800;">📞 Contacto</a></li>
+            </ul>
+        </div>
 
+    </div>
+</div>
         </div>
     </div>
 </header>
@@ -203,27 +210,42 @@
             <div class="gradual-blur-bottom"></div>
         </section>
 
+<!-- SECCIÓN: RETOS DEL CONGRESO (JUEGOS) -->
+<section id="retos-congreso" class="about-section seccion-relativa" style="background-color: var(--white); text-align: center;">
+    <h2 style="color: var(--primary);" class="blur-animated blur-hidden">Reto del Día</h2>
+    
+    <div style="background: var(--bg-main); max-width: 800px; margin: 0 auto; padding: 30px; border-radius: 16px; box-shadow: var(--shadow); border: 2px solid var(--secondary);">
+        <!-- Aquí inyectaremos con JS si es Día 1 (Bingo), Día 2 (Operación ABJ) o Día 3 (Kahoot!) -->
+        <h3 id="titulo-juego-hoy" style="color: var(--dark); font-size: 1.8rem; margin-top: 0;">Cargando reto...</h3>
+        
+        <p id="ganador-ayer" style="color: #f6961a; font-weight: bold; display: none;">🏆 Ganador de ayer: <span id="nombre-ganador-ayer"></span></p>
+        
+        <div style="margin: 20px 0; font-size: 1.2rem;">
+            🔥 <strong id="contador-jugadores" style="color: var(--secondary); font-size: 1.5rem;">0</strong> personas están jugando ahora mismo.
+        </div>
+        
+        <button id="btn-entrar-reto" class="cta-button btn-perfil" style="font-size: 1.2rem; padding: 12px 30px;">Entrar al Juego</button>
+    </div>
+    <div class="gradual-blur-bottom"></div>
+</section>
+
         <!-- SECCIÓN: Talleres -->
-        <section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
-            <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
-            
-            <!-- CONTENEDOR DEL AVISO DE INSCRIPCIONES -->
-            <div id="aviso-inscripciones" class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; background: #FFF9F0; padding: 15px; border-radius: 8px; border: 2px dashed #f6961a;">
-                <p style="margin: 0; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
-                    ¡Próximamente se habilitará el sistema para reservar tu lugar!
-                </p>
-                <div id="contador-inscripciones" style="font-size: 1.5rem; color: #046b33; font-weight: 900; margin-top: 10px;">
-                    Cargando tiempo restante...
-                </div>
-            </div>
+<section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
+    <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
+    
+    <div id="aviso-edicion-2028" class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; background: #E6FFFA; padding: 20px; border-radius: 12px; border: 2px solid #046b33; box-shadow: var(--shadow);">
+        <h3 style="margin: 0; color: #046b33; font-size: 1.5rem;">¡Nos vemos en la 2da Edición! 🎉</h3>
+        <p style="color: var(--dark); font-size: 1.1rem; margin-top: 10px; font-weight: bold;">
+            El congreso regresará con nuevas propuestas en el mes de agosto del año 2028. ¡Mantente atento!
+        </p>
+    </div>
 
-            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
-            <div id="talleres-container" class="agenda-container">
-                <p>Cargando cronograma...</p>
-            </div>
-            <div class="gradual-blur-bottom"></div>
-        </section>
-
+    <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
+    <div id="talleres-container" class="agenda-container">
+        <p>Cargando cronograma...</p>
+    </div>
+    <div class="gradual-blur-bottom"></div>
+</section>
         
 <!-- SECCIÓN: Ubicación de Aulas y Mapas -->
         <section id="ubicacion-aulas" class="about-section seccion-relativa" style="background-color: var(--bg-main);">
@@ -476,6 +498,24 @@
         </div>
     </div>
 
+<div id="modal-visor-seguro" class="modal-overlay">
+    <div class="modal-content" style="width: 95%; max-width: 1000px; height: 90vh; display: flex; flex-direction: column; padding: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 id="visor-titulo" style="margin: 0; color: var(--dark); font-size: 1.2rem; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">Visor de Material</h3>
+            <!-- Se añade window. para asegurar la conexión con tu módulo JS -->
+            <button class="btn-cerrar" onclick="window.cerrarVisorSeguro()" style="position: static; z-index: 20;">×</button>
+        </div>
+        
+        <!-- NUEVO CONTENEDOR RELATIVO: Encierra al PDF y restringe el crecimiento del escudo transparente -->
+        <div style="flex-grow: 1; position: relative; border-radius: 8px; overflow: hidden;">
+            <div id="visor-contenedor" style="width: 100%; height: 100%; background: #2D3142;">
+                <!-- El PDF o Video se inyectará dinámicamente aquí -->
+            </div>
+            <!-- Capa protectora ahora anidada correctamente -->
+            <div id="visor-overlay-proteccion" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: none; background: transparent;"></div>
+        </div>
+    </div>
+</div>
     <script src="js/app.js" type="module"></script>
 </body>
 </html>
