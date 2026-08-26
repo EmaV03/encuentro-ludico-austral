@@ -4,17 +4,17 @@ import { congresoData } from './data.js';
 // ==========================================
 // CONTROL AUTOMÁTICO DE INSCRIPCIONES Y JUEGOS
 // ==========================================
-const FECHA_APERTURA_INSCRIPCIONES = new Date(2026, 7, 4, 14, 0, 0).getTime();
-let INSCRIPCIONES_ABIERTAS = false;
+// Ajustado a la edición 2028
+const FECHA_APERTURA_INSCRIPCIONES = new Date(2028, 7, 1, 14, 0, 0).getTime();
+let INSCRIPCIONES_ABIERTAS = false; // Forzado a false por la finalización del evento actual
 
-const FECHA_APERTURA_BINGO = new Date(2026, 7, 15, 12, 30, 0).getTime();
+const FECHA_APERTURA_BINGO = new Date(2028, 7, 1, 12, 30, 0).getTime();
 
 const ADMIN_EMAIL = 'ev22903@gmail.com';
 const esAdmin = (usuario) => usuario && usuario.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
 function verificarAperturaInscripciones() {
-    const ahora = new Date().getTime();
-    INSCRIPCIONES_ABIERTAS = ahora >= FECHA_APERTURA_INSCRIPCIONES;
+    INSCRIPCIONES_ABIERTAS = false; // Mantenemos cerrado para esta etapa
 }
 
 function esHorarioBingoHabilitado(usuario) {
@@ -385,7 +385,7 @@ window.renderizarAgenda = async function() {
                         <p style="margin-top: 5px;"><strong>Ponente:</strong> ${taller.ponente}</p>
                         <p>Cupos: <span class="${claseCupos}">${cuposReales} / ${taller.cupoMaximo}</span></p>
                     `;
-                    card.onclick = () => abrirDetalleTaller(taller, turno, diaKey, cuposReales);
+                    card.onclick = () => window.abrirDetalleTaller(taller, turno, diaKey, cuposReales);
                     td.appendChild(card);
                 });
             } else {
@@ -415,52 +415,13 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
 
     const horaTexto = moduloKey === 'manana' ? `1er Módulo (${horaInicio})` : `2do Módulo (${horaInicio})`; 
     
-    let bloqueInscripcion = '';
-    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
-
-    if (INSCRIPCIONES_ABIERTAS) {
-        if (usuarioActivo) {
-            bloqueInscripcion = `
-                <div class="form-inscripcion" style="text-align: center; padding: 20px;">
-                    <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">¡Hola, ${usuarioActivo.nombre}!</h3>
-                    <p style="color: #555; margin-bottom: 15px; font-weight: bold;">Estás habilitado para reservar tu lugar en este taller.</p>
-                    
-                    <button id="btn-inscripcion-directa" class="btn-anotarse" style="${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed;' : ''}" ${cuposReales <= 0 ? 'disabled' : ''}>
-                        ${cuposReales <= 0 ? 'Cupos Agotados' : 'Confirmar mi lugar'}
-                    </button>
-                </div>
-            `;
-        } else {
-            bloqueInscripcion = `
-                <div class="form-inscripcion" style="text-align: center; padding: 20px;">
-                    <h3 style="color: #046b33; margin-top: 0; font-size: 1.2rem;">¡Reserva tu lugar!</h3>
-                    
-                    <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px;">
-                        <p style="color: #555; margin-top: 0; margin-bottom: 10px; font-weight: bold; font-size: 0.95rem;">¿Ya tienes cuenta?</p>
-                        <input type="email" id="taller-login-email" placeholder="Correo Electrónico" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                        <input type="password" id="taller-login-dni" placeholder="Contraseña (DNI)" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                        <button id="btn-login-y-reservar" class="btn-anotarse" style="margin-top: 0; padding: 8px; font-size: 1rem; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed;' : ''}" ${cuposReales <= 0 ? 'disabled' : ''}>
-                            ${cuposReales <= 0 ? 'Cupos Agotados' : 'Ingresar y Reservar'}
-                        </button>
-                    </div>
-                    
-                    <hr style="border: 0.5px dashed #ccc; margin: 15px 0;">
-                    
-                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">¿Aún no estás registrado en el congreso?</p>
-                    <a href="https://forms.gle/mn71uqKEjV9UcAS39" target="_blank" class="btn-anotarse" style="display: block; text-decoration: none; background: var(--secondary); padding: 8px; font-size: 1rem; ${cuposReales <= 0 ? 'background:#ccc; cursor:not-allowed; pointer-events: none;' : ''}">
-                        Ir al Formulario de Registro
-                    </a>
-                </div>
-            `;
-        }
-    } else {
-        bloqueInscripcion = `
-            <div class="form-inscripcion" style="text-align: center; padding: 20px;">
-                <h3 style="color: #f6961a; margin-top: 0; font-size: 1.3rem;">Inscripciones en Pausa</h3>
-                <p style="color: #555; margin-bottom: 0; font-weight: bold;">Las reservas se abrirán nuevamente hoy a partir de las 14:00 hs.</p>
-            </div>
-        `;
-    }
+    // BLOQUE DE INSCRIPCIÓN DESACTIVADO
+    let bloqueInscripcion = `
+        <div class="form-inscripcion" style="text-align: center; padding: 20px;">
+            <h3 style="color: #046b33; margin-top: 0; font-size: 1.3rem;">Inscripciones Cerradas</h3>
+            <p style="color: #555; margin-bottom: 0; font-weight: bold;">Las reservas de cupos para esta edición han finalizado.</p>
+        </div>
+    `;
 
     const colorAula = window.obtenerColorAula(taller.aula);
 
@@ -472,9 +433,23 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
         }
     }
 
+    // Lógica para mostrar el botón de material SOLO si el usuario está logueado y hay un archivo asignado
+    let botonMaterial = '';
+    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+    
+    if (usuarioActivo && taller.materialUrl) {
+        botonMaterial = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button onclick="window.solicitarMaterialSeguro('${taller.materialUrl}')" class="cta-button" style="background-color: var(--dark); width: 100%;">
+                    📚 Ver Material de Estudio
+                </button>
+            </div>
+        `;
+    }
+
     modalContenedor.innerHTML = `
         <div class="modal-content">
-            <button class="btn-cerrar" onclick="cerrarModal()">×</button>
+            <button class="btn-cerrar" onclick="window.cerrarModal()">×</button>
             <span style="color: var(--secondary); font-weight:bold; text-transform:uppercase; font-size:0.8rem;">
                 ${diaTexto} - ${horaTexto}
             </span>
@@ -496,61 +471,12 @@ window.abrirDetalleTaller = function(taller, moduloKey, diaKey, cuposReales) {
                 ${taller.resumen ? taller.resumen : 'Resumen no disponible.'}
             </p>
             
+            ${botonMaterial}
+            
             ${bloqueInscripcion}
         </div>
     `;
     modalContenedor.classList.add('active');
-
-    if (INSCRIPCIONES_ABIERTAS && cuposReales > 0) {
-        if (usuarioActivo) {
-            const btnDirecto = document.getElementById('btn-inscripcion-directa');
-            if (btnDirecto) {
-                btnDirecto.addEventListener('click', () => {
-                    window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
-                });
-            }
-        } else {
-            const btnLoginReservar = document.getElementById('btn-login-y-reservar');
-            if (btnLoginReservar) {
-                btnLoginReservar.addEventListener('click', async () => {
-                    const emailInput = document.getElementById('taller-login-email').value.trim().toLowerCase();
-                    const dniInput = document.getElementById('taller-login-dni').value.trim();
-                    if (!emailInput || !dniInput) {
-                        window.showCustomAlert('error', '⚠️ Por favor, ingresa tu correo y contraseña (DNI).');
-                        return;
-                    }
-                    
-                    btnLoginReservar.innerText = 'Validando...';
-                    btnLoginReservar.disabled = true;
-                    
-                    try {
-                        const { data: usuario, error } = await supabase
-                            .from('asistentes')
-                            .select('*')
-                            .eq('email', emailInput)
-                            .eq('dni', dniInput)
-                            .maybeSingle();
-
-                        if (error || !usuario) {
-                            window.showCustomAlert('error', '❌ Credenciales incorrectas. Verifica tu correo y DNI.');
-                            btnLoginReservar.innerText = 'Ingresar y Reservar';
-                            btnLoginReservar.disabled = false;
-                            return;
-                        }
-
-                        localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
-                        await window.procesarInscripcionDirecta(taller, moduloKey, diaKey);
-                        
-                    } catch (err) {
-                        console.error("Error de conexión:", err);
-                        window.showCustomAlert('error', '⚠️ Hubo un problema de conexión con el servidor.');
-                        btnLoginReservar.innerText = 'Ingresar y Reservar';
-                        btnLoginReservar.disabled = false;
-                    }
-                });
-            }
-        }
-    }
 };
 
 window.cerrarModal = function() {
@@ -599,7 +525,7 @@ window.abrirModalDevir = function(tipo) {
 
     modalDevir.innerHTML = `
         <div class="modal-content" style="text-align: center;">
-            <button class="btn-cerrar" onclick="cerrarModalDevir()">×</button>
+            <button class="btn-cerrar" onclick="window.cerrarModalDevir()">×</button>
             <img src="${imagenModal}" alt="${titulo}" style="height: auto; display: block; ${claseEstilo}">
             <h2 style="margin: 0; color: #046b33;">${titulo}</h2>
             <h4 style="color: var(--primary); margin-top: 5px;">${subtitulo}</h4>
@@ -625,57 +551,6 @@ window.abrirModalDevir = function(tipo) {
 window.cerrarModalDevir = function() {
     const modalDevir = document.getElementById('modal-devir-dinamico');
     if (modalDevir) modalDevir.classList.remove('active');
-};
-
-// ==========================================
-// SISTEMA DE INSCRIPCIÓN DIRECTA
-// ==========================================
-window.procesarInscripcionDirecta = async function(taller, moduloKey, diaKey) {
-    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
-    if (!usuarioActivo) return;
-
-    const btnSubmit = document.getElementById('btn-inscripcion-directa');
-    if (btnSubmit) {
-        btnSubmit.innerText = 'Procesando...';
-        btnSubmit.disabled = true;
-    }
-
-    try {
-        const { error: errorInscripcion } = await supabase
-            .from('inscripciones')
-            .insert([{
-                asistente_id: usuarioActivo.id,
-                taller_id: taller.id,
-                dia_key: diaKey,
-                modulo_key: moduloKey
-            }]);
-
-        if (errorInscripcion) {
-            if (errorInscripcion.code === '23505') {
-                window.showCustomAlert('error', `⚠️ Ya estás inscrito a otro taller en este mismo turno.`);
-            } else {
-                throw errorInscripcion;
-            }
-        } else {
-            window.showCustomAlert('success', `¡Excelente, <strong>${usuarioActivo.nombre}</strong>! Tu lugar ha sido reservado con éxito.`);
-            window.cerrarModal();
-            await window.renderizarAgenda();
-            
-            const modalPerfilActivo = document.getElementById('modal-perfil');
-            if (modalPerfilActivo && modalPerfilActivo.classList.contains('active')) {
-                 window.cargarTalleresUsuario(usuarioActivo);
-            }
-        }
-
-    } catch (err) {
-        console.error("Error en inscripción:", err);
-        window.showCustomAlert('error', `❌ No pudimos completar tu registro. Por favor, intenta nuevamente.`);
-    } finally {
-        if(btnSubmit) {
-            btnSubmit.innerText = 'Reservar mi lugar';
-            btnSubmit.disabled = false;
-        }
-    }
 };
 
 // ==========================================
@@ -786,6 +661,17 @@ window.renderizarContenidoPerfil = function() {
                 📧 ${usuarioActivo.email} | 🆔 DNI: ${usuarioActivo.dni}
             </p>
             
+            <!-- NUEVO: SECCIÓN DE DESCARGA DE CERTIFICADO -->
+            <div style="background: #E6FFFA; border-left: 4px solid #046b33; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: var(--shadow);">
+                <h4 style="color: #046b33; margin-top: 0; margin-bottom: 8px;">🎓 Tu Certificado</h4>
+                <p style="font-size: 0.9rem; color: var(--dark); margin-top: 0; margin-bottom: 15px;">
+                    Descarga tu certificado de asistencia con validez oficial.
+                </p>
+                <button onclick="window.descargarCertificado()" class="cta-button" style="background-color: #046b33; width: 100%; border: none;">
+                    📄 Descargar Certificado
+                </button>
+            </div>
+
             <div style="background: #F0FDF4; border-left: 4px solid #16A34A; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: var(--shadow);">
                 <h4 style="color: #16A34A; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
                     📸 Material Exclusivo
@@ -841,7 +727,7 @@ window.validarUsuario = async function() {
 
         localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
         window.showCustomAlert('success', `¡Qué bueno verte, <strong>${usuario.nombre}</strong>!`);
-        renderizarContenidoPerfil();
+        window.renderizarContenidoPerfil();
 
     } catch (err) {
         console.error("Error de conexión:", err);
@@ -896,9 +782,6 @@ window.cargarTalleresUsuario = async function(usuario) {
                             📅 ${fecha} <br> 🕒 ${ins.modulo_key === 'manana' ? '1er Módulo' : '2do Módulo'}
                         </p>
                     </div>
-                    <button class="btn-baja" onclick="window.darseDeBaja('${ins.id}', '${titulo}')">
-                        Darse de baja
-                    </button>
                 </div>
             `;
         });
@@ -933,7 +816,7 @@ window.abrirModalMisionBingo = function(cartonId, tipoRespuesta, descripcion) {
 
     modalContenedor.innerHTML = `
         <div class="modal-content" style="text-align: center;">
-            <button class="btn-cerrar" onclick="cerrarModal()">×</button>
+            <button class="btn-cerrar" onclick="window.cerrarModal()">×</button>
             <h2 style="color: var(--primary); margin-top: 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
                 🎯 Misión de A B J .... Bingo!
             </h2>
@@ -1061,7 +944,7 @@ window.iniciarSliderTalleresEditoriales = function() {
     let html = '';
     editorialesDestacadas.forEach(ed => {
         html += `
-            <div class="institucion-slide editorial-card" onclick="abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
+            <div class="institucion-slide editorial-card" onclick="window.abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
                 <img src="${ed.logo}" alt="${ed.nombre}" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
                 <h4 style="color: #046b33; margin: 0; font-size: 1.1rem;">${ed.nombre}</h4>
             </div>
@@ -1163,7 +1046,7 @@ window.abrirModalSponsor = function(sponsorDataStr) {
     if (modalSponsor) {
         modalSponsor.innerHTML = `
             <div class="modal-content" style="text-align: center;">
-                <button class="btn-cerrar" onclick="cerrarModalSponsor()">×</button>
+                <button class="btn-cerrar" onclick="window.cerrarModalSponsor()">×</button>
                 <img src="${sponsor.logo}" alt="${sponsor.nombre}" style="max-width: 200px; height: 110px; object-fit: contain; margin: 0 auto 15px auto;">
                 <h2 style="margin: 0; color: #046b33;">${sponsor.nombre}</h2>
                 <hr style="border: 1px dashed #ccc; margin: 15px 0;">
@@ -1219,7 +1102,7 @@ window.renderizarExpositores = function() {
     
     window.expositoresDinamicos.forEach(exp => {
         htmlCards += `
-            <div class="speaker-card" style="width: 200px; cursor: pointer; flex-shrink: 0; padding: 20px 15px;" onclick="abrirModalExpositor('${exp.id}')">
+            <div class="speaker-card" style="width: 200px; cursor: pointer; flex-shrink: 0; padding: 20px 15px;" onclick="window.abrirModalExpositor('${exp.id}')">
                 <img src="${exp.foto}" alt="${exp.nombre.replace(/<[^>]*>?/gm, '')}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto; display: block;">
                 <h3 style="font-size: 1.05rem; color: #046b33;">${exp.nombre}</h3>
                 <p style="font-size: 0.85rem; color: #f6961a; font-weight: bold; margin:0;">${exp.titulo}</p>
@@ -1238,7 +1121,7 @@ window.abrirModalExpositor = function(expId) {
     if (modalExpositor) {
         modalExpositor.innerHTML = `
             <div class="modal-content" style="text-align: center;">
-                <button class="btn-cerrar" onclick="cerrarModalExpositor()">×</button>
+                <button class="btn-cerrar" onclick="window.cerrarModalExpositor()">×</button>
                 <img src="${expositor.foto}" alt="Expositor" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin: 0 auto 15px auto;">
                 <h2 style="margin: 0; color: #046b33;">${expositor.nombre}</h2>
                 <h4 style="color: #f6961a; margin-top: 5px;">${expositor.titulo}</h4>
@@ -1262,7 +1145,7 @@ window.cerrarModalExpositor = function() {
 // CONTADOR EN CUENTA REGRESIVA
 // ==========================================
 window.iniciarContador = function() {
-    const fechaInicio = new Date('2026-08-15T14:00:00').getTime();
+    const fechaInicio = new Date('2028-08-01T00:00:00').getTime(); // FECHA ACTUALIZADA A 2028
 
     const actualizarReloj = setInterval(function() {
         const ahora = new Date().getTime();
@@ -1306,7 +1189,7 @@ window.cambiarOrg = function(orgId, element) {
         'hl-educacion': {
             titulo: 'Homo Ludens Educación',
             color: '#f6961a', 
-            texto: 'Homo ludens Educación es un programa pedagógico surgido en Homo ludens, en Bahía Blanca, que promueve el Aprendizaje Basado en Juegos (ABJ) para transformar la experiencia educativa en todos los niveles educativos. A través del juego de mesa y diversas dinámicas de ingenio, la iniciativa busca integrar los contenidos educativos con la diversión, ofreciendo talleres educativos que muestran como mediante el juego de mesa se pueden reforzar áreas clave como la matemática, la comprensión lectora, la lógica y el pensamiento crítico. Además, mediante su proyecto "De la mesa al aula", llevan tableros, juegos de mesa y estrategias de trabajo en equipo directamente a escuelas y jardines, convirtiendo el aula en un espacio colaborativo donde aprender se vuelve una experiencia motivadora y significativa. Tambien desde el año pasado se implementa el Programa "Biblios ludicas" en bibliotecas publicas de todo el pais. Ambos programas se realizan gracias al acompañamiento de Cultura de la Cooperativa Obrera. Además Homo ludens educación cuenta con un club docente con el objetivo de dar a conocer los juegos y sus aplicaciones aulicas.',
+            texto: 'Homo ludens Educación es un programa pedagógico surgido en Homo ludens, en Bahía Blanca, que promueve el Aprendizaje Basado en Juegos (ABJ) para transformar la experiencia educativa en todos los niveles educativos. A través del juego de mesa y diversas dinámicas de ingenio, la iniciativa busca integrar los contenidos educativos con la diversión, ofreciendo talleres educativos que muestran como mediante el juego de mesa se pueden reforzar áreas clave como la matemática, la comprensión lectora, la lógica y el pensamiento crítico. Además, mediante su proyecto "De la mesa al aula", llevan tableros, juegos de mesa y strategies de trabajo en equipo directamente a escuelas y jardines, convirtiendo el aula en un espacio colaborativo donde aprender se vuelve una experiencia motivadora y significativa. Tambien desde el año pasado se implementa el Programa "Biblios ludicas" en bibliotecas publicas de todo el pais. Ambos programas se realizan gracias al acompañamiento de Cultura de la Cooperativa Obrera. Además Homo ludens educación cuenta con un club docente con el objetivo de dar a conocer los juegos y sus aplicaciones aulicas.',
             boton: '<a href="https://www.instagram.com/homoludens.educacion/" target="_blank" class="cta-button" style="background-color: #E1306C; color: white; display: inline-flex; align-items: center; text-decoration: none; font-size: 0.95rem; padding: 10px 20px;"><svg style="width:18px; height:18px; margin-right:8px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> Visitar Instagram</a>'
         }
     };
@@ -1474,7 +1357,7 @@ window.iniciarSliderEditoriales = function() {
     let html = '';
     congresoData.editoriales.forEach(ed => {
         html += `
-            <div class="institucion-slide editorial-card" onclick="abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
+            <div class="institucion-slide editorial-card" onclick="window.abrirModalEditorial('${ed.id}')" style="cursor: pointer;">
                 <img src="${ed.logo}" alt="${ed.nombre}" style="width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px;">
                 <h4 style="color: #046b33; margin: 0; font-size: 1.1rem;">${ed.nombre}</h4>
             </div>
@@ -1524,43 +1407,11 @@ window.iniciarSliderEditoriales = function() {
 };
 
 // ==========================================
-// CONTADOR PARA APERTURA DE INSCRIPCIONES
+// CONTADOR PARA APERTURA DE INSCRIPCIONES (DESACTIVADO PARA FASE 2028)
 // ==========================================
 window.iniciarContadorInscripciones = function() {
-    const contenedorAviso = document.getElementById('aviso-inscripciones');
-    const elContador = document.getElementById('contador-inscripciones');
-    
-    if (!contenedorAviso || !elContador) return;
-
-    if (INSCRIPCIONES_ABIERTAS) {
-        contenedorAviso.innerHTML = '<p style="margin: 0; font-weight: bold; color: #046b33; font-size: 1.3rem;">✅ ¡El sistema de reservas ya está habilitado!</p>';
-        return;
-    }
-
-    const actualizarRelojInscripciones = setInterval(function() {
-        const ahora = new Date().getTime();
-        const distancia = FECHA_APERTURA_INSCRIPCIONES - ahora;
-
-        if (distancia <= 0) {
-            clearInterval(actualizarRelojInscripciones);
-            verificarAperturaInscripciones(); 
-            contenedorAviso.innerHTML = '<p style="margin: 0; font-weight: bold; color: #046b33; font-size: 1.3rem;">✅ ¡El sistema de reservas ya está habilitado!</p>';
-            if(typeof window.renderizarAgenda === 'function') window.renderizarAgenda();
-            return;
-        }
-
-        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-        let textoFaltante = "Faltan: ";
-        if (dias > 0) textoFaltante += `${dias}d `;
-        textoFaltante += `${horas < 10 ? '0'+horas : horas}h : ${minutos < 10 ? '0'+minutos : minutos}m : ${segundos < 10 ? '0'+segundos : segundos}s`;
-        
-        elContador.innerText = textoFaltante;
-
-    }, 1000);
+    // Función vaciada intencionalmente, ya que las inscripciones 
+    // están cerradas temporalmente para la nueva edición.
 };
 
 // ==========================================
@@ -1576,6 +1427,9 @@ document.addEventListener('keydown', function(event) {
     const isSponsorModalVisible = document.getElementById('modal-sponsor') && document.getElementById('modal-sponsor').classList.contains('active');
     const isDevirModalVisible = document.getElementById('modal-devir-dinamico') && document.getElementById('modal-devir-dinamico').classList.contains('active');
     
+    // NUEVA VALIDACIÓN: Detector del Visor Seguro
+    const isVisorSeguroVisible = document.getElementById('modal-visor-seguro') && document.getElementById('modal-visor-seguro').classList.contains('active');
+    
     const modalPerfil = document.getElementById('modal-perfil');
     const isPerfilModalVisible = modalPerfil && modalPerfil.classList.contains('active');
     
@@ -1585,6 +1439,8 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         if (isAlertVisible) {
             window.closeCustomAlert();
+        } else if (isVisorSeguroVisible) {
+            window.cerrarVisorSeguro(); // Cierra el visor y restaura el scroll automáticamente
         } else if (isTallerModalVisible) {
             window.cerrarModal();
         } else if (isExpositorModalVisible) {
@@ -1624,7 +1480,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof window.iniciarContador === 'function') window.iniciarContador(); 
     if(typeof window.iniciarSliderTalleresEditoriales === 'function') window.iniciarSliderTalleresEditoriales();
     if(typeof window.iniciarAnimacionesScroll === 'function') window.iniciarAnimacionesScroll();
-    if(typeof window.iniciarSliderInstituciones === 'function') window.iniciarSliderInstituciones();
     if(typeof window.iniciarContadorInscripciones === 'function') window.iniciarContadorInscripciones();
 
     // ==========================================
@@ -1794,7 +1649,7 @@ window.abrirMisRetos = async function() {
             perfilContenido.innerHTML = `<div style="text-align:center; padding: 20px;">
                 <h3 style="color: var(--primary);">Juegos inactivos</h3>
                 <p>Aún no ha comenzado el reto de hoy. ¡Mantente atento!</p>
-                <button class="cta-button" onclick="renderizarContenidoPerfil()">Volver al Perfil</button>
+                <button class="cta-button" onclick="window.renderizarContenidoPerfil()">Volver al Perfil</button>
             </div>`;
             return;
         }
@@ -1837,7 +1692,7 @@ window.abrirMisRetos = async function() {
                         </div>
                         <p style="font-size: 1rem; color: var(--dark); line-height: 1.4; margin: 10px 0;">Tu cartón único se generará a las <strong>12:30 hs</strong>:</p>
                         <div style="font-size: 2.5rem; font-weight: 900; color: #046b33; margin: 10px 0; letter-spacing: 2px;" id="contador-bingo-tiempo">--:--:--</div>
-                        <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background: var(--dark); width: 100%;">Volver a mi Perfil</button>
+                        <button class="cta-button" onclick="window.renderizarContenidoPerfil()" style="background: var(--dark); width: 100%;">Volver a mi Perfil</button>
                     </div>
                 `;
                 return; 
@@ -1858,7 +1713,7 @@ window.abrirMisRetos = async function() {
         // Botón de salida global
         perfilContenido.insertAdjacentHTML('beforeend', `
             <div style="text-align:center; margin-top:30px;">
-                <button class="cta-button" onclick="renderizarContenidoPerfil()" style="background:var(--dark); width:100%;">Volver a mi perfil</button>
+                <button class="cta-button" onclick="window.renderizarContenidoPerfil()" style="background:var(--dark); width:100%;">Volver a mi perfil</button>
             </div>
         `);
 
@@ -1916,7 +1771,7 @@ async function cargarBingo(usuario, estadoJuego) {
         const selloHTML = celda.completada ? '<div class="bingo-sello"></div>' : '';
         
         const onClick = (!celda.completada && (!estadoJuego.juego_bloqueado || esAdminUser)) 
-            ? `onclick="abrirModalMisionBingo('${celda.id}', '${celda.bingo_misiones.tipo_respuesta}', '${celda.bingo_misiones.descripcion}')"` 
+            ? `onclick="window.abrirModalMisionBingo('${celda.id}', '${celda.bingo_misiones.tipo_respuesta}', '${celda.bingo_misiones.descripcion}')"` 
             : '';
 
         gridHTML += `
@@ -2015,4 +1870,172 @@ window.procesarOperacionABJ = async function(usuarioId) {
         btnEl.innerText = 'Validar Código';
         btnEl.disabled = false;
     }
+};
+
+// ==========================================
+// VISOR SEGURO DE MATERIALES (FASE 3)
+// ==========================================
+let visorActivo = false;
+
+window.abrirVisorSeguro = function(titulo, url, tipo) {
+    visorActivo = true;
+    const modal = document.getElementById('modal-visor-seguro');
+    const tituloEl = document.getElementById('visor-titulo');
+    const contenedor = document.getElementById('visor-contenedor');
+    const overlayProteccion = document.getElementById('visor-overlay-proteccion');
+    
+    tituloEl.innerText = titulo;
+    const urlSegura = url;
+
+    if (tipo === 'pdf') {
+        contenedor.innerHTML = `<embed src="${urlSegura}#toolbar=0&navpanes=0" type="application/pdf" width="100%" height="100%">`;
+        overlayProteccion.style.display = 'block';
+        overlayProteccion.style.width = 'calc(100% - 20px)';
+    } else if (tipo === 'video') {
+        contenedor.innerHTML = `<video controls controlsList="nodownload" disablePictureInPicture width="100%" height="100%" style="background: black;">
+                                    <source src="${urlSegura}" type="video/mp4">
+                                </video>`;
+        overlayProteccion.style.display = 'none';
+        overlayProteccion.style.width = '100%';
+    }
+    
+    // Bloquea el scroll de la página principal
+    document.body.style.overflow = 'hidden';
+    modal.classList.add('active');
+};
+
+window.cerrarVisorSeguro = function() {
+    visorActivo = false;
+    
+    // 1. Restaurar explícitamente el scroll de la página principal
+    document.body.style.overflow = 'auto';
+    
+    // 2. Ocultar el modal del visor
+    const modalVisor = document.getElementById('modal-visor-seguro');
+    if (modalVisor) {
+        modalVisor.classList.remove('active');
+    }
+    
+    // 3. Destruir los lienzos del PDF para liberar memoria
+    const contenedorVisor = document.getElementById('visor-contenedor');
+    if (contenedorVisor) {
+        contenedorVisor.innerHTML = ''; 
+    }
+};
+
+// Escudos Activos: Bloqueo de Clic Derecho y Atajos de Teclado
+document.addEventListener('contextmenu', function(e) {
+    if (visorActivo) e.preventDefault();
+});
+
+document.addEventListener('keydown', function(e) {
+    if (visorActivo) {
+        // Intercepta y bloquea Ctrl+S (Guardar), Ctrl+P (Imprimir)
+        if (e.ctrlKey && (e.key.toLowerCase() === 's' || e.key.toLowerCase() === 'p')) {
+            e.preventDefault();
+            window.showCustomAlert('error', '⚠️ Las funciones de guardado e impresión están deshabilitadas por derechos de autor.');
+        }
+    }
+});
+
+// ==========================================
+// FUNCIÓN PARA DESCARGAR EL CERTIFICADO 
+// ==========================================
+window.descargarCertificado = async function() {
+    const usuario = JSON.parse(localStorage.getItem('usuarioActivo'));
+    if (!usuario) {
+        window.showCustomAlert('error', 'Sesión no válida.');
+        return;
+    }
+
+    // Mostramos alerta de procesamiento
+    window.showCustomAlert('success', 'Generando tu certificado con validez oficial, por favor espera un momento...');
+
+    // 1. Base de datos estática de DNIs de Talleristas (Limpios de guiones y espacios)
+    const talleristasDNI = [
+        '25787901', '16940893', '53375210', '28511722', '20201871',
+        '34303147', '31659874', '29449696', '23674758', '29900570',
+        '8649324',  '10917993', '27481298', '31477249', '40478557',
+        '28296196', '22277133', '23624444', '17647061', '32582248',
+        '13801295', '36697357', '18151400', '24004067', '27327267',
+        '95675657', '16022330', '35315178', '38919885', '24773264'
+    ];
+
+    // 2. Limpieza del DNI del usuario logueado para una validación exacta
+    const userDNI = usuario.dni.replace(/[^0-9]/g, '');
+    const esTallerista = talleristasDNI.includes(userDNI);
+
+    // 3. Asignación dinámica del fondo
+    const imgPath = esTallerista 
+        ? 'Imagenes/certificado-de-tallerista.png' 
+        : 'Imagenes/certificado-de-participante.png';
+
+    // Función auxiliar para cargar la imagen en formato utilizable por jsPDF
+    const loadImage = (url) => new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('Error de carga'));
+        img.src = url;
+    });
+
+    try {
+        // 4. Cargamos la imagen de fondo
+        const backgroundObj = await loadImage(imgPath);
+
+        // 5. Inicializamos jsPDF ajustando el tamaño exacto al de tu imagen
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ 
+            orientation: 'landscape', 
+            unit: 'px', 
+            format: [backgroundObj.width, backgroundObj.height] 
+        });
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+
+        // Dibujamos el certificado de fondo
+        doc.addImage(backgroundObj, 'PNG', 0, 0, pageWidth, pageHeight);
+
+        // 6. Configuración de Textos y Coordenadas
+        doc.setTextColor(45, 49, 66); // Color oscuro para legibilidad
+        
+        // Imprimir Nombre del Usuario (Centrado sobre la línea)
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(pageWidth * 0.04); // Tamaño dinámico proporcional
+        doc.text(usuario.nombre.toUpperCase(), pageWidth / 2, pageHeight * 0.48, { align: 'center' });
+
+        // Imprimir DNI (Alineado junto a "Identificación :")
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(pageWidth * 0.025);
+        doc.text(usuario.dni, pageWidth * 0.45, pageHeight * 0.545);
+
+        // 7. Forzar la descarga
+        doc.save(`Certificado_ABJ_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
+        
+    } catch (error) {
+        console.error('Error generando PDF:', error);
+        window.showCustomAlert('error', '❌ Tuvimos un problema al generar el certificado. Verifica tu conexión.');
+    }
+};
+
+// ==========================================
+// FUNCIÓN PARA SOLICITAR MATERIAL SEGURO A SUPABASE
+// ==========================================
+window.solicitarMaterialSeguro = async function(rutaArchivo) {
+    // 1. Pedimos a Supabase una URL que caduque en 60 segundos
+    const { data, error } = await supabase
+        .storage
+        .from('materiales_congreso')
+        .createSignedUrl(rutaArchivo, 60);
+
+    if (error) {
+        console.error('Error obteniendo material:', error);
+        window.showCustomAlert('error', 'No se pudo acceder al material. Verifica que el archivo exista y las políticas RLS estén correctas.');
+        return;
+    }
+
+    // 2. Si es exitoso, abrimos nuestro visor con la URL temporal
+    const esPDF = rutaArchivo.toLowerCase().endsWith('.pdf');
+    window.abrirVisorSeguro('Material de Estudio', data.signedUrl, esPDF ? 'pdf' : 'video');
 };

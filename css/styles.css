@@ -1016,3 +1016,20 @@ body {
 #modal-contenedor {
     z-index: 1050 !important;
 }
+/* =========================================
+   CORRECCIÓN Z-INDEX VISOR SEGURO
+   ========================================= */
+#modal-visor-seguro {
+    z-index: 9999 !important;
+    visibility: hidden; /* Fuerza a que la capa no intercepte clics cuando está inactiva */
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
+}
+
+#modal-visor-seguro.active {
+    visibility: visible; /* Activa la capa solo cuando se abre el modal */
+}
+
+#modal-visor-seguro .modal-content {
+    overflow-y: auto !important; 
+    pointer-events: auto !important; 
+}

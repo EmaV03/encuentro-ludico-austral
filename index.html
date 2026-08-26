@@ -6,6 +6,7 @@
     <title>1er Congreso Nacional ABJ</title>
     <link rel="icon" href="Imagenes/TuLogo.png" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -229,26 +230,22 @@
 </section>
 
         <!-- SECCIÓN: Talleres -->
-        <section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
-            <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
-            
-            <!-- CONTENEDOR DEL AVISO DE INSCRIPCIONES -->
-            <div id="aviso-inscripciones" class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; background: #FFF9F0; padding: 15px; border-radius: 8px; border: 2px dashed #f6961a;">
-                <p style="margin: 0; font-weight: bold; color: #f6961a; font-size: 1.2rem;">
-                    ¡Próximamente se habilitará el sistema para reservar tu lugar!
-                </p>
-                <div id="contador-inscripciones" style="font-size: 1.5rem; color: #046b33; font-weight: 900; margin-top: 10px;">
-                    Cargando tiempo restante...
-                </div>
-            </div>
+<section id="talleres" class="agenda-section seccion-relativa" style="background-color: var(--white);">
+    <h2 style="color: #046b33;" class="blur-animated blur-hidden">Cronograma de Talleres</h2>
+    
+    <div id="aviso-edicion-2028" class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; background: #E6FFFA; padding: 20px; border-radius: 12px; border: 2px solid #046b33; box-shadow: var(--shadow);">
+        <h3 style="margin: 0; color: #046b33; font-size: 1.5rem;">¡Nos vemos en la 2da Edición! 🎉</h3>
+        <p style="color: var(--dark); font-size: 1.1rem; margin-top: 10px; font-weight: bold;">
+            El congreso regresará con nuevas propuestas en el mes de agosto del año 2028. ¡Mantente atento!
+        </p>
+    </div>
 
-            <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
-            <div id="talleres-container" class="agenda-container">
-                <p>Cargando cronograma...</p>
-            </div>
-            <div class="gradual-blur-bottom"></div>
-        </section>
-
+    <p class="blur-animated blur-hidden" style="text-align: center; margin-bottom: 20px; color: #555;">Explora la grilla y conoce los espacios de formación práctica.</p>
+    <div id="talleres-container" class="agenda-container">
+        <p>Cargando cronograma...</p>
+    </div>
+    <div class="gradual-blur-bottom"></div>
+</section>
         
 <!-- SECCIÓN: Ubicación de Aulas y Mapas -->
         <section id="ubicacion-aulas" class="about-section seccion-relativa" style="background-color: var(--bg-main);">
@@ -501,6 +498,24 @@
         </div>
     </div>
 
+<div id="modal-visor-seguro" class="modal-overlay">
+    <div class="modal-content" style="width: 95%; max-width: 1000px; height: 90vh; display: flex; flex-direction: column; padding: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 id="visor-titulo" style="margin: 0; color: var(--dark); font-size: 1.2rem; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">Visor de Material</h3>
+            <!-- Se añade window. para asegurar la conexión con tu módulo JS -->
+            <button class="btn-cerrar" onclick="window.cerrarVisorSeguro()" style="position: static; z-index: 20;">×</button>
+        </div>
+        
+        <!-- NUEVO CONTENEDOR RELATIVO: Encierra al PDF y restringe el crecimiento del escudo transparente -->
+        <div style="flex-grow: 1; position: relative; border-radius: 8px; overflow: hidden;">
+            <div id="visor-contenedor" style="width: 100%; height: 100%; background: #2D3142;">
+                <!-- El PDF o Video se inyectará dinámicamente aquí -->
+            </div>
+            <!-- Capa protectora ahora anidada correctamente -->
+            <div id="visor-overlay-proteccion" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: none; background: transparent;"></div>
+        </div>
+    </div>
+</div>
     <script src="js/app.js" type="module"></script>
 </body>
 </html>
