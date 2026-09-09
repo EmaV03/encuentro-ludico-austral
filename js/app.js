@@ -1,6 +1,9 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 import { congresoData } from './data.js';
 
+// Configuramos el "trabajador" en segundo plano para PDF.js
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
 // ==========================================
 // CONTROL AUTOMÁTICO DE INSCRIPCIONES Y JUEGOS
 // ==========================================
@@ -135,7 +138,7 @@ window.abrirModalCreadora = function(creaId) {
     if (modalCreadora) {
         modalCreadora.innerHTML = `
             <div class="modal-content" style="text-align: center;">
-                <button class="btn-cerrar" onclick="cerrarModalCreadora()">×</button>
+                <button class="btn-cerrar" onclick="window.cerrarModalCreadora()">×</button>
                 <div style="width: 120px; height: 120px; border-radius: 50%; background-color: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; margin: 0 auto 15px auto; overflow: hidden; border: 3px solid var(--primary);">
                     <img src="${creadora.foto}" alt="${creadora.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" style="width: 100%; height: 100%; object-fit: cover;">
                     <span style="display: none;">${creadora.nombre.charAt(0)}</span>
@@ -169,7 +172,7 @@ window.abrirModalEditorial = function(editorialId) {
     if (modalEditorial) {
         modalEditorial.innerHTML = `
             <div class="modal-content" style="text-align: center;">
-                <button class="btn-cerrar" onclick="cerrarModalEditorial()">×</button>
+                <button class="btn-cerrar" onclick="window.cerrarModalEditorial()">×</button>
                 <img src="${editorial.logo}" alt="${editorial.nombre}" style="max-width: 150px; height: auto; margin: 0 auto 15px auto; border-radius: 8px;">
                 <h2 style="margin: 0; color: #046b33;">${editorial.nombre}</h2>
                 <hr style="border: 1px dashed #ccc; margin: 15px 0;">
@@ -195,7 +198,7 @@ window.abrirModalActividad = function(actId) {
     if (modalActividad) {
         modalActividad.innerHTML = `
             <div class="modal-content" style="text-align: center;">
-                <button class="btn-cerrar" onclick="cerrarModalActividad()">×</button>
+                <button class="btn-cerrar" onclick="window.cerrarModalActividad()">×</button>
                 <div style="height: 150px; background-color: #FFFFFF; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--secondary);">
                     <img src="${actividad.imagen}" alt="${actividad.nombre}" onerror="this.style.display='none';" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
                 </div>
@@ -1407,7 +1410,7 @@ window.iniciarSliderEditoriales = function() {
 };
 
 // ==========================================
-// CONTADOR PARA APERTURA DE INSCRIPCIONES (DESACTIVADO PARA FASE 2028)
+// CONTADOR PARA APERTURA DE INSCRIPCIONES
 // ==========================================
 window.iniciarContadorInscripciones = function() {
     // Función vaciada intencionalmente, ya que las inscripciones 
@@ -1877,65 +1880,106 @@ window.procesarOperacionABJ = async function(usuarioId) {
 // ==========================================
 let visorActivo = false;
 
-window.abrirVisorSeguro = function(titulo, url, tipo) {
+window.abrirVisorSeguro = async function(titulo, url, tipo) {
     visorActivo = true;
     const modal = document.getElementById('modal-visor-seguro');
     const tituloEl = document.getElementById('visor-titulo');
     const contenedor = document.getElementById('visor-contenedor');
-    const overlayProteccion = document.getElementById('visor-overlay-proteccion');
     
     tituloEl.innerText = titulo;
-    const urlSegura = url;
+    contenedor.innerHTML = '<p style="color: white; font-weight: bold; margin-top: 20px;">Cargando documento interactivo...</p>'; 
 
     if (tipo === 'pdf') {
-        contenedor.innerHTML = `<embed src="${urlSegura}#toolbar=0&navpanes=0" type="application/pdf" width="100%" height="100%">`;
-        overlayProteccion.style.display = 'block';
-        overlayProteccion.style.width = 'calc(100% - 20px)';
+        try {
+            const loadingTask = pdfjsLib.getDocument(url);
+            const pdf = await loadingTask.promise;
+            contenedor.innerHTML = ''; 
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const viewport = page.getViewport({ scale: 1.5 }); 
+                
+                const pageContainer = document.createElement('div');
+                pageContainer.style.position = 'relative';
+                pageContainer.style.marginBottom = '20px';
+                pageContainer.style.width = '100%';
+                pageContainer.style.maxWidth = `${viewport.width}px`; 
+                pageContainer.style.boxShadow = '0 4px 10px rgba(0,0,0,0.3)';
+                
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                canvas.style.display = 'block';
+                canvas.style.width = '100%';
+                canvas.style.height = 'auto';
+                canvas.style.backgroundColor = 'white';
+
+                pageContainer.appendChild(canvas);
+                contenedor.appendChild(pageContainer);
+                
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+                const annotations = await page.getAnnotations();
+                if (annotations.length > 0) {
+                    const annotationLayer = document.createElement('div');
+                    annotationLayer.style.position = 'absolute';
+                    annotationLayer.style.top = '0';
+                    annotationLayer.style.left = '0';
+                    annotationLayer.style.width = '100%';
+                    annotationLayer.style.height = '100%';
+                    annotationLayer.style.pointerEvents = 'none'; 
+
+                    annotations.forEach(anno => {
+                        if (anno.subtype === 'Link' && anno.url) {
+                            const a = document.createElement('a');
+                            a.href = anno.url;
+                            a.target = '_blank';
+                            a.style.position = 'absolute';
+                            a.style.pointerEvents = 'auto'; 
+                            a.style.cursor = 'pointer';
+
+                            const rect = viewport.convertToViewportRectangle(anno.rect);
+                            const x = Math.min(rect[0], rect[2]);
+                            const y = Math.min(rect[1], rect[3]);
+                            const width = Math.abs(rect[2] - rect[0]);
+                            const height = Math.abs(rect[3] - rect[1]);
+
+                            a.style.left = `${(x / viewport.width) * 100}%`;
+                            a.style.top = `${(y / viewport.height) * 100}%`;
+                            a.style.width = `${(width / viewport.width) * 100}%`;
+                            a.style.height = `${(height / viewport.height) * 100}%`;
+
+                            annotationLayer.appendChild(a);
+                        }
+                    });
+                    pageContainer.appendChild(annotationLayer);
+                }
+            }
+        } catch (error) {
+            console.error('Error al compilar el PDF:', error);
+            contenedor.innerHTML = '<p style="color: #FF6B6B; font-weight: bold;">Error al cargar el documento de estudio.</p>';
+        }
     } else if (tipo === 'video') {
-        contenedor.innerHTML = `<video controls controlsList="nodownload" disablePictureInPicture width="100%" height="100%" style="background: black;">
-                                    <source src="${urlSegura}" type="video/mp4">
+        contenedor.innerHTML = `<video controls controlsList="nodownload" disablePictureInPicture width="100%" height="auto" style="background: black; border-radius: 8px;">
+                                    <source src="${url}" type="video/mp4">
                                 </video>`;
-        overlayProteccion.style.display = 'none';
-        overlayProteccion.style.width = '100%';
     }
     
-    // Bloquea el scroll de la página principal
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; 
     modal.classList.add('active');
 };
 
 window.cerrarVisorSeguro = function() {
     visorActivo = false;
-    
-    // 1. Restaurar explícitamente el scroll de la página principal
-    document.body.style.overflow = 'auto';
-    
-    // 2. Ocultar el modal del visor
-    const modalVisor = document.getElementById('modal-visor-seguro');
-    if (modalVisor) {
-        modalVisor.classList.remove('active');
-    }
-    
-    // 3. Destruir los lienzos del PDF para liberar memoria
-    const contenedorVisor = document.getElementById('visor-contenedor');
-    if (contenedorVisor) {
-        contenedorVisor.innerHTML = ''; 
-    }
+    document.body.style.overflow = 'auto'; 
+    document.getElementById('modal-visor-seguro').classList.remove('active');
+    document.getElementById('visor-contenedor').innerHTML = ''; 
 };
 
 // Escudos Activos: Bloqueo de Clic Derecho y Atajos de Teclado
 document.addEventListener('contextmenu', function(e) {
     if (visorActivo) e.preventDefault();
-});
-
-document.addEventListener('keydown', function(e) {
-    if (visorActivo) {
-        // Intercepta y bloquea Ctrl+S (Guardar), Ctrl+P (Imprimir)
-        if (e.ctrlKey && (e.key.toLowerCase() === 's' || e.key.toLowerCase() === 'p')) {
-            e.preventDefault();
-            window.showCustomAlert('error', '⚠️ Las funciones de guardado e impresión están deshabilitadas por derechos de autor.');
-        }
-    }
 });
 
 // ==========================================

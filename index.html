@@ -7,6 +7,8 @@
     <link rel="icon" href="Imagenes/TuLogo.png" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- NUEVO: Motor de renderizado PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -507,12 +509,8 @@
         </div>
         
         <!-- NUEVO CONTENEDOR RELATIVO: Encierra al PDF y restringe el crecimiento del escudo transparente -->
-        <div style="flex-grow: 1; position: relative; border-radius: 8px; overflow: hidden;">
-            <div id="visor-contenedor" style="width: 100%; height: 100%; background: #2D3142;">
-                <!-- El PDF o Video se inyectará dinámicamente aquí -->
-            </div>
-            <!-- Capa protectora ahora anidada correctamente -->
-            <div id="visor-overlay-proteccion" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: none; background: transparent;"></div>
+        <div id="visor-contenedor" oncontextmenu="return false;" style="flex-grow: 1; position: relative; border-radius: 8px; overflow-y: auto; background: #2D3142; display: flex; flex-direction: column; align-items: center; padding: 15px; gap: 15px;">
+            <!-- Los lienzos del PDF se inyectarán dinámicamente aquí -->
         </div>
     </div>
 </div>
