@@ -652,7 +652,7 @@ window.renderizarContenidoPerfil = function() {
         } else {
             btnRetosHTML = `
             <button class="btn-anotarse btn-perfil" style="margin-bottom: 20px; font-size: 1.05rem; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; background: #E2E8F0 !important; color: #94a3b8 !important; border: 2px solid #cbd5e1 !important; cursor: not-allowed; box-shadow: none !important;" disabled>
-                ⏳ Retos disponibles a las 12:30 hs
+                🏆 ¡Gracias por haber jugado!
             </button>`;
         }
 
@@ -1121,6 +1121,20 @@ window.abrirModalExpositor = function(expId) {
     const expositor = window.expositoresDinamicos.find(e => e.id === expId);
     if (!expositor) return;
 
+    // NUEVO: Lógica de validación para mostrar el botón de material (idéntica a los talleres)
+    let botonMaterial = '';
+    const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+    
+    if (usuarioActivo && expositor.materialUrl) {
+        botonMaterial = `
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="window.solicitarMaterialSeguro('${expositor.materialUrl}')" class="cta-button" style="background-color: var(--dark); width: 100%;">
+                    📚 Ver Material de la Ponencia
+                </button>
+            </div>
+        `;
+    }
+
     if (modalExpositor) {
         modalExpositor.innerHTML = `
             <div class="modal-content" style="text-align: center;">
@@ -1134,6 +1148,9 @@ window.abrirModalExpositor = function(expId) {
                 
                 <h3 style="text-align: left; color: #046b33; font-size: 1.2rem;">Ponencia que dicta:</h3>
                 <p style="color: #555; text-align: left; margin-top: 5px; font-weight: bold;">${expositor.ponencia ? expositor.ponencia : 'De momento esta información no está disponible.'}</p>
+                
+                <!-- Inyección del botón seguro (solo visible si está logueado y hay PDF) -->
+                ${botonMaterial}
             </div>
         `;
         modalExpositor.classList.add('active');
